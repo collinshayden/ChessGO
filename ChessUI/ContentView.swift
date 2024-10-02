@@ -81,9 +81,9 @@ struct board: View {
     // places squares from perspective of black or white player
     var boardOrientation = { (row: Int, col: Int) -> Bool in
         if (ContentView.white) {
-            return (col+row)%2 == 1
-        } else {
             return (col+row)%2 == 0
+        } else {
+            return (col+row)%2 == 1
         }
     }
     
