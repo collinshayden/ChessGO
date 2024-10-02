@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import ChessKit
 
 struct piece {
     var id: Character?
@@ -34,28 +35,25 @@ func parseFEN(fen: String) -> [[piece]] {
     
     // tracks location of each piece in FEN
     var row = 0
-    var col = 0
     
     for char in fen {
         // checks if the row has ended
         if char == "/" {
             row += 1
-            col = 0
         // checks if there isn't a piece at a position
         } else if char.isNumber {
             let n = Int(String(char))
             for _ in 0..<n! {
-                pieces[row].append(piece())
+                pieces[row].insert(piece(), at: 0)
             }
-            col += n!
         // checks if all pieces have been read
         } else if char == " " {
             break
         // adds a piece
         } else {
-            pieces[row].append(piece(
+            pieces[row].insert(piece(
                 id: char,
-                icon: pieceImages[char]))
+                icon: pieceImages[char]), at: 0)
         }
     }
     return pieces
@@ -75,6 +73,9 @@ struct boardSquare: ButtonStyle {
 
 // View controller for the chess board
 struct board: View {
+    @Binding var clickedSquare: Square?
+    @Binding var legalMoves: [Square]
+    
     static let cols = ["A", "B", "C", "D", "E", "F", "G", "H"]
     var pieces: [[piece?]]
     
@@ -98,7 +99,7 @@ struct board: View {
     
     // flips col and row values if in black orientation
     var pieceOrientation = { (index: Int) -> Int in
-        if (ContentView.white) {
+        if (!ContentView.white) {
             return index
         } else {
             return 7-index
@@ -120,7 +121,7 @@ struct board: View {
                 }
             }
             // make a square for each row, col in an 8x8 grid
-            ForEach(1..<9) {row in
+            ForEach((1..<9).reversed(), id: \.self) {row in
                 HStack(spacing: 0) {
                     // row lables
                     Text(String(labelOrientation(row)) + "  ")
@@ -131,15 +132,18 @@ struct board: View {
                     ForEach(1..<9) {col in
                         // squares
                         Button(action: {
-                            print(
-                                board.cols[col-1] + String(row))
+                            //save square coordinate of clicked button
+                            clickedSquare = Square(board.cols[col-1].lowercased() + String(row))
+
                         }) {
                             if pieces[pieceOrientation(row-1)][pieceOrientation(col-1)]?.icon != nil {
                                 pieces[pieceOrientation(row-1)][pieceOrientation(col-1)]?.icon?
                                     .resizable()
                             } else {
-                                Text("")
+                                //                                Text(board.cols[col-1].lowercased() + String(row))
+                                Text(" ")
                             }
+                            
                         }
                         .buttonStyle(
                             boardSquare(color: boardOrientation(row, col)))
@@ -153,8 +157,11 @@ struct board: View {
 
 struct ContentView: View {
     // this controls what pieces are displayed on the board
-    @State var fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
-    
+    @State var fen = "r4rk1/pp3ppp/2n1b3/q1pp2B1/8/P1Q2NP1/1PP1PP1P/2KR3R w - - 0 15"
+    // clicked squares
+    @State private var clickedSquare: Square?
+    @State private var legalMoves: [Square] = [] // Stores the legal moves
+
     // determines which orientation the board should be displayed
     static let white = true
     
@@ -166,18 +173,31 @@ struct ContentView: View {
     static let boardLabel: CGFloat = 30
     static let squareSize = floor((UIScreen.main.bounds.size.width - ContentView.boardLabel)/8)
     
+    
+    
+    // moves
+    
+    
     var body: some View {
         Text("ChessGo").font(.largeTitle).padding(40)
-        Button("Test") {
-            fen = "rnbqkbnr/pppppppp/8/8/4P3/8/PPPPPPPP/RNBQKBNR b KQkq e3 0"
+        
+        board(clickedSquare: $clickedSquare, legalMoves: $legalMoves, pieces: parseFEN(fen: fen))
+        
+        var board_backend = Board(position: Position(fen: fen)!)
+//        Move(result: Move.Result, piece: <#T##Piece#>, start: <#T##Square#>, end: <#T##Square#>)
+//        board_backend.move(pieceAt: Square("c3"), to: Square("d5"))
+//        board_backend.position.fen
+        
+        if let square = clickedSquare {
+            let moves = board_backend.legalMoves(forPieceAt: square)
+            if let square = clickedSquare {
+                            Text("Clicked Square: \(square.notation)")
+                        }
+            Text("Legal Moves: \(moves.count)")
+                            ForEach(moves, id: \.self) { square in
+                                Text("1. \(square.notation)") // Customize the display of each move as needed
+                            }
         }
-        Button("Test1") {
-            fen = "rnbqkbnr/pppppppp/8/8/3P4/8/PPPPPPPP/RNBQKBNR b KQkq e3 0"
-        }
-        Button("Test2") {
-            fen = "8/8/5k2/8/1K6/8/PpPpPpPp/8 b KQkq e3 0"
-        }
-        board(pieces: parseFEN(fen: fen))
     }
 }
 
