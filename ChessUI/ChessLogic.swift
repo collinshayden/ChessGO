@@ -7,7 +7,7 @@
 
 import Foundation
 import SwiftUI
-
+import ChessKit
 
 struct piece {
     var id: Character?
@@ -27,6 +27,20 @@ func parsePuzzle(puzzle: String) -> ([[piece]], [move], Bool) {
     var orientation = true
     return (pieces, moves, orientation)
 }
+
+func parseSolution(moves: String) -> [[Square]] {
+    var squareLists: [[Square]] = []
+    var splitMoves = moves.split(separator: " ")
+    
+    for move in splitMoves {
+        var source = Square(String(move.prefix(2)))
+        var destination = Square(String(move.suffix(2)))
+        squareLists.append([source, destination])
+    }
+        
+    return squareLists
+}
+
 
 func parseFEN(fen: String) -> [[piece]] {
     // piece id to icon dictionary

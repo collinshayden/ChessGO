@@ -79,8 +79,8 @@ struct board: View {
                                 pieces[pieceOrientation(row-1)][pieceOrientation(8-col)]?.icon?
                                     .resizable()
                             } else {
-                                Text(board.cols[labelOrientation(col)-1] + String(labelOrientation(9-row)))
-//                                Text(" ")
+                                /*Text(board.cols[labelOrientation(col)-1] + String(labelOrientation(9-row)))*/
+                                Text(" ")
                             }
                             
                         }
@@ -123,14 +123,12 @@ struct ContentView: View {
         board(clickedSquare: $clickedSquare, legalMoves: $legalMoves, pieces: parseFEN(fen: fen))
         
         var board_backend = Board(position: Position(fen: fen)!)
-//        Move(result: Move.Result, piece: <#T##Piece#>, start: <#T##Square#>, end: <#T##Square#>)
-//        board_backend.move(pieceAt: Square("c3"), to: Square("d5"))
-//        board_backend.position.fen
-        
+
         if let square = clickedSquare {
             let moves = board_backend.legalMoves(forPieceAt: square)
             if let square = clickedSquare {
                             Text("Clicked Square: \(square.notation)")
+                           
                         }
             Text("Legal Moves: \(moves.count)")
                             ForEach(moves, id: \.self) { square in
