@@ -8,57 +8,6 @@
 import SwiftUI
 import ChessKit
 
-struct piece {
-    var id: Character?
-    var icon: Image?
-}
-
-func parseFEN(fen: String) -> [[piece]] {
-    // piece id to icon dictionary
-    let pieceImages: Dictionary<Character, Image> = [
-        "p": Image(.chessPdt45Svg),
-        "r": Image(.chessRdt45Svg),
-        "n": Image(.chessNdt45Svg),
-        "b": Image(.chessBdt45Svg),
-        "q": Image(.chessQdt45Svg),
-        "k": Image(.chessKdt45Svg),
-        "P": Image(.chessPlt45Svg),
-        "R": Image(.chessRlt45Svg),
-        "N": Image(.chessNlt45Svg),
-        "B": Image(.chessBlt45Svg),
-        "Q": Image(.chessQlt45Svg),
-        "K": Image(.chessKlt45Svg)
-    ]
-    
-    // array of arrays which holds pieces [row][col]
-    var pieces: [[piece]] = [[],[],[],[],[],[],[],[]]
-    
-    // tracks location of each piece in FEN
-    var row = 0
-    
-    for char in fen {
-        // checks if the row has ended
-        if char == "/" {
-            row += 1
-        // checks if there isn't a piece at a position
-        } else if char.isNumber {
-            let n = Int(String(char))
-            for _ in 0..<n! {
-                pieces[row].insert(piece(), at: 0)
-            }
-        // checks if all pieces have been read
-        } else if char == " " {
-            break
-        // adds a piece
-        } else {
-            pieces[row].insert(piece(
-                id: char,
-                icon: pieceImages[char]), at: 0)
-        }
-    }
-    return pieces
-}
-
 // Style for the squares (buttons) on the chess board
 struct boardSquare: ButtonStyle {
     var color: Bool
@@ -75,34 +24,24 @@ struct boardSquare: ButtonStyle {
 struct board: View {
     @Binding var clickedSquare: Square?
     @Binding var legalMoves: [Square]
-    
-    static let cols = ["A", "B", "C", "D", "E", "F", "G", "H"]
+    static let cols = ["h", "g", "f", "e", "d", "c", "b", "a"]
     var pieces: [[piece?]]
     
-    // places squares from perspective of black or white player
-    var boardOrientation = { (row: Int, col: Int) -> Bool in
-        if (ContentView.white) {
-            return (col+row)%2 == 0
-        } else {
-            return (col+row)%2 == 1
-        }
-    }
-    
     // places row labels from perspective of black or white player
-    var labelOrientation = { (row: Int) -> Int in
+    var labelOrientation = { (coord: Int) -> Int in
         if (ContentView.white) {
-            return row
+            return 9-coord
         } else {
-            return 9-row
+            return coord
         }
     }
     
     // flips col and row values if in black orientation
     var pieceOrientation = { (index: Int) -> Int in
-        if (!ContentView.white) {
-            return index
-        } else {
+        if (ContentView.white) {
             return 7-index
+        } else {
+            return index
         }
     }
     
@@ -124,7 +63,7 @@ struct board: View {
             ForEach((1..<9).reversed(), id: \.self) {row in
                 HStack(spacing: 0) {
                     // row lables
-                    Text(String(labelOrientation(row)) + "  ")
+                    Text(String(labelOrientation(9-row)) + "  ")
                         .frame(
                             width: ContentView.boardLabel,
                         height: ContentView.squareSize,
@@ -133,20 +72,20 @@ struct board: View {
                         // squares
                         Button(action: {
                             //save square coordinate of clicked button
-                            clickedSquare = Square(board.cols[col-1].lowercased() + String(row))
+                            clickedSquare = Square(board.cols[labelOrientation(col)-1] + String(labelOrientation(9-row)))
 
                         }) {
-                            if pieces[pieceOrientation(row-1)][pieceOrientation(col-1)]?.icon != nil {
-                                pieces[pieceOrientation(row-1)][pieceOrientation(col-1)]?.icon?
+                            if pieces[pieceOrientation(row-1)][pieceOrientation(8-col)]?.icon != nil {
+                                pieces[pieceOrientation(row-1)][pieceOrientation(8-col)]?.icon?
                                     .resizable()
                             } else {
-                                //                                Text(board.cols[col-1].lowercased() + String(row))
-                                Text(" ")
+                                Text(board.cols[labelOrientation(col)-1] + String(labelOrientation(9-row)))
+//                                Text(" ")
                             }
                             
                         }
                         .buttonStyle(
-                            boardSquare(color: boardOrientation(row, col)))
+                            boardSquare(color: (col+row)%2 == 1))
                     }
                 }
             }
@@ -180,7 +119,7 @@ struct ContentView: View {
     
     var body: some View {
         Text("ChessGo").font(.largeTitle).padding(40)
-        
+
         board(clickedSquare: $clickedSquare, legalMoves: $legalMoves, pieces: parseFEN(fen: fen))
         
         var board_backend = Board(position: Position(fen: fen)!)
