@@ -23,9 +23,9 @@ struct boardSquare: ButtonStyle {
 // View controller for the chess board
 struct board: View {
     @Binding var clickedSquare: Square?
-    @Binding var legalMoves: [Square]
+    @Binding var moves: [Square]
     static let cols = ["h", "g", "f", "e", "d", "c", "b", "a"]
-    var pieces: [[piece?]]
+    var puzzle: Puzzle
     
     // places row labels from perspective of black or white player
     var labelOrientation = { (coord: Int) -> Int in
@@ -73,14 +73,15 @@ struct board: View {
                         Button(action: {
                             //save square coordinate of clicked button
                             clickedSquare = Square(board.cols[labelOrientation(col)-1] + String(labelOrientation(9-row)))
-
                         }) {
-                            if pieces[pieceOrientation(row-1)][pieceOrientation(8-col)]?.icon != nil {
-                                pieces[pieceOrientation(row-1)][pieceOrientation(8-col)]?.icon?
+                            if puzzle.pieces[pieceOrientation(row-1)][pieceOrientation(8-col)].icon != nil {
+                                puzzle.pieces[pieceOrientation(row-1)][pieceOrientation(8-col)].icon?
                                     .resizable()
+                            } else if moves.contains(where: {$0.notation == board.cols[labelOrientation(col)-1] + String(labelOrientation(9-row))}) {
+                                Text("hl")
                             } else {
                                 Text(board.cols[labelOrientation(col)-1] + String(labelOrientation(9-row)))
-//                                Text(" ")
+                                //Text(moves[0].notation)
                             }
                             
                         }
@@ -96,10 +97,10 @@ struct board: View {
 
 struct ContentView: View {
     // this controls what pieces are displayed on the board
-    @State var fen = "r4rk1/pp3ppp/2n1b3/q1pp2B1/8/P1Q2NP1/1PP1PP1P/2KR3R w - - 0 15"
+    @State var selectedPuzzle = ["q3k1nr/1pp1nQpp/3p4/1P2p3/4P3/B1PP1b2/B5PP/5K2 b k - 0 17","e8d7 a2e6 d7d8 f7f8","1760"]
     // clicked squares
     @State private var clickedSquare: Square?
-    @State private var legalMoves: [Square] = [] // Stores the legal moves
+    @State private var moves: [Square] = [] // Stores the legal moves
 
     // determines which orientation the board should be displayed
     static let white = true
@@ -107,6 +108,8 @@ struct ContentView: View {
     // colors for board squares
     static let whiteSquares = Color.white
     static let blackSquares = Color(red: 0.55, green: 0.43, blue: 0.07)
+    static let startHighlight = Color.blue
+    static let targetHighlight = Color.red
     
     // controls size of squares
     static let boardLabel: CGFloat = 30
@@ -119,16 +122,16 @@ struct ContentView: View {
     
     var body: some View {
         Text("ChessGo").font(.largeTitle).padding(40)
-
-        board(clickedSquare: $clickedSquare, legalMoves: $legalMoves, pieces: parseFEN(fen: fen))
-        
-        var board_backend = Board(position: Position(fen: fen)!)
+        var board_backend = Board(position: Position(fen: selectedPuzzle[0])!)
+        board(clickedSquare: $clickedSquare, moves: $moves, puzzle: parsePuzzle(selectedPuzzle: selectedPuzzle))
+                
 //        Move(result: Move.Result, piece: <#T##Piece#>, start: <#T##Square#>, end: <#T##Square#>)
 //        board_backend.move(pieceAt: Square("c3"), to: Square("d5"))
 //        board_backend.position.fen
         
         if let square = clickedSquare {
-            let moves = board_backend.legalMoves(forPieceAt: square)
+            moves = board_backend.legalMoves(forPieceAt: square)
+            
             if let square = clickedSquare {
                             Text("Clicked Square: \(square.notation)")
                         }
