@@ -1,0 +1,27 @@
+{
+  "configurations" : [
+    {
+      "id" : "8C5BCB8B-6816-4D5E-9016-575D66AA0163",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : false,
+    "locationScenario" : {
+      "identifier" : "New York, NY, USA",
+      "referenceType" : "built-in"
+    },
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:ChessUI.xcodeproj",
+      "identifier" : "DB146E452CA5A10C00A145B7",
+      "name" : "ChessUI"
+    }
+  },
+  "testTargets" : [
+
+  ],
+  "version" : 1
+}
