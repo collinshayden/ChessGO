@@ -1,0 +1,17 @@
+# Ignore Google Service Info
+GoogleService-Info.plist
+
+# Ignore Xcode project files
+*.xcodeproj/
+*.xcworkspace/
+
+# Ignore build artifacts
+build/
+DerivedData/
+
+# Ignore CocoaPods files
+Pods/
+
+# Ignore user-specific files
+*.xcuserstate
+*.xcuserdatad/
