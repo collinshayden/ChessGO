@@ -23,8 +23,8 @@ class BoardLogic {
         legalMoves = boardState.legalMoves(forPieceAt: clickedSquare!)
         
         if (legalMoves.contains {$0.notation == "d4"}) {
-            print("d4 found")
-        }
+                    print("d4 found from click function, pos \(pos)")
+                }
     }
     
     func getLegalMoves() -> [Square] {
@@ -32,6 +32,17 @@ class BoardLogic {
     }
     
     func checkLegalMove(pos: String) -> Bool {
-        return legalMoves.contains {$0.notation == pos}
+        if legalMoves.contains(where: {$0.notation == pos}) {
+            print(" LEFLELFE \(pos)")
+            return true
+        }
+        else {
+            return false
+        }
+        
+    }
+    
+    func consolePrint() {
+        print("AWHDNJAWD")
     }
 }

@@ -11,11 +11,12 @@ import ChessKit
 // Style for the squares (buttons) on the chess board
 struct boardSquare: ButtonStyle {
     var color: Bool
+    var isLegalMove: Bool
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .frame(width: ContentView.squareSize, height: ContentView.squareSize)
-            .background(color ? ContentView.whiteSquares : ContentView.blackSquares)
-            .foregroundColor(color ? ContentView.blackSquares : ContentView.whiteSquares)
+            .background(isLegalMove ? Color.red : (color ? ContentView.whiteSquares : ContentView.blackSquares))
+            .foregroundColor(isLegalMove ? Color.red : color ? ContentView.whiteSquares : ContentView.blackSquares)
             .border(color ? ContentView.whiteSquares : ContentView.blackSquares)
     }
 }
@@ -25,6 +26,8 @@ struct board: View {
     static let cols = ["h", "g", "f", "e", "d", "c", "b", "a"]
     var puzzle: Puzzle
     var logic: BoardLogic
+    @State private var legalMoves: [Square] = []
+
     
     init(puzzle: Puzzle) {
         self.puzzle = puzzle
@@ -76,20 +79,21 @@ struct board: View {
                         // squares
                         Button(action: {
                             logic.click(pos: coord)
-                            print(coord)
+                            legalMoves = logic.getLegalMoves()
                         }) {
                             if puzzle.pieces[pieceOrientation(row-1)][pieceOrientation(8-col)].icon != nil {
                                 puzzle.pieces[pieceOrientation(row-1)][pieceOrientation(8-col)].icon?
                                     .resizable()
-                            } else if logic.checkLegalMove(pos: "d4") {
-                                Text("L")
-                            } else {
+                            }
+                        else {
                                 Text(coord)
                             }
                             
                         }
                         .buttonStyle(
-                            boardSquare(color: (col+row)%2 == 1))
+                            boardSquare(color: (col+row)%2 == 1, isLegalMove: legalMoves.contains(Square(coord))))
+                        
+                        
                     }
                 }
             }
