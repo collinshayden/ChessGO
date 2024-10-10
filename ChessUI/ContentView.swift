@@ -23,13 +23,7 @@ struct boardSquare: ButtonStyle {
 // View controller for the chess board
 struct board: View {
     static let cols = ["h", "g", "f", "e", "d", "c", "b", "a"]
-    var puzzle: Puzzle
-    var logic: BoardLogic
-    
-    init(puzzle: Puzzle) {
-        self.puzzle = puzzle
-        self.logic = BoardLogic(puzzle: self.puzzle)
-    }
+    @ObservedObject var logic: BoardLogic
     
     // places row labels from perspective of black or white player
     var labelOrientation = { (coord: Int) -> Int in
@@ -48,6 +42,7 @@ struct board: View {
             return index
         }
     }
+    
     var body: some View {
         VStack(spacing: 0) {
             HStack(spacing: 0) {
@@ -76,13 +71,26 @@ struct board: View {
                         // squares
                         Button(action: {
                             logic.click(pos: coord)
-                            print(coord)
                         }) {
-                            if puzzle.pieces[pieceOrientation(row-1)][pieceOrientation(8-col)].icon != nil {
-                                puzzle.pieces[pieceOrientation(row-1)][pieceOrientation(8-col)].icon?
-                                    .resizable()
-                            } else if logic.checkLegalMove(pos: "d4") {
-                                Text("L")
+                            // style for board positions
+                            if logic.getPuzzle().pieces[pieceOrientation(row-1)][pieceOrientation(8-col)].icon != nil {
+                                
+                                ZStack{
+                                    if logic.checkLegalMove(pos: coord) {
+                                        Circle()
+                                            .stroke(Color(red: 0.5, green: 0.5, blue: 0.5), lineWidth: 4)
+                                        .frame(
+                                            width: ContentView.squareSize-7,
+                                            height: ContentView.squareSize-7)
+                                    }
+                                    logic.getPuzzle().pieces[pieceOrientation(row-1)][pieceOrientation(8-col)].icon?
+                                        .resizable()
+                                }
+                            } else if logic.checkLegalMove(pos: coord) {
+                                Circle()
+                                    .fill(Color(red: 0.5, green: 0.5, blue: 0.5))
+                                    .frame(width: ContentView.squareSize*0.3,
+                                               height: ContentView.squareSize*0.3)
                             } else {
                                 Text(coord)
                             }
@@ -99,9 +107,8 @@ struct board: View {
 
 
 struct ContentView: View {
-    // this controls what pieces are displayed on the board
-    @State var selectedPuzzle = ["q3k1nr/1pp1nQpp/3p4/1P2p3/4P3/B1PP1b2/B5PP/5K2 b k - 0 17","e8d7 a2e6 d7d8 f7f8","1760"]
-    // determines which orientation the board should be displayed
+    @StateObject var logic: BoardLogic = BoardLogic(selectedPuzzle: ["q3k1nr/1pp1nQpp/3p4/1P2p3/4P3/B1PP1b2/B5PP/5K2 b k - 0 17","e8d7 a2e6 d7d8 f7f8","1760"])
+
     static let white = true
     
     // colors for board squares
@@ -117,7 +124,7 @@ struct ContentView: View {
     
     var body: some View {
         Text("ChessGo").font(.largeTitle).padding(40)
-        board(puzzle: parsePuzzle(selectedPuzzle: selectedPuzzle))
+        board(logic: logic)
 //        Move(result: Move.Result, piece: <#T##Piece#>, start: <#T##Square#>, end: <#T##Square#>)
 //        board_backend.move(pieceAt: Square("c3"), to: Square("d5"))
 //        board_backend.position.fen

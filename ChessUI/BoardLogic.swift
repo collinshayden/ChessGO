@@ -8,12 +8,14 @@
 import Foundation
 import ChessKit
 
-class BoardLogic {
-    var boardState: Board
+class BoardLogic: ObservableObject {
+    var puzzle: Puzzle
+    @Published var boardState: Board
     var clickedSquare: Square?
-    var legalMoves: [Square]
+    @Published var legalMoves: [Square]
     
-    init(puzzle: Puzzle) {
+    init(selectedPuzzle: [String]) {
+        puzzle = parsePuzzle(selectedPuzzle: selectedPuzzle)
         boardState = Board(position: Position(fen: puzzle.fen)!)
         legalMoves = []
     }
@@ -21,10 +23,11 @@ class BoardLogic {
     func click(pos: String) {
         clickedSquare = Square(pos)
         legalMoves = boardState.legalMoves(forPieceAt: clickedSquare!)
-        
-        if (legalMoves.contains {$0.notation == "d4"}) {
-            print("d4 found")
-        }
+        print("Length of legal moves after assignment: " + String(legalMoves.count))
+        //print(legalMoves[0].notation)
+        //if checkLegalMove(pos: "d4") {
+        //    print("d4 found")
+        //}
     }
     
     func getLegalMoves() -> [Square] {
@@ -32,6 +35,11 @@ class BoardLogic {
     }
     
     func checkLegalMove(pos: String) -> Bool {
+        //print("Length of legal moves when checking: " + String(legalMoves.count))
         return legalMoves.contains {$0.notation == pos}
+    }
+    
+    func getPuzzle() -> Puzzle {
+        return puzzle
     }
 }
