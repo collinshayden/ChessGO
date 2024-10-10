@@ -122,9 +122,6 @@ struct ContentView: View {
     var body: some View {
         Text("ChessGo").font(.largeTitle).padding(40)
         board(puzzle: parsePuzzle(selectedPuzzle: selectedPuzzle))
-//        Move(result: Move.Result, piece: <#T##Piece#>, start: <#T##Square#>, end: <#T##Square#>)
-//        board_backend.move(pieceAt: Square("c3"), to: Square("d5"))
-//        board_backend.position.fen
     }
 }
 

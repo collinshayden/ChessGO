@@ -10,7 +10,8 @@ import ChessKit
 
 class BoardLogic {
     var boardState: Board
-    var clickedSquare: Square?
+    var firstClickedSquare: Square?
+    var secondClickedSquare: Square?
     var legalMoves: [Square]
     
     init(puzzle: Puzzle) {
@@ -19,12 +20,26 @@ class BoardLogic {
     }
     
     func click(pos: String) {
-        clickedSquare = Square(pos)
-        legalMoves = boardState.legalMoves(forPieceAt: clickedSquare!)
-        
-        if (legalMoves.contains {$0.notation == "d4"}) {
-                    print("d4 found from click function, pos \(pos)")
-                }
+        // if first click is nil, calc legal moves
+        if firstClickedSquare == nil {
+            firstClickedSquare = Square(pos)
+            legalMoves = boardState.legalMoves(forPieceAt: firstClickedSquare!)
+            print("First square clicked at \(pos)")
+        }
+        // else if first square has already been clicked, check if new click is legal
+        else {
+            secondClickedSquare = Square(pos)
+            if checkLegalMove(pos: pos) {
+                print("move from \(firstClickedSquare!.notation) to \(pos) is legal")
+            }
+            // if second click wasn't in legal moves, reset and calculate legal moves for the new square
+            else {
+                firstClickedSquare = secondClickedSquare
+                secondClickedSquare = nil
+                legalMoves = boardState.legalMoves(forPieceAt: firstClickedSquare!)
+            }
+
+        }
     }
     
     func getLegalMoves() -> [Square] {
@@ -33,16 +48,11 @@ class BoardLogic {
     
     func checkLegalMove(pos: String) -> Bool {
         if legalMoves.contains(where: {$0.notation == pos}) {
-            print(" LEFLELFE \(pos)")
             return true
         }
         else {
             return false
         }
         
-    }
-    
-    func consolePrint() {
-        print("AWHDNJAWD")
     }
 }
