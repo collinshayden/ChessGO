@@ -25,6 +25,7 @@ struct Puzzle {
     var moves = [Move]()
     var orientation: Bool = true
     var rating: String = "-1"
+    var fen: String = ""
 }
 
 func parsePuzzle(selectedPuzzle: [String]) -> Puzzle {
@@ -48,6 +49,7 @@ func parsePuzzle(selectedPuzzle: [String]) -> Puzzle {
                           target_col: colIndices[String(coords[2])]!))
     }
     puzzle.rating = selectedPuzzle[2]
+    puzzle.fen = selectedPuzzle[0]
     return puzzle
 }
 

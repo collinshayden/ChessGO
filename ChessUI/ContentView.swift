@@ -22,10 +22,14 @@ struct boardSquare: ButtonStyle {
 
 // View controller for the chess board
 struct board: View {
-    @Binding var clickedSquare: Square?
-    @Binding var moves: [Square]
     static let cols = ["h", "g", "f", "e", "d", "c", "b", "a"]
     var puzzle: Puzzle
+    var logic: BoardLogic
+    
+    init(puzzle: Puzzle) {
+        self.puzzle = puzzle
+        self.logic = BoardLogic(puzzle: self.puzzle)
+    }
     
     // places row labels from perspective of black or white player
     var labelOrientation = { (coord: Int) -> Int in
@@ -44,7 +48,6 @@ struct board: View {
             return index
         }
     }
-    
     var body: some View {
         VStack(spacing: 0) {
             HStack(spacing: 0) {
@@ -69,19 +72,19 @@ struct board: View {
                         height: ContentView.squareSize,
                         alignment: .center)
                     ForEach(1..<9) {col in
+                        let coord = board.cols[labelOrientation(col)-1] + String(labelOrientation(9-row))
                         // squares
                         Button(action: {
-                            //save square coordinate of clicked button
-                            clickedSquare = Square(board.cols[labelOrientation(col)-1] + String(labelOrientation(9-row)))
+                            logic.click(pos: coord)
+                            print(coord)
                         }) {
                             if puzzle.pieces[pieceOrientation(row-1)][pieceOrientation(8-col)].icon != nil {
                                 puzzle.pieces[pieceOrientation(row-1)][pieceOrientation(8-col)].icon?
                                     .resizable()
-                            } else if moves.contains(where: {$0.notation == board.cols[labelOrientation(col)-1] + String(labelOrientation(9-row))}) {
-                                Text("hl")
+                            } else if logic.checkLegalMove(pos: "d4") {
+                                Text("L")
                             } else {
-                                Text(board.cols[labelOrientation(col)-1] + String(labelOrientation(9-row)))
-                                //Text(moves[0].notation)
+                                Text(coord)
                             }
                             
                         }
@@ -98,10 +101,6 @@ struct board: View {
 struct ContentView: View {
     // this controls what pieces are displayed on the board
     @State var selectedPuzzle = ["q3k1nr/1pp1nQpp/3p4/1P2p3/4P3/B1PP1b2/B5PP/5K2 b k - 0 17","e8d7 a2e6 d7d8 f7f8","1760"]
-    // clicked squares
-    @State private var clickedSquare: Square?
-    @State private var moves: [Square] = [] // Stores the legal moves
-
     // determines which orientation the board should be displayed
     static let white = true
     
@@ -116,30 +115,12 @@ struct ContentView: View {
     static let squareSize = floor((UIScreen.main.bounds.size.width - ContentView.boardLabel)/8)
     
     
-    
-    // moves
-    
-    
     var body: some View {
         Text("ChessGo").font(.largeTitle).padding(40)
-        var board_backend = Board(position: Position(fen: selectedPuzzle[0])!)
-        board(clickedSquare: $clickedSquare, moves: $moves, puzzle: parsePuzzle(selectedPuzzle: selectedPuzzle))
-                
+        board(puzzle: parsePuzzle(selectedPuzzle: selectedPuzzle))
 //        Move(result: Move.Result, piece: <#T##Piece#>, start: <#T##Square#>, end: <#T##Square#>)
 //        board_backend.move(pieceAt: Square("c3"), to: Square("d5"))
 //        board_backend.position.fen
-        
-        if let square = clickedSquare {
-            moves = board_backend.legalMoves(forPieceAt: square)
-            
-            if let square = clickedSquare {
-                            Text("Clicked Square: \(square.notation)")
-                        }
-            Text("Legal Moves: \(moves.count)")
-                            ForEach(moves, id: \.self) { square in
-                                Text("1. \(square.notation)") // Customize the display of each move as needed
-                            }
-        }
     }
 }
 
