@@ -8,6 +8,20 @@
 
 /* Begin PBXBuildFile section */
 		A1BDB7E82CACDD92000FEDA1 /* ChessKit in Frameworks */ = {isa = PBXBuildFile; productRef = A1BDB7E72CACDD92000FEDA1 /* ChessKit */; };
+		B60D89472CB822FA004A3C03 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B60D89462CB822FA004A3C03 /* GoogleService-Info.plist */; };
+		B6BFA55F2CB7062000F1DA5F /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = B6BFA55E2CB7062000F1DA5F /* FirebaseAuth */; };
+		B6BFA5612CB7062000F1DA5F /* FirebaseAuthCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = B6BFA5602CB7062000F1DA5F /* FirebaseAuthCombine-Community */; };
+		B6BFA5632CB7062000F1DA5F /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = B6BFA5622CB7062000F1DA5F /* FirebaseCore */; };
+		B6BFA5652CB7062000F1DA5F /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = B6BFA5642CB7062000F1DA5F /* FirebaseDatabase */; };
+		B6BFA5672CB7062000F1DA5F /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = B6BFA5662CB7062000F1DA5F /* FirebaseFirestore */; };
+		B6BFA5692CB7062000F1DA5F /* FirebaseFirestoreCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = B6BFA5682CB7062000F1DA5F /* FirebaseFirestoreCombine-Community */; };
+		B6BFA56B2CB7062000F1DA5F /* FirebaseFunctions in Frameworks */ = {isa = PBXBuildFile; productRef = B6BFA56A2CB7062000F1DA5F /* FirebaseFunctions */; };
+		B6BFA56D2CB7062000F1DA5F /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = B6BFA56C2CB7062000F1DA5F /* FirebaseStorage */; };
+		B6BFA56F2CB7062000F1DA5F /* FirebaseStorageCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = B6BFA56E2CB7062000F1DA5F /* FirebaseStorageCombine-Community */; };
+		B6E5D7962CB7071000DF5139 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6E5D7952CB7070B00DF5139 /* HomeView.swift */; };
+		B6E5D79A2CB7073700DF5139 /* FirebaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6E5D7992CB7073100DF5139 /* FirebaseService.swift */; };
+		B6E5D79C2CB7074000DF5139 /* DBError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6E5D79B2CB7073C00DF5139 /* DBError.swift */; };
+		B6E5D79E2CB7074800DF5139 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6E5D79D2CB7074300DF5139 /* LoginView.swift */; };
 		DB06DB6B2CAEEBE400CBE7F3 /* ChessLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB06DB6A2CAEEBE400CBE7F3 /* ChessLogic.swift */; };
 		DB146E4A2CA5A10C00A145B7 /* ChessUIApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB146E492CA5A10C00A145B7 /* ChessUIApp.swift */; };
 		DB146E4C2CA5A10C00A145B7 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB146E4B2CA5A10C00A145B7 /* ContentView.swift */; };
@@ -16,6 +30,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B60D89462CB822FA004A3C03 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		B6E5D7952CB7070B00DF5139 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		B6E5D7992CB7073100DF5139 /* FirebaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseService.swift; sourceTree = "<group>"; };
+		B6E5D79B2CB7073C00DF5139 /* DBError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBError.swift; sourceTree = "<group>"; };
+		B6E5D79D2CB7074300DF5139 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		DB06DB6A2CAEEBE400CBE7F3 /* ChessLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChessLogic.swift; sourceTree = "<group>"; };
 		DB146E462CA5A10C00A145B7 /* ChessUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChessUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB146E492CA5A10C00A145B7 /* ChessUIApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChessUIApp.swift; sourceTree = "<group>"; };
@@ -29,7 +48,16 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B6BFA5652CB7062000F1DA5F /* FirebaseDatabase in Frameworks */,
 				A1BDB7E82CACDD92000FEDA1 /* ChessKit in Frameworks */,
+				B6BFA56F2CB7062000F1DA5F /* FirebaseStorageCombine-Community in Frameworks */,
+				B6BFA56D2CB7062000F1DA5F /* FirebaseStorage in Frameworks */,
+				B6BFA5612CB7062000F1DA5F /* FirebaseAuthCombine-Community in Frameworks */,
+				B6BFA56B2CB7062000F1DA5F /* FirebaseFunctions in Frameworks */,
+				B6BFA5632CB7062000F1DA5F /* FirebaseCore in Frameworks */,
+				B6BFA55F2CB7062000F1DA5F /* FirebaseAuth in Frameworks */,
+				B6BFA5672CB7062000F1DA5F /* FirebaseFirestore in Frameworks */,
+				B6BFA5692CB7062000F1DA5F /* FirebaseFirestoreCombine-Community in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -39,6 +67,7 @@
 		DB146E3D2CA5A10C00A145B7 = {
 			isa = PBXGroup;
 			children = (
+				B60D89462CB822FA004A3C03 /* GoogleService-Info.plist */,
 				DB146E482CA5A10C00A145B7 /* ChessUI */,
 				DB146E472CA5A10C00A145B7 /* Products */,
 			);
@@ -56,7 +85,11 @@
 			isa = PBXGroup;
 			children = (
 				DB146E492CA5A10C00A145B7 /* ChessUIApp.swift */,
+				B6E5D7952CB7070B00DF5139 /* HomeView.swift */,
+				B6E5D7992CB7073100DF5139 /* FirebaseService.swift */,
 				DB06DB6A2CAEEBE400CBE7F3 /* ChessLogic.swift */,
+				B6E5D79B2CB7073C00DF5139 /* DBError.swift */,
+				B6E5D79D2CB7074300DF5139 /* LoginView.swift */,
 				DB146E4B2CA5A10C00A145B7 /* ContentView.swift */,
 				DB146E4D2CA5A10E00A145B7 /* Assets.xcassets */,
 				DB146E4F2CA5A10E00A145B7 /* Preview Content */,
@@ -90,6 +123,15 @@
 			name = ChessUI;
 			packageProductDependencies = (
 				A1BDB7E72CACDD92000FEDA1 /* ChessKit */,
+				B6BFA55E2CB7062000F1DA5F /* FirebaseAuth */,
+				B6BFA5602CB7062000F1DA5F /* FirebaseAuthCombine-Community */,
+				B6BFA5622CB7062000F1DA5F /* FirebaseCore */,
+				B6BFA5642CB7062000F1DA5F /* FirebaseDatabase */,
+				B6BFA5662CB7062000F1DA5F /* FirebaseFirestore */,
+				B6BFA5682CB7062000F1DA5F /* FirebaseFirestoreCombine-Community */,
+				B6BFA56A2CB7062000F1DA5F /* FirebaseFunctions */,
+				B6BFA56C2CB7062000F1DA5F /* FirebaseStorage */,
+				B6BFA56E2CB7062000F1DA5F /* FirebaseStorageCombine-Community */,
 			);
 			productName = ChessUI;
 			productReference = DB146E462CA5A10C00A145B7 /* ChessUI.app */;
@@ -121,6 +163,7 @@
 			mainGroup = DB146E3D2CA5A10C00A145B7;
 			packageReferences = (
 				A1BDB7E62CACDD92000FEDA1 /* XCRemoteSwiftPackageReference "chesskit-swift" */,
+				B6BFA55D2CB7062000F1DA5F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = DB146E472CA5A10C00A145B7 /* Products */;
 			projectDirPath = "";
@@ -138,6 +181,7 @@
 			files = (
 				DB146E512CA5A10E00A145B7 /* Preview Assets.xcassets in Resources */,
 				DB146E4E2CA5A10E00A145B7 /* Assets.xcassets in Resources */,
+				B60D89472CB822FA004A3C03 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -148,7 +192,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B6E5D79C2CB7074000DF5139 /* DBError.swift in Sources */,
+				B6E5D79E2CB7074800DF5139 /* LoginView.swift in Sources */,
 				DB146E4C2CA5A10C00A145B7 /* ContentView.swift in Sources */,
+				B6E5D79A2CB7073700DF5139 /* FirebaseService.swift in Sources */,
+				B6E5D7962CB7071000DF5139 /* HomeView.swift in Sources */,
 				DB146E4A2CA5A10C00A145B7 /* ChessUIApp.swift in Sources */,
 				DB06DB6B2CAEEBE400CBE7F3 /* ChessLogic.swift in Sources */,
 			);
@@ -284,7 +332,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"ChessUI/Preview Content\"";
-				DEVELOPMENT_TEAM = 668P2C4QWT;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -313,7 +361,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"ChessUI/Preview Content\"";
-				DEVELOPMENT_TEAM = 668P2C4QWT;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -366,6 +414,14 @@
 				minimumVersion = 0.12.1;
 			};
 		};
+		B6BFA55D2CB7062000F1DA5F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 11.3.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -373,6 +429,51 @@
 			isa = XCSwiftPackageProductDependency;
 			package = A1BDB7E62CACDD92000FEDA1 /* XCRemoteSwiftPackageReference "chesskit-swift" */;
 			productName = ChessKit;
+		};
+		B6BFA55E2CB7062000F1DA5F /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B6BFA55D2CB7062000F1DA5F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		B6BFA5602CB7062000F1DA5F /* FirebaseAuthCombine-Community */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B6BFA55D2CB7062000F1DA5F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = "FirebaseAuthCombine-Community";
+		};
+		B6BFA5622CB7062000F1DA5F /* FirebaseCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B6BFA55D2CB7062000F1DA5F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCore;
+		};
+		B6BFA5642CB7062000F1DA5F /* FirebaseDatabase */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B6BFA55D2CB7062000F1DA5F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseDatabase;
+		};
+		B6BFA5662CB7062000F1DA5F /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B6BFA55D2CB7062000F1DA5F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+		B6BFA5682CB7062000F1DA5F /* FirebaseFirestoreCombine-Community */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B6BFA55D2CB7062000F1DA5F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = "FirebaseFirestoreCombine-Community";
+		};
+		B6BFA56A2CB7062000F1DA5F /* FirebaseFunctions */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B6BFA55D2CB7062000F1DA5F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFunctions;
+		};
+		B6BFA56C2CB7062000F1DA5F /* FirebaseStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B6BFA55D2CB7062000F1DA5F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseStorage;
+		};
+		B6BFA56E2CB7062000F1DA5F /* FirebaseStorageCombine-Community */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B6BFA55D2CB7062000F1DA5F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = "FirebaseStorageCombine-Community";
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
