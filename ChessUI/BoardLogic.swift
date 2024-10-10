@@ -23,20 +23,25 @@ class BoardLogic {
         // if first click is nil, calc legal moves
         if firstClickedSquare == nil {
             firstClickedSquare = Square(pos)
-            legalMoves = boardState.legalMoves(forPieceAt: firstClickedSquare!)
-            print("First square clicked at \(pos)")
+            
+            if boardState.position.sideToMove == boardState.position.piece(at: firstClickedSquare!)?.color {
+                legalMoves = boardState.legalMoves(forPieceAt: firstClickedSquare!)
+            }
         }
         // else if first square has already been clicked, check if new click is legal
         else {
             secondClickedSquare = Square(pos)
             if checkLegalMove(pos: pos) {
-                print("move from \(firstClickedSquare!.notation) to \(pos) is legal")
+                boardState.move(pieceAt: firstClickedSquare!, to: secondClickedSquare!)
+                legalMoves = []
             }
             // if second click wasn't in legal moves, reset and calculate legal moves for the new square
             else {
                 firstClickedSquare = secondClickedSquare
                 secondClickedSquare = nil
-                legalMoves = boardState.legalMoves(forPieceAt: firstClickedSquare!)
+                if boardState.position.sideToMove == boardState.position.piece(at: firstClickedSquare!)?.color {
+                    legalMoves = boardState.legalMoves(forPieceAt: firstClickedSquare!)
+                }
             }
 
         }

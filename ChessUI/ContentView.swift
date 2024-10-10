@@ -26,12 +26,14 @@ struct board: View {
     static let cols = ["h", "g", "f", "e", "d", "c", "b", "a"]
     var puzzle: Puzzle
     var logic: BoardLogic
+    @State private var pieces: [[Piece]]
     @State private var legalMoves: [Square] = []
 
     
     init(puzzle: Puzzle) {
         self.puzzle = puzzle
         self.logic = BoardLogic(puzzle: self.puzzle)
+        self.pieces = puzzle.pieces
     }
     
     // places row labels from perspective of black or white player
@@ -80,9 +82,10 @@ struct board: View {
                         Button(action: {
                             logic.click(pos: coord)
                             legalMoves = logic.getLegalMoves()
+                            pieces = parseFEN(fen: logic.boardState.position.fen)
                         }) {
-                            if puzzle.pieces[pieceOrientation(row-1)][pieceOrientation(8-col)].icon != nil {
-                                puzzle.pieces[pieceOrientation(row-1)][pieceOrientation(8-col)].icon?
+                            if pieces[pieceOrientation(row-1)][pieceOrientation(8-col)].icon != nil {
+                                pieces[pieceOrientation(row-1)][pieceOrientation(8-col)].icon?
                                     .resizable()
                             }
                         else {
