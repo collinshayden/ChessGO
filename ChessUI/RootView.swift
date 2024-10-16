@@ -12,11 +12,18 @@ struct RootView : View {
     var body: some View {
         VStack {
             if(fireBaseService.isLoggedIn){
-                //try await fireBaseService.signIn(UserDefaults.standard.value(forKey: "username") as! String)
                 MapView()
             }
             else{
                 LoginView()
+            }
+        }.onAppear {
+            if fireBaseService.isLoggedIn {
+                Task {
+                    if let username = UserDefaults.standard.value(forKey: "username") as? String {
+                        try await fireBaseService.signIn(username)
+                    }
+                }
             }
         }
     }
