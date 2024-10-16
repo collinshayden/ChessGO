@@ -17,10 +17,6 @@ struct LoginView: View {
     @State private var error: String? = nil
     var body: some View {
         VStack {
-            if(fireBaseService.isLoggedIn){
-                ContentView()
-            }
-            else{
                 Text("Welcome to ChessGO!")
                 
                 Image(systemName: "globe")
@@ -45,11 +41,7 @@ struct LoginView: View {
                     }
                     
                     if let message = error { Text("\(message)").foregroundColor(.red) }
-                    
                 }
-                
-                
-            }
         }
         .padding()
     }

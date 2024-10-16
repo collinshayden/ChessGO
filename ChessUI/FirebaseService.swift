@@ -31,7 +31,6 @@ class FireBaseService: ObservableObject{
     func createAccount(_ username: String) async throws {
       do {
         print("trying create with \(username)")
-        UserDefaults.standard.set(username, forKey: "username")
         let authResult = try await firebaseAuth.createUser(withEmail: "\(username)@chess.com", password: "chess123")
         self.userSession = authResult.user
         if let session = userSession {
@@ -39,11 +38,14 @@ class FireBaseService: ObservableObject{
         DispatchQueue.main.async {
         self.currentUser = session.email
         self.isLoggedIn = true
+        UserDefaults.standard.set(true, forKey: "isLoggedIn")
+        UserDefaults.standard.set(username, forKey: "username")
           }
         try await db.collection("users").document("\(username)").setData([
                 "username" : username,
                 "elo" : 400,
             ])
+        
         }
       } catch {
         print("Error registering user or saving user data: \(error.localizedDescription)")

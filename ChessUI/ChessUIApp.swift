@@ -27,7 +27,7 @@ struct ChessUIApp: App {
     
     var body: some Scene {
         WindowGroup {
-            LoginView()
+            RootView()
             .environmentObject(FireBaseService())
         }
     }

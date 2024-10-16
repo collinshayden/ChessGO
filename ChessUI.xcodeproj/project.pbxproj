@@ -22,9 +22,12 @@
 		B6E5D79A2CB7073700DF5139 /* FirebaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6E5D7992CB7073100DF5139 /* FirebaseService.swift */; };
 		B6E5D79C2CB7074000DF5139 /* DBError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6E5D79B2CB7073C00DF5139 /* DBError.swift */; };
 		B6E5D79E2CB7074800DF5139 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6E5D79D2CB7074300DF5139 /* LoginView.swift */; };
+		B6EFACCA2CC02188003DF466 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6EFACC92CC02188003DF466 /* MapView.swift */; };
+		B6EFACCB2CC02188003DF466 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6EFACC82CC02188003DF466 /* LocationService.swift */; };
+		B6EFACCD2CC02670003DF466 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6EFACCC2CC0266C003DF466 /* RootView.swift */; };
 		DB06DB6B2CAEEBE400CBE7F3 /* ChessLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB06DB6A2CAEEBE400CBE7F3 /* ChessLogic.swift */; };
 		DB146E4A2CA5A10C00A145B7 /* ChessUIApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB146E492CA5A10C00A145B7 /* ChessUIApp.swift */; };
-		DB146E4C2CA5A10C00A145B7 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB146E4B2CA5A10C00A145B7 /* ContentView.swift */; };
+		DB146E4C2CA5A10C00A145B7 /* PuzzleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB146E4B2CA5A10C00A145B7 /* PuzzleView.swift */; };
 		DB146E4E2CA5A10E00A145B7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DB146E4D2CA5A10E00A145B7 /* Assets.xcassets */; };
 		DB146E512CA5A10E00A145B7 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DB146E502CA5A10E00A145B7 /* Preview Assets.xcassets */; };
 /* End PBXBuildFile section */
@@ -35,10 +38,13 @@
 		B6E5D7992CB7073100DF5139 /* FirebaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseService.swift; sourceTree = "<group>"; };
 		B6E5D79B2CB7073C00DF5139 /* DBError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBError.swift; sourceTree = "<group>"; };
 		B6E5D79D2CB7074300DF5139 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		B6EFACC82CC02188003DF466 /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
+		B6EFACC92CC02188003DF466 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
+		B6EFACCC2CC0266C003DF466 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		DB06DB6A2CAEEBE400CBE7F3 /* ChessLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChessLogic.swift; sourceTree = "<group>"; };
 		DB146E462CA5A10C00A145B7 /* ChessUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChessUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB146E492CA5A10C00A145B7 /* ChessUIApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChessUIApp.swift; sourceTree = "<group>"; };
-		DB146E4B2CA5A10C00A145B7 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		DB146E4B2CA5A10C00A145B7 /* PuzzleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PuzzleView.swift; sourceTree = "<group>"; };
 		DB146E4D2CA5A10E00A145B7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DB146E502CA5A10E00A145B7 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -86,11 +92,14 @@
 			children = (
 				DB146E492CA5A10C00A145B7 /* ChessUIApp.swift */,
 				B6E5D7952CB7070B00DF5139 /* HomeView.swift */,
+				B6EFACC82CC02188003DF466 /* LocationService.swift */,
+				B6EFACC92CC02188003DF466 /* MapView.swift */,
 				B6E5D7992CB7073100DF5139 /* FirebaseService.swift */,
+				B6EFACCC2CC0266C003DF466 /* RootView.swift */,
 				DB06DB6A2CAEEBE400CBE7F3 /* ChessLogic.swift */,
 				B6E5D79B2CB7073C00DF5139 /* DBError.swift */,
 				B6E5D79D2CB7074300DF5139 /* LoginView.swift */,
-				DB146E4B2CA5A10C00A145B7 /* ContentView.swift */,
+				DB146E4B2CA5A10C00A145B7 /* PuzzleView.swift */,
 				DB146E4D2CA5A10E00A145B7 /* Assets.xcassets */,
 				DB146E4F2CA5A10E00A145B7 /* Preview Content */,
 			);
@@ -194,7 +203,10 @@
 			files = (
 				B6E5D79C2CB7074000DF5139 /* DBError.swift in Sources */,
 				B6E5D79E2CB7074800DF5139 /* LoginView.swift in Sources */,
-				DB146E4C2CA5A10C00A145B7 /* ContentView.swift in Sources */,
+				DB146E4C2CA5A10C00A145B7 /* PuzzleView.swift in Sources */,
+				B6EFACCA2CC02188003DF466 /* MapView.swift in Sources */,
+				B6EFACCD2CC02670003DF466 /* RootView.swift in Sources */,
+				B6EFACCB2CC02188003DF466 /* LocationService.swift in Sources */,
 				B6E5D79A2CB7073700DF5139 /* FirebaseService.swift in Sources */,
 				B6E5D7962CB7071000DF5139 /* HomeView.swift in Sources */,
 				DB146E4A2CA5A10C00A145B7 /* ChessUIApp.swift in Sources */,
