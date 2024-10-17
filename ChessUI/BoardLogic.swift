@@ -8,43 +8,26 @@
 import Foundation
 import ChessKit
 
-class BoardLogic {
-    var boardState: Board
-    var firstClickedSquare: Square?
-    var secondClickedSquare: Square?
-    var legalMoves: [Square]
+class BoardLogic: ObservableObject {
+    var puzzle: Puzzle
+    @Published var boardState: Board
+    var clickedSquare: Square?
+    @Published var legalMoves: [Square]
     
-    init(puzzle: Puzzle) {
+    init(selectedPuzzle: [String]) {
+        puzzle = parsePuzzle(selectedPuzzle: selectedPuzzle)
         boardState = Board(position: Position(fen: puzzle.fen)!)
         legalMoves = []
     }
     
     func click(pos: String) {
-        // if first click is nil, calc legal moves
-        if firstClickedSquare == nil {
-            firstClickedSquare = Square(pos)
-            
-            if boardState.position.sideToMove == boardState.position.piece(at: firstClickedSquare!)?.color {
-                legalMoves = boardState.legalMoves(forPieceAt: firstClickedSquare!)
-            }
-        }
-        // else if first square has already been clicked, check if new click is legal
-        else {
-            secondClickedSquare = Square(pos)
-            if checkLegalMove(pos: pos) {
-                boardState.move(pieceAt: firstClickedSquare!, to: secondClickedSquare!)
-                legalMoves = []
-            }
-            // if second click wasn't in legal moves, reset and calculate legal moves for the new square
-            else {
-                firstClickedSquare = secondClickedSquare
-                secondClickedSquare = nil
-                if boardState.position.sideToMove == boardState.position.piece(at: firstClickedSquare!)?.color {
-                    legalMoves = boardState.legalMoves(forPieceAt: firstClickedSquare!)
-                }
-            }
-
-        }
+        clickedSquare = Square(pos)
+        legalMoves = boardState.legalMoves(forPieceAt: clickedSquare!)
+        print("Length of legal moves after assignment: " + String(legalMoves.count))
+        //print(legalMoves[0].notation)
+        //if checkLegalMove(pos: "d4") {
+        //    print("d4 found")
+        //}
     }
     
     func getLegalMoves() -> [Square] {
@@ -52,12 +35,15 @@ class BoardLogic {
     }
     
     func checkLegalMove(pos: String) -> Bool {
-        if legalMoves.contains(where: {$0.notation == pos}) {
-            return true
-        }
-        else {
-            return false
-        }
-        
+        //print("Length of legal moves when checking: " + String(legalMoves.count))
+        return legalMoves.contains {$0.notation == pos}
+    }
+    
+    func getPuzzle() -> Puzzle {
+        return puzzle
+    }
+    
+    func move(pos: String) -> Bool {
+        boardState.canMove(pieceAt: clickedSquare!, to: Square(pos))
     }
 }
