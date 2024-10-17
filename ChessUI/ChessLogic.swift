@@ -44,9 +44,9 @@ func parsePuzzle(selectedPuzzle: [String]) -> Puzzle {
     for str in selectedPuzzle[1].split(separator: " ") {
         let coords = str.split(separator: "")
         puzzle.moves.append(Move(start_row: Int(coords[1])!,
-                          start_col: colIndices[String(coords[0])]!,
-                          target_row: Int(coords[3])!,
-                          target_col: colIndices[String(coords[2])]!))
+                                 start_col: colIndices[String(coords[0])]!,
+                                 target_row: Int(coords[3])!,
+                                 target_col: colIndices[String(coords[2])]!))
     }
     puzzle.rating = selectedPuzzle[2]
     puzzle.fen = selectedPuzzle[0]
@@ -80,16 +80,16 @@ func parseFEN(fen: String) -> [[Piece]] {
         // checks if the row has ended
         if char == "/" {
             row += 1
-        // checks if there isn't a piece at a position
+            // checks if there isn't a piece at a position
         } else if char.isNumber {
             let n = Int(String(char))
             for _ in 0..<n! {
                 pieces[row].append(Piece())
             }
-        // checks if all pieces have been read
+            // checks if all pieces have been read
         } else if char == " " {
             break
-        // adds a piece
+            // adds a piece
         } else {
             pieces[row].append(Piece(
                 id: char,

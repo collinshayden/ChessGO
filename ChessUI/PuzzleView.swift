@@ -22,34 +22,34 @@ struct boardSquare: ButtonStyle {
 
 // View controller for the chess board
 struct board: View {
-    static let cols = ["h", "g", "f", "e", "d", "c", "b", "a"]
+    static let colLabels = ["h", "g", "f", "e", "d", "c", "b", "a"]
     @ObservedObject var logic: BoardLogic
     
-    // places row labels from perspective of black or white player
-    var labelOrientation = { (coord: Int) -> Int in
-        if (PuzzleView.white) {
-            return 9-coord
-        } else {
-            return coord
-        }
+    // orient the rows based on board orientation
+    var rows: [Int] {
+        PuzzleView.white ? Array(1...8) : Array(1...8).reversed()
     }
     
-    // flips col and row values if in black orientation
-    var pieceOrientation = { (index: Int) -> Int in
-        if (PuzzleView.white) {
-            return 7-index
-        } else {
-            return index
-        }
+    // orient the cols based on board orientation
+    var cols: [String] {
+        PuzzleView.white  ? board.colLabels.reversed() : board.colLabels
     }
+    
+    // orients row/col indices based on board orientation
+    var orientIndices = { (row: Int, col: Int) -> (Int, Int) in
+        let orientedRow = PuzzleView.white ? 7 - row : row
+        let orientedCol = PuzzleView.white ? col : 7 - col
+        return (orientedRow, orientedCol)
+    }
+    
     var body: some View {
         VStack(spacing: 0) {
             HStack(spacing: 0) {
                 // this is just white space to align the col text labels with the board
                 Text("").frame(width: PuzzleView.boardLabel)
                 // col labels
-                ForEach(1..<9) { col in
-                    Text(board.cols[labelOrientation(col)-1])
+                ForEach(0..<8) { col in
+                    Text(cols[col])
                         .frame(
                             width: PuzzleView.squareSize,
                             height: PuzzleView.squareSize,
@@ -57,21 +57,22 @@ struct board: View {
                 }
             }
             // make a square for each row, col in an 8x8 grid
-            ForEach((1..<9).reversed(), id: \.self) {row in
+            ForEach((0..<8).reversed(), id: \.self) {row in
                 HStack(spacing: 0) {
                     // row lables
-                    Text(String(labelOrientation(9-row)) + "  ")
+                    Text(String(rows[row]) + "  ")
                         .frame(
                             width: PuzzleView.boardLabel,
                             height: PuzzleView.squareSize,
                             alignment: .center)
-                    ForEach(1..<9) {col in
-                        let coord = board.cols[labelOrientation(col)-1] + String(labelOrientation(9-row))
+                    ForEach(0..<8) {col in
+                        let coord = cols[col] + String(rows[row])
                         // squares
                         Button(action: {
                             logic.click(pos: coord)
                         }) {
-                            if logic.getPieces()[pieceOrientation(row-1)][pieceOrientation(8-col)].icon != nil {
+                            let (orientedRow, orientedCol) = orientIndices(row, col)
+                            if logic.getPieces()[orientedRow][orientedCol].icon != nil {
                                 
                                 ZStack{
                                     if logic.checkLegalMove(pos: coord) {
@@ -81,7 +82,9 @@ struct board: View {
                                                 width: PuzzleView.squareSize-7,
                                                 height: PuzzleView.squareSize-7)
                                     }
-                                    logic.getPieces()[pieceOrientation(row-1)][pieceOrientation(8-col)].icon?
+                                    
+                                    
+                                    logic.getPieces()[orientedRow][orientedCol].icon?
                                         .resizable()
                                 }
                             } else if logic.checkLegalMove(pos: coord) {

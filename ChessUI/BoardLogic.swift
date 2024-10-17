@@ -45,7 +45,7 @@ class BoardLogic : ObservableObject {
                     legalMoves = boardState.legalMoves(forPieceAt: firstClickedSquare!)
                 }
             }
-
+            
         }
     }
     
