@@ -7,42 +7,53 @@
 
 import Foundation
 import SwiftUI
-import ChessKit
 
-struct piece {
+struct Piece {
     var id: Character?
     var icon: Image?
 }
 
-struct move {
+struct Move {
     var start_row: Int
     var start_col: Int
     var target_row: Int
     var target_col: Int
 }
 
-func parsePuzzle(puzzle: String) -> ([[piece]], [move], Bool) {
-    var pieces: [[piece]] = [[],[],[],[],[],[],[],[]]
-    var moves: [move] = []
-    var orientation = true
-    return (pieces, moves, orientation)
+struct Puzzle {
+    var pieces = [[Piece]]()
+    var moves = [Move]()
+    var orientation: Bool = true
+    var rating: String = "-1"
+    var fen: String = ""
 }
 
-func parseSolution(moves: String) -> [[Square]] {
-    var squareLists: [[Square]] = []
-    var splitMoves = moves.split(separator: " ")
-    
-    for move in splitMoves {
-        var source = Square(String(move.prefix(2)))
-        var destination = Square(String(move.suffix(2)))
-        squareLists.append([source, destination])
+func parsePuzzle(selectedPuzzle: [String]) -> Puzzle {
+    var puzzle = Puzzle()
+    puzzle.pieces = parseFEN(fen: selectedPuzzle[0])
+    puzzle.orientation = {selectedPuzzle[0].split(separator: " ")[1] == "b" ? true : false}()
+    puzzle.moves = [Move]()
+    let colIndices = ["a": 1,
+                      "b": 2,
+                      "c": 3,
+                      "d": 4,
+                      "e": 5,
+                      "f": 6,
+                      "g": 7,
+                      "h": 8]
+    for str in selectedPuzzle[1].split(separator: " ") {
+        let coords = str.split(separator: "")
+        puzzle.moves.append(Move(start_row: Int(coords[1])!,
+                          start_col: colIndices[String(coords[0])]!,
+                          target_row: Int(coords[3])!,
+                          target_col: colIndices[String(coords[2])]!))
     }
-        
-    return squareLists
+    puzzle.rating = selectedPuzzle[2]
+    puzzle.fen = selectedPuzzle[0]
+    return puzzle
 }
 
-
-func parseFEN(fen: String) -> [[piece]] {
+func parseFEN(fen: String) -> [[Piece]] {
     // piece id to icon dictionary
     let pieceImages: Dictionary<Character, Image> = [
         "p": Image(.chessPdt45Svg),
@@ -60,7 +71,7 @@ func parseFEN(fen: String) -> [[piece]] {
     ]
     
     // array of arrays which holds pieces [row][col]
-    var pieces: [[piece]] = [[],[],[],[],[],[],[],[]]
+    var pieces: [[Piece]] = [[],[],[],[],[],[],[],[]]
     
     // tracks location of each piece in FEN
     var row = 0
@@ -73,17 +84,18 @@ func parseFEN(fen: String) -> [[piece]] {
         } else if char.isNumber {
             let n = Int(String(char))
             for _ in 0..<n! {
-                pieces[row].append(piece())
+                pieces[row].append(Piece())
             }
         // checks if all pieces have been read
         } else if char == " " {
             break
         // adds a piece
         } else {
-            pieces[row].append(piece(
+            pieces[row].append(Piece(
                 id: char,
                 icon: pieceImages[char]))
         }
     }
+    
     return pieces
 }
