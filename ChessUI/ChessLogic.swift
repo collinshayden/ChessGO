@@ -7,17 +7,16 @@
 
 import Foundation
 import SwiftUI
+import ChessKit
 
 struct Piece {
     var id: Character?
     var icon: Image?
 }
 
-struct Move {
-    var start_row: Int
-    var start_col: Int
-    var target_row: Int
-    var target_col: Int
+struct Move : Equatable {
+    var source : Square
+    var destination : Square
 }
 
 struct Puzzle {
@@ -33,20 +32,10 @@ func parsePuzzle(selectedPuzzle: [String]) -> Puzzle {
     puzzle.pieces = parseFEN(fen: selectedPuzzle[0])
     puzzle.orientation = {selectedPuzzle[0].split(separator: " ")[1] == "b" ? true : false}()
     puzzle.moves = [Move]()
-    let colIndices = ["a": 1,
-                      "b": 2,
-                      "c": 3,
-                      "d": 4,
-                      "e": 5,
-                      "f": 6,
-                      "g": 7,
-                      "h": 8]
     for str in selectedPuzzle[1].split(separator: " ") {
-        let coords = str.split(separator: "")
-        puzzle.moves.append(Move(start_row: Int(coords[1])!,
-                                 start_col: colIndices[String(coords[0])]!,
-                                 target_row: Int(coords[3])!,
-                                 target_col: colIndices[String(coords[2])]!))
+        var source = Square(String(str.prefix(2)))
+        var destination = Square(String(str.suffix(2)))
+        puzzle.moves.append(Move(source: source, destination: destination))
     }
     puzzle.rating = selectedPuzzle[2]
     puzzle.fen = selectedPuzzle[0]

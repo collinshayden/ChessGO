@@ -104,6 +104,7 @@ struct board: View {
             }
         }
         Text("Puzzle Rating: \(logic.puzzle.rating)")
+        Text("\(logic.msg)")
     }
 }
 

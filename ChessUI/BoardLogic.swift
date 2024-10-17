@@ -14,11 +14,14 @@ class BoardLogic : ObservableObject {
     var puzzle: Puzzle
     var firstClickedSquare: Square?
     var secondClickedSquare: Square?
+    var moveNum: Int = 1
+    var msg: String = ""
     
     init(selectedPuzzle: [String]) {
         puzzle = parsePuzzle(selectedPuzzle: selectedPuzzle)
         boardState = Board(position: Position(fen: puzzle.fen)!)
         legalMoves = []
+        boardState.move(pieceAt: puzzle.moves[0].source, to: puzzle.moves[0].destination)
     }
     
     func click(pos: String) {
@@ -34,7 +37,24 @@ class BoardLogic : ObservableObject {
         else {
             secondClickedSquare = Square(pos)
             if checkLegalMove(pos: pos) {
-                boardState.move(pieceAt: firstClickedSquare!, to: secondClickedSquare!)
+                if puzzle.moves[moveNum] == Move(source: firstClickedSquare!, destination: secondClickedSquare!) {
+                    boardState.move(pieceAt: firstClickedSquare!, to: secondClickedSquare!)
+                    msg = "Correct! Keep going!"
+                    moveNum += 1
+                    if moveNum < puzzle.moves.count {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [self] in
+                            self.boardState.move(pieceAt: puzzle.moves[moveNum].source, to: puzzle.moves[moveNum].destination)
+                            moveNum += 1
+                        }
+                    }
+                    else {
+                        msg = "Puzzle Complete!"
+                    }
+                }
+                else {
+                    msg = "Not quite. Hint: \(puzzle.moves[moveNum].source.notation)"
+                }
+                
                 legalMoves = []
             }
             // if second click wasn't in legal moves, reset and calculate legal moves for the new square
