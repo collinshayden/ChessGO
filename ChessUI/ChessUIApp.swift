@@ -29,6 +29,7 @@ struct ChessUIApp: App {
         WindowGroup {
             RootView()
             .environmentObject(FireBaseService())
+            .environmentObject(LocationService())
         }
     }
 }
