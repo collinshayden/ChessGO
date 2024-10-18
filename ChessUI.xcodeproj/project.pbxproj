@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6E63E7DE2CC2C3C000183041 /* PuzzleAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E63E7DD2CC2C3C000183041 /* PuzzleAnnotationView.swift */; };
+		6E63E7E02CC2C56B00183041 /* BoardLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E63E7DF2CC2C56B00183041 /* BoardLogic.swift */; };
 		A1BDB7E82CACDD92000FEDA1 /* ChessKit in Frameworks */ = {isa = PBXBuildFile; productRef = A1BDB7E72CACDD92000FEDA1 /* ChessKit */; };
 		B60D89472CB822FA004A3C03 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B60D89462CB822FA004A3C03 /* GoogleService-Info.plist */; };
 		B6BFA55F2CB7062000F1DA5F /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = B6BFA55E2CB7062000F1DA5F /* FirebaseAuth */; };
@@ -33,6 +35,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6E63E7DD2CC2C3C000183041 /* PuzzleAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PuzzleAnnotationView.swift; sourceTree = "<group>"; };
+		6E63E7DF2CC2C56B00183041 /* BoardLogic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoardLogic.swift; sourceTree = "<group>"; };
 		B60D89462CB822FA004A3C03 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B6E5D7952CB7070B00DF5139 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		B6E5D7992CB7073100DF5139 /* FirebaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseService.swift; sourceTree = "<group>"; };
@@ -97,11 +101,13 @@
 				B6E5D7992CB7073100DF5139 /* FirebaseService.swift */,
 				B6EFACCC2CC0266C003DF466 /* RootView.swift */,
 				DB06DB6A2CAEEBE400CBE7F3 /* ChessLogic.swift */,
+				6E63E7DF2CC2C56B00183041 /* BoardLogic.swift */,
 				B6E5D79B2CB7073C00DF5139 /* DBError.swift */,
 				B6E5D79D2CB7074300DF5139 /* LoginView.swift */,
 				DB146E4B2CA5A10C00A145B7 /* PuzzleView.swift */,
 				DB146E4D2CA5A10E00A145B7 /* Assets.xcassets */,
 				DB146E4F2CA5A10E00A145B7 /* Preview Content */,
+				6E63E7DD2CC2C3C000183041 /* PuzzleAnnotationView.swift */,
 			);
 			path = ChessUI;
 			sourceTree = "<group>";
@@ -210,6 +216,8 @@
 				B6E5D79A2CB7073700DF5139 /* FirebaseService.swift in Sources */,
 				B6E5D7962CB7071000DF5139 /* HomeView.swift in Sources */,
 				DB146E4A2CA5A10C00A145B7 /* ChessUIApp.swift in Sources */,
+				6E63E7E02CC2C56B00183041 /* BoardLogic.swift in Sources */,
+				6E63E7DE2CC2C3C000183041 /* PuzzleAnnotationView.swift in Sources */,
 				DB06DB6B2CAEEBE400CBE7F3 /* ChessLogic.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -347,6 +355,7 @@
 				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -376,6 +385,7 @@
 				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

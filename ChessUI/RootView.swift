@@ -12,7 +12,7 @@ struct RootView : View {
     var body: some View {
         VStack {
             if(fireBaseService.isLoggedIn){
-                MapView()
+                MapView().environmentObject(LocationService())
             }
             else{
                 LoginView()

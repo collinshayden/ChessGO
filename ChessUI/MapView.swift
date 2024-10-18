@@ -5,7 +5,9 @@ import CoreLocation // just for the printResult()
 struct MapView: View {
   @EnvironmentObject var locationService: LocationService
   @State private var name = ""
+    // TODO: These states should be in the main view and set as binding here to update what view is shown there
     @State private var showMap = false
+    @State private var showChess = false
   
   func printResult(location: CLLocation) {
     print("location received: \(location)")
@@ -34,7 +36,10 @@ struct MapView: View {
   
   var body: some View {
     VStack(spacing: 50) {
-        if !showMap {
+        if showChess{
+            PuzzleView()
+        }
+        if (!showMap && !showChess) {
             Button("showMap", action: {
                 startRecording()
                 showMap = true
@@ -43,7 +48,10 @@ struct MapView: View {
         if showMap {
             // TODO: What do we want the user to be able to do? Pan, Pitch, Rotate, Zoom are the options
             Map (position: $locationService.currentCameraPos,
-                 interactionModes: [.rotate, .zoom]) {
+                 interactionModes: [.rotate, .zoom, .pitch]) {
+                Annotation("test", coordinate: CLLocationCoordinate2D(latitude: 37.335855, longitude: -122.0089189)) {
+                    PuzzleAnnotationView(showMap:$showMap, showChess:$showChess)
+                }
                 if let userLoc = locationService.currentLoc {
                     Annotation("user", coordinate:userLoc){
                         ZStack {
@@ -76,4 +84,5 @@ struct MapView: View {
   MapView()
     .environmentObject(LocationService())
 }
+
 
