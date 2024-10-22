@@ -7,10 +7,12 @@
 
 import Foundation
 import ChessKit
+import SwiftUI
 
 class BoardLogic : ObservableObject {
     @Published var boardState: Board
     @Published var legalMoves: [Square]
+    @Published var lastMoveCoords: [String]?
     var puzzle: Puzzle
     var firstClickedSquare: Square?
     var secondClickedSquare: Square?
@@ -21,7 +23,13 @@ class BoardLogic : ObservableObject {
         puzzle = parsePuzzle(selectedPuzzle: selectedPuzzle)
         boardState = Board(position: Position(fen: puzzle.fen)!)
         legalMoves = []
-        boardState.move(pieceAt: puzzle.moves[0].source, to: puzzle.moves[0].destination)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [self] in
+            withAnimation(.easeInOut(duration: 0.5)) {
+                _ = boardState.move(pieceAt: puzzle.moves[0].source, to: puzzle.moves[0].destination)
+                self.lastMoveCoords = [puzzle.moves[0].source.notation, puzzle.moves[0].destination.notation]
+            }
+        }
     }
     
     func click(pos: String) {
@@ -39,11 +47,15 @@ class BoardLogic : ObservableObject {
             if checkLegalMove(pos: pos) {
                 if puzzle.moves[moveNum] == Move(source: firstClickedSquare!, destination: secondClickedSquare!) {
                     boardState.move(pieceAt: firstClickedSquare!, to: secondClickedSquare!)
+                    self.lastMoveCoords = [firstClickedSquare!.notation, secondClickedSquare!.notation]
                     msg = "Correct! Keep going!"
                     moveNum += 1
                     if moveNum < puzzle.moves.count {
                         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [self] in
-                            self.boardState.move(pieceAt: puzzle.moves[moveNum].source, to: puzzle.moves[moveNum].destination)
+                            withAnimation(.easeInOut(duration: 0.5)) {
+                                self.boardState.move(pieceAt: puzzle.moves[moveNum].source, to: puzzle.moves[moveNum].destination)
+                                self.lastMoveCoords = [puzzle.moves[moveNum].source.notation, puzzle.moves[moveNum].destination.notation]
+                            }
                             moveNum += 1
                         }
                     }

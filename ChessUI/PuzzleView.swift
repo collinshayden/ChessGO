@@ -10,13 +10,13 @@ import ChessKit
 
 // Style for the squares (buttons) on the chess board
 struct boardSquare: ButtonStyle {
-    var color: Bool
+    var color: Color
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .frame(width: PuzzleView.squareSize, height: PuzzleView.squareSize)
-            .background(color ? PuzzleView.whiteSquares : PuzzleView.blackSquares)
-            .foregroundColor(color ? PuzzleView.blackSquares : PuzzleView.whiteSquares)
-            .border(color ? PuzzleView.whiteSquares : PuzzleView.blackSquares)
+            .background(color)
+            .foregroundColor(color)
+            .border(color)
     }
 }
 
@@ -67,13 +67,15 @@ struct board: View {
                             alignment: .center)
                     ForEach(0..<8) {col in
                         let coord = cols[col] + String(rows[row])
+                        let highlight = logic.lastMoveCoords?.contains(coord) ?? false
+                        let defaultSquareColor = (col+row) % 2 == 1 ? PuzzleView.whiteSquares : PuzzleView.blackSquares
+                        let squareColor = highlight ? PuzzleView.highlightColor : defaultSquareColor
                         // squares
                         Button(action: {
                             logic.click(pos: coord)
                         }) {
                             let (orientedRow, orientedCol) = orientIndices(row, col)
                             if logic.getPieces()[orientedRow][orientedCol].icon != nil {
-                                
                                 ZStack{
                                     if logic.checkLegalMove(pos: coord) {
                                         Circle()
@@ -82,7 +84,6 @@ struct board: View {
                                                 width: PuzzleView.squareSize-7,
                                                 height: PuzzleView.squareSize-7)
                                     }
-                                    
                                     
                                     logic.getPieces()[orientedRow][orientedCol].icon?
                                         .resizable()
@@ -93,12 +94,12 @@ struct board: View {
                                     .frame(width: PuzzleView.squareSize*0.3,
                                            height: PuzzleView.squareSize*0.3)
                             } else {
-                                Text(coord)
+                                Text("")
                             }
                             
                         }
                         .buttonStyle(
-                            boardSquare(color: (col+row)%2 == 1))
+                            boardSquare(color: squareColor))
                     }
                 }
             }
@@ -118,8 +119,7 @@ struct PuzzleView: View {
     // colors for board squares
     static let whiteSquares = Color.white
     static let blackSquares = Color(red: 0.55, green: 0.43, blue: 0.07)
-    static let startHighlight = Color.blue
-    static let targetHighlight = Color.red
+    static let highlightColor = Color.green.opacity(0.5)
     
     // controls size of squares
     static let boardLabel: CGFloat = 30
