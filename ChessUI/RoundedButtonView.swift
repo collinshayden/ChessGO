@@ -1,8 +1,7 @@
 //
 //  RoundedButtonView.swift
-//  VocabTest
 //
-//  Created by Jason Hibbeler on 12/3/23.
+//  Created by Evan Rohan
 //
 
 import SwiftUI

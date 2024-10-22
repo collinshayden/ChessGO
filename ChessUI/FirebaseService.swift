@@ -44,6 +44,9 @@ class FireBaseService: ObservableObject{
         try await db.collection("users").document("\(username)").setData([
                 "username" : username,
                 "elo" : 400,
+                "correct" : 0,
+                "incorrect" : 0,
+                "tactics" : []
             ])
         
         }

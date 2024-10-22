@@ -13,4 +13,6 @@ class colors {
     static let vermontGreen = Color(red: 0/255, green: 120/255, blue: 52/255)
     static let gray = Color(red: 215/255, green: 210/255, blue: 203/255)
     static let black = Color(red: 48/255, green: 48/255, blue: 48/255)
+    static let orange = Color(red: 184 / 255, green: 84 / 255, blue: 35 / 255)
+    static let yellow = Color(red: 245 / 255, green: 179 / 255, blue: 36 / 255)
 }
