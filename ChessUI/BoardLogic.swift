@@ -18,6 +18,8 @@ class BoardLogic : ObservableObject {
     var secondClickedSquare: Square?
     var moveNum: Int = 1
     var msg: String = ""
+    var puzzleComplete = false
+    
     
     init(selectedPuzzle: [String]) {
         puzzle = parsePuzzle(selectedPuzzle: selectedPuzzle)
@@ -61,6 +63,7 @@ class BoardLogic : ObservableObject {
                     }
                     else {
                         msg = "Puzzle Complete!"
+                        puzzleComplete = true
                     }
                 }
                 else {
@@ -95,6 +98,10 @@ class BoardLogic : ObservableObject {
     
     func getPieces() -> [[Piece]] {
         return parseFEN(fen: self.boardState.position.fen)
+    }
+    
+    func getHintSquares() -> [String] {
+        return !puzzleComplete ? [self.puzzle.moves[self.moveNum].source.notation, self.puzzle.moves[self.moveNum].destination.notation] : []
     }
 }
 
