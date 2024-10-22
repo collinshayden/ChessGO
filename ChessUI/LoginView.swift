@@ -11,42 +11,54 @@ import FirebaseFirestore
 struct LoginView: View {
     
     @EnvironmentObject var fireBaseService : FireBaseService
-    let textFieldColor = Color(red:0.2, green: 0.1, blue: 0.5)
-
+    
     @State private var username: String = ""
     @State private var error: String? = nil
     var body: some View {
         VStack {
-                Text("Welcome to ChessGO!")
                 
-                Image(systemName: "globe")
-                    .imageScale(.large)
-                    .foregroundStyle(.tint)
-                
-                HStack{
-                    Text("Enter a Username:")
-                    TextField("i.e. hikaru", text: $username).padding().background(Color.gray.opacity(0.2)).autocorrectionDisabled().onSubmit{
-                        Task{
-                            do{
-                                if (await fireBaseService.validUsername(username)){
-                                    try await fireBaseService.createAccount(username)
-                                }else{
-                                    error = "Username already exists."
-                                }
-                            }
-                            catch{
-                                print("Error Creating an Account")
-                            }
-                        }
-                    }
+                Image("ChessGo").resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: 400, height: 400)
+            
+                Spacer()
+            
+                VStack{
+                    TextField("Welcome! Enter a Username", text: $username).padding().background(colors.gray.opacity(0.5)).autocorrectionDisabled()
+                        .font(.custom("League Spartan", size: 22))
+                        .foregroundColor(colors.black)
+                        .cornerRadius(10)
                     
                     if let message = error { Text("\(message)").foregroundColor(.red) }
                 }
+            Spacer()
+            RoundedButtonView(buttonText: "Sign Up" , action: {
+                Task{
+                    error = await CreateAccount(fireBaseService, username)
+                }
+            }
+            )
         }
-        .padding()
+        .padding(50)
+
     }
 }
 
+
+func CreateAccount(_ fireBaseService : FireBaseService, _ username : String) async -> String?
+{
+        do{
+            if (await fireBaseService.validUsername(username)){
+                try await fireBaseService.createAccount(username)
+                return nil
+            }else{
+                return "Username already exists."
+            }
+        }
+        catch{
+            return "Error Creating an Account"
+        }
+}
 #Preview {
     LoginView()
     .environmentObject(FireBaseService())

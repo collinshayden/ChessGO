@@ -11,6 +11,9 @@
 		6E63E7E02CC2C56B00183041 /* BoardLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E63E7DF2CC2C56B00183041 /* BoardLogic.swift */; };
 		A1BDB7E82CACDD92000FEDA1 /* ChessKit in Frameworks */ = {isa = PBXBuildFile; productRef = A1BDB7E72CACDD92000FEDA1 /* ChessKit */; };
 		B60D89472CB822FA004A3C03 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B60D89462CB822FA004A3C03 /* GoogleService-Info.plist */; };
+		B626D4E32CC6C05F00C22E4E /* RoundedButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B626D4E22CC6C05F00C22E4E /* RoundedButtonView.swift */; };
+		B626D4E72CC6C62800C22E4E /* LeagueSpartan.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B626D4E62CC6C62800C22E4E /* LeagueSpartan.ttf */; };
+		B626D4EA2CC6CCC100C22E4E /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = B626D4E92CC6CCBD00C22E4E /* Colors.swift */; };
 		B6BFA55F2CB7062000F1DA5F /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = B6BFA55E2CB7062000F1DA5F /* FirebaseAuth */; };
 		B6BFA5612CB7062000F1DA5F /* FirebaseAuthCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = B6BFA5602CB7062000F1DA5F /* FirebaseAuthCombine-Community */; };
 		B6BFA5632CB7062000F1DA5F /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = B6BFA5622CB7062000F1DA5F /* FirebaseCore */; };
@@ -38,6 +41,10 @@
 		6E63E7DD2CC2C3C000183041 /* PuzzleAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PuzzleAnnotationView.swift; sourceTree = "<group>"; };
 		6E63E7DF2CC2C56B00183041 /* BoardLogic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoardLogic.swift; sourceTree = "<group>"; };
 		B60D89462CB822FA004A3C03 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		B626D4E22CC6C05F00C22E4E /* RoundedButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedButtonView.swift; sourceTree = "<group>"; };
+		B626D4E62CC6C62800C22E4E /* LeagueSpartan.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = LeagueSpartan.ttf; sourceTree = "<group>"; };
+		B626D4E82CC6C65300C22E4E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		B626D4E92CC6CCBD00C22E4E /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		B6E5D7952CB7070B00DF5139 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		B6E5D7992CB7073100DF5139 /* FirebaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseService.swift; sourceTree = "<group>"; };
 		B6E5D79B2CB7073C00DF5139 /* DBError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBError.swift; sourceTree = "<group>"; };
@@ -94,11 +101,15 @@
 		DB146E482CA5A10C00A145B7 /* ChessUI */ = {
 			isa = PBXGroup;
 			children = (
+				B626D4E82CC6C65300C22E4E /* Info.plist */,
 				DB146E492CA5A10C00A145B7 /* ChessUIApp.swift */,
 				B6E5D7952CB7070B00DF5139 /* HomeView.swift */,
 				B6EFACC82CC02188003DF466 /* LocationService.swift */,
 				B6EFACC92CC02188003DF466 /* MapView.swift */,
+				B626D4E22CC6C05F00C22E4E /* RoundedButtonView.swift */,
+				B626D4E92CC6CCBD00C22E4E /* Colors.swift */,
 				B6E5D7992CB7073100DF5139 /* FirebaseService.swift */,
+				B626D4E62CC6C62800C22E4E /* LeagueSpartan.ttf */,
 				B6EFACCC2CC0266C003DF466 /* RootView.swift */,
 				DB06DB6A2CAEEBE400CBE7F3 /* ChessLogic.swift */,
 				6E63E7DF2CC2C56B00183041 /* BoardLogic.swift */,
@@ -195,6 +206,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DB146E512CA5A10E00A145B7 /* Preview Assets.xcassets in Resources */,
+				B626D4E72CC6C62800C22E4E /* LeagueSpartan.ttf in Resources */,
 				DB146E4E2CA5A10E00A145B7 /* Assets.xcassets in Resources */,
 				B60D89472CB822FA004A3C03 /* GoogleService-Info.plist in Resources */,
 			);
@@ -210,6 +222,7 @@
 				B6E5D79C2CB7074000DF5139 /* DBError.swift in Sources */,
 				B6E5D79E2CB7074800DF5139 /* LoginView.swift in Sources */,
 				DB146E4C2CA5A10C00A145B7 /* PuzzleView.swift in Sources */,
+				B626D4EA2CC6CCC100C22E4E /* Colors.swift in Sources */,
 				B6EFACCA2CC02188003DF466 /* MapView.swift in Sources */,
 				B6EFACCD2CC02670003DF466 /* RootView.swift in Sources */,
 				B6EFACCB2CC02188003DF466 /* LocationService.swift in Sources */,
@@ -219,6 +232,7 @@
 				6E63E7E02CC2C56B00183041 /* BoardLogic.swift in Sources */,
 				6E63E7DE2CC2C3C000183041 /* PuzzleAnnotationView.swift in Sources */,
 				DB06DB6B2CAEEBE400CBE7F3 /* ChessLogic.swift in Sources */,
+				B626D4E32CC6C05F00C22E4E /* RoundedButtonView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -355,6 +369,8 @@
 				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ChessUI/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -385,6 +401,8 @@
 				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ChessUI/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
