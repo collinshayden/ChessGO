@@ -115,7 +115,7 @@ struct board: View {
                     }
                 }
                 Text("\(logic.msg)")
-                    .bold()
+                    .foregroundStyle({logic.correct ? .green : .red}())
                     .padding(10)
                 
                 // doesnt allow user to get hints after they have finished the puzzle
