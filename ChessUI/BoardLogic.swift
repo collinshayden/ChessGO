@@ -21,8 +21,8 @@ class BoardLogic : ObservableObject {
     var puzzleComplete = false
     
     
-    init(selectedPuzzle: [String]) {
-        puzzle = parsePuzzle(selectedPuzzle: selectedPuzzle)
+    init(selectedPuzzle: Puzzle) {
+        puzzle = selectedPuzzle
         boardState = Board(position: Position(fen: puzzle.fen)!)
         legalMoves = []
         
