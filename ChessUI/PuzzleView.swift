@@ -115,7 +115,7 @@ struct board: View {
                     }
                 }
                 Text("\(logic.msg)")
-                    .bold()
+                    .foregroundStyle({logic.correct ? .green : .red}())
                     .padding(10)
                 
                 // doesnt allow user to get hints after they have finished the puzzle
@@ -149,17 +149,21 @@ struct board: View {
 
 struct PuzzleView: View {
     // this controls what pieces are displayed on the board
-    @StateObject var logic: BoardLogic = BoardLogic(selectedPuzzle: ["q3k1nr/1pp1nQpp/3p4/1P2p3/4P3/B1PP1b2/B5PP/5K2 b k - 0 17","e8d7 a2e6 d7d8 f7f8","1760"])
+    @StateObject var logic: BoardLogic
+    
+    init(puzzle: Puzzle) {
+        _logic = StateObject(wrappedValue: BoardLogic(selectedPuzzle: puzzle))
+    }
     // determines which orientation the board should be displayed
     static let white = true
-    
+       
     // colors for board squares
     static let whiteSquares = Color.white
     static let blackSquares = Color(red: 0.55, green: 0.43, blue: 0.07)
     static let highlightColor = Color.green.opacity(0.5)
     static let hintColor = Color.blue.opacity(0.5)
     
-    // controls size of squares
+    
     static let boardLabel: CGFloat = 30
     static let squareSize = floor((UIScreen.main.bounds.size.width - PuzzleView.boardLabel)/8)
     
@@ -171,5 +175,5 @@ struct PuzzleView: View {
 }
 
 #Preview {
-    PuzzleView()
+    PuzzleView(puzzle: Puzzle())
 }

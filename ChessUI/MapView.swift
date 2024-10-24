@@ -40,7 +40,7 @@ struct MapView: View {
   var body: some View {
     VStack(spacing: 50) {
         if showChess{
-            PuzzleView()
+            PuzzleView(puzzle: Puzzle())
         }
         if (!showMap && !showChess) {
             Button("showMap", action: {
