@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6E47329E2CC973D000DDFB36 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6E47329D2CC973D000DDFB36 /* GoogleService-Info.plist */; };
+		6E4732A02CC9749800DDFB36 /* PuzzleStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E47329F2CC9749800DDFB36 /* PuzzleStore.swift */; };
 		6E63E7DE2CC2C3C000183041 /* PuzzleAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E63E7DD2CC2C3C000183041 /* PuzzleAnnotationView.swift */; };
 		6E63E7E02CC2C56B00183041 /* BoardLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E63E7DF2CC2C56B00183041 /* BoardLogic.swift */; };
 		A1BDB7E82CACDD92000FEDA1 /* ChessKit in Frameworks */ = {isa = PBXBuildFile; productRef = A1BDB7E72CACDD92000FEDA1 /* ChessKit */; };
@@ -31,10 +33,11 @@
 		DB146E4C2CA5A10C00A145B7 /* PuzzleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB146E4B2CA5A10C00A145B7 /* PuzzleView.swift */; };
 		DB146E4E2CA5A10E00A145B7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DB146E4D2CA5A10E00A145B7 /* Assets.xcassets */; };
 		DB146E512CA5A10E00A145B7 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DB146E502CA5A10E00A145B7 /* Preview Assets.xcassets */; };
-		DBEB42722CC95B6700E58C3A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DBEB42712CC95B6700E58C3A /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6E47329D2CC973D000DDFB36 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		6E47329F2CC9749800DDFB36 /* PuzzleStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PuzzleStore.swift; sourceTree = "<group>"; };
 		6E63E7DD2CC2C3C000183041 /* PuzzleAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PuzzleAnnotationView.swift; sourceTree = "<group>"; };
 		6E63E7DF2CC2C56B00183041 /* BoardLogic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoardLogic.swift; sourceTree = "<group>"; };
 		B6E5D7952CB7070B00DF5139 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
@@ -50,7 +53,6 @@
 		DB146E4B2CA5A10C00A145B7 /* PuzzleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PuzzleView.swift; sourceTree = "<group>"; };
 		DB146E4D2CA5A10E00A145B7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DB146E502CA5A10E00A145B7 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		DBEB42712CC95B6700E58C3A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,7 +79,7 @@
 		DB146E3D2CA5A10C00A145B7 = {
 			isa = PBXGroup;
 			children = (
-				DBEB42712CC95B6700E58C3A /* GoogleService-Info.plist */,
+				6E47329D2CC973D000DDFB36 /* GoogleService-Info.plist */,
 				DB146E482CA5A10C00A145B7 /* ChessUI */,
 				DB146E472CA5A10C00A145B7 /* Products */,
 			);
@@ -108,6 +110,7 @@
 				DB146E4D2CA5A10E00A145B7 /* Assets.xcassets */,
 				DB146E4F2CA5A10E00A145B7 /* Preview Content */,
 				6E63E7DD2CC2C3C000183041 /* PuzzleAnnotationView.swift */,
+				6E47329F2CC9749800DDFB36 /* PuzzleStore.swift */,
 			);
 			path = ChessUI;
 			sourceTree = "<group>";
@@ -196,7 +199,7 @@
 			files = (
 				DB146E512CA5A10E00A145B7 /* Preview Assets.xcassets in Resources */,
 				DB146E4E2CA5A10E00A145B7 /* Assets.xcassets in Resources */,
-				DBEB42722CC95B6700E58C3A /* GoogleService-Info.plist in Resources */,
+				6E47329E2CC973D000DDFB36 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -217,6 +220,7 @@
 				B6E5D7962CB7071000DF5139 /* HomeView.swift in Sources */,
 				DB146E4A2CA5A10C00A145B7 /* ChessUIApp.swift in Sources */,
 				6E63E7E02CC2C56B00183041 /* BoardLogic.swift in Sources */,
+				6E4732A02CC9749800DDFB36 /* PuzzleStore.swift in Sources */,
 				6E63E7DE2CC2C3C000183041 /* PuzzleAnnotationView.swift in Sources */,
 				DB06DB6B2CAEEBE400CBE7F3 /* ChessLogic.swift in Sources */,
 			);

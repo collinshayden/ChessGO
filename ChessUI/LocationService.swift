@@ -20,7 +20,7 @@ class LocationService: NSObject, CLLocationManagerDelegate, ObservableObject  {
     @Published var currentRegion: MKCoordinateRegion?
     @Published var currentCameraPos: MapCameraPosition = .region(MKCoordinateRegion(
         center: CLLocationCoordinate2D(latitude: 0, longitude: 0),
-        span: MKCoordinateSpan(latitudeDelta: 0.005, longitudeDelta: 0.005)
+        span: MKCoordinateSpan(latitudeDelta: 0.003, longitudeDelta: 0.003)
         )
     )
     
@@ -52,7 +52,7 @@ class LocationService: NSObject, CLLocationManagerDelegate, ObservableObject  {
       currentLoc = latestLocation.coordinate
       currentRegion = MKCoordinateRegion (
           center: currentLoc!,
-          span: MKCoordinateSpan(latitudeDelta: 0.005, longitudeDelta: 0.005)
+          span: MKCoordinateSpan(latitudeDelta: 0.003, longitudeDelta: 0.003)
       )
       currentCameraPos = MapCameraPosition.region(currentRegion!)
       // demo showing how to provide info asynchronously back to the main thread
