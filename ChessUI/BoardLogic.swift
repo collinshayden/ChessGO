@@ -18,6 +18,7 @@ class BoardLogic : ObservableObject {
     var secondClickedSquare: Square?
     var moveNum: Int = 1
     var msg: String = ""
+    var correct: Bool = false
     var puzzleComplete = false
     
     
@@ -51,6 +52,7 @@ class BoardLogic : ObservableObject {
                     boardState.move(pieceAt: firstClickedSquare!, to: secondClickedSquare!)
                     self.lastMoveCoords = [firstClickedSquare!.notation, secondClickedSquare!.notation]
                     msg = "Correct! Keep going!"
+                    correct = true
                     moveNum += 1
                     if moveNum < puzzle.moves.count {
                         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [self] in
@@ -68,6 +70,7 @@ class BoardLogic : ObservableObject {
                 }
                 else {
                     msg = "Not quite. Hint: \(puzzle.moves[moveNum].source.notation)"
+                    correct = false
                 }
                 
                 legalMoves = []

@@ -10,7 +10,6 @@
 		6E63E7DE2CC2C3C000183041 /* PuzzleAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E63E7DD2CC2C3C000183041 /* PuzzleAnnotationView.swift */; };
 		6E63E7E02CC2C56B00183041 /* BoardLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E63E7DF2CC2C56B00183041 /* BoardLogic.swift */; };
 		A1BDB7E82CACDD92000FEDA1 /* ChessKit in Frameworks */ = {isa = PBXBuildFile; productRef = A1BDB7E72CACDD92000FEDA1 /* ChessKit */; };
-		B60D89472CB822FA004A3C03 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B60D89462CB822FA004A3C03 /* GoogleService-Info.plist */; };
 		B6BFA55F2CB7062000F1DA5F /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = B6BFA55E2CB7062000F1DA5F /* FirebaseAuth */; };
 		B6BFA5612CB7062000F1DA5F /* FirebaseAuthCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = B6BFA5602CB7062000F1DA5F /* FirebaseAuthCombine-Community */; };
 		B6BFA5632CB7062000F1DA5F /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = B6BFA5622CB7062000F1DA5F /* FirebaseCore */; };
@@ -32,12 +31,12 @@
 		DB146E4C2CA5A10C00A145B7 /* PuzzleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB146E4B2CA5A10C00A145B7 /* PuzzleView.swift */; };
 		DB146E4E2CA5A10E00A145B7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DB146E4D2CA5A10E00A145B7 /* Assets.xcassets */; };
 		DB146E512CA5A10E00A145B7 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DB146E502CA5A10E00A145B7 /* Preview Assets.xcassets */; };
+		DBEB42722CC95B6700E58C3A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DBEB42712CC95B6700E58C3A /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		6E63E7DD2CC2C3C000183041 /* PuzzleAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PuzzleAnnotationView.swift; sourceTree = "<group>"; };
 		6E63E7DF2CC2C56B00183041 /* BoardLogic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoardLogic.swift; sourceTree = "<group>"; };
-		B60D89462CB822FA004A3C03 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B6E5D7952CB7070B00DF5139 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		B6E5D7992CB7073100DF5139 /* FirebaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseService.swift; sourceTree = "<group>"; };
 		B6E5D79B2CB7073C00DF5139 /* DBError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBError.swift; sourceTree = "<group>"; };
@@ -51,6 +50,7 @@
 		DB146E4B2CA5A10C00A145B7 /* PuzzleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PuzzleView.swift; sourceTree = "<group>"; };
 		DB146E4D2CA5A10E00A145B7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DB146E502CA5A10E00A145B7 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		DBEB42712CC95B6700E58C3A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,7 +77,7 @@
 		DB146E3D2CA5A10C00A145B7 = {
 			isa = PBXGroup;
 			children = (
-				B60D89462CB822FA004A3C03 /* GoogleService-Info.plist */,
+				DBEB42712CC95B6700E58C3A /* GoogleService-Info.plist */,
 				DB146E482CA5A10C00A145B7 /* ChessUI */,
 				DB146E472CA5A10C00A145B7 /* Products */,
 			);
@@ -196,7 +196,7 @@
 			files = (
 				DB146E512CA5A10E00A145B7 /* Preview Assets.xcassets in Resources */,
 				DB146E4E2CA5A10E00A145B7 /* Assets.xcassets in Resources */,
-				B60D89472CB822FA004A3C03 /* GoogleService-Info.plist in Resources */,
+				DBEB42722CC95B6700E58C3A /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
