@@ -3,12 +3,13 @@ import MapKit
 import CoreLocation // just for the printResult()
 
 struct MapView: View {
-  @EnvironmentObject var locationService: LocationService
-  @State private var name = ""
+    @EnvironmentObject var locationService: LocationService
+    @State private var name = ""
     // TODO: These states should be in the main view and set as binding here to update what view is shown there
     @State private var showMap = true
     @State private var showChess = false
     @State private var showHome = false
+    @State private var gradientOffset = UIScreen.main.bounds.height
   
   func printResult(location: CLLocation) {
     print("location received: \(location)")
@@ -41,8 +42,6 @@ struct MapView: View {
         }
       if showHome {
         HomeButtonView()
-        .transition(.move(edge: .bottom))
-        .animation(.easeInOut)
                   }
         if showMap {
             ZStack{
@@ -71,19 +70,37 @@ struct MapView: View {
                 }.ignoresSafeArea()
                 
                 VStack{
-                    Color.white
-                    .frame(height: 125)
+                    ZStack{
+                        colors.darkGreen
+                        .frame(height: 110)
+                        HStack
+                        {
+                            Text("Username").foregroundColor(.white)
+                            Spacer()
+                            Text("Elo").foregroundColor(.white)
+                        }.padding(40)
+                    }
                     
                     Spacer()
-                    DefaultButtonView(buttonImage: "house", action: {
-                        withAnimation(.easeInOut) {
-                            showHome = true
-                            showMap = false
-                            }
-                    }).padding(20)
+                    Button(action : {withAnimation(.easeInOut) {
+                        showHome = true
+                        showMap = false
+                        }}) {
+                        Image(systemName: "house")
+                        .font(.custom("League Spartan", size: 32))
+                        .frame(width: 75, height: 75) .foregroundColor(.white) .background(LinearGradient(
+                            gradient: Gradient(colors: [
+                                colors.vermontGreen,
+                                colors.lightGreen
+                            ]),
+                            startPoint: .top,
+                            endPoint: .bottom
+                        ))
+                        .cornerRadius(100)
+                    }.padding(50)
                 }.ignoresSafeArea()
                
-            }.onAppear {
+            }.onAppear{
                 if showMap {
                     startRecording()
                 }

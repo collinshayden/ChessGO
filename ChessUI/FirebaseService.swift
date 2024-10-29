@@ -46,7 +46,7 @@ class FireBaseService: ObservableObject{
                 "elo" : 400,
                 "correct" : 0,
                 "incorrect" : 0,
-                "tactics" : []
+                "themes" : []
             ])
         
         }
@@ -88,28 +88,43 @@ class FireBaseService: ObservableObject{
             return false
         }
     }
-    //maybe add throw
-    //hayden needs to do tasks
+    //
     func getPuzzle(_ min : Int , _ max : Int) async -> [String]{
         let puzzles = db.collection("puzzles")
             var choices : [[String]] = []
             do{
                 let querySnapshot = try await puzzles.whereField("rating", isGreaterThan: min).whereField("rating", isLessThan: max).getDocuments()
                 
-                for puzzles in querySnapshot.documents{
+                for puzzle in querySnapshot.documents{
                     //return FEN, rating, moves instead
-                    let dict = puzzles.data()
-                    let rating = (dict["Rating"]) as! Int
+                    let dict = puzzle.data()
+                    let Rating = (dict["Rating"]) as! String
                     let FEN = dict["FEN"] as! String
                     let Moves = dict["Moves"] as! String
+                    let Themes = dict["Themes"] as! String
                     
-                    choices.append([String(rating),FEN,Moves])
+                    choices.append([Rating,FEN,Moves,Themes])
                 }
             }catch{
                 print("error getting puzzles")
             }
             
             return choices[0]
+    }
+    //returns the user information from firebase in order, username, elo, correct, incorrect, themes
+    func getUser() async -> (String,Int,Int,Int,[String]){
+        let users = db.collection("users")
+        var result : (String,Int,Int,Int,[String]) = ("",0,0,0,[])
+        do{
+            let querySnapshot = try await users.whereField("username", isEqualTo: UserDefaults.standard.value(forKey: "username")!).getDocuments()
+            let dict = querySnapshot.documents[0].data()
+            
+           result = ((dict["Username"]) as! String,(dict["elo"]) as! Int,(dict["correct"]) as! Int,(dict["incorrect"]) as! Int,(dict["themes"]) as! [String])
+            
+        }catch{
+            print("error getting userInfo")
+        }
+        return result
     }
 
 }
