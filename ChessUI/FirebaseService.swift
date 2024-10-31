@@ -93,39 +93,68 @@ class FireBaseService: ObservableObject{
         let puzzles = db.collection("puzzles")
             var choices : [[String]] = []
             do{
-                let querySnapshot = try await puzzles.whereField("rating", isGreaterThan: min).whereField("rating", isLessThan: max).getDocuments()
+                
+                let querySnapshot = try await puzzles.whereField("Rating", isGreaterThanOrEqualTo: min).whereField("Rating", isLessThanOrEqualTo: max).getDocuments()
                 
                 for puzzle in querySnapshot.documents{
                     //return FEN, rating, moves instead
                     let dict = puzzle.data()
-                    let Rating = (dict["Rating"]) as! String
+                    let Rating = (dict["Rating"]) as! Int
                     let FEN = dict["FEN"] as! String
                     let Moves = dict["Moves"] as! String
                     let Themes = dict["Themes"] as! String
                     
-                    choices.append([Rating,FEN,Moves,Themes])
+                    choices.append([String(Rating),FEN,Moves,Themes])
                 }
             }catch{
-                print("error getting puzzles")
+                print("Error executing query: \(error)")
             }
-            
-            return choices[0]
+        if let firstChoice = choices.first{
+            print(firstChoice)
+            return firstChoice
+        }else{
+            print("fail")
+            return []
+        }
     }
     //returns the user information from firebase in order, username, elo, correct, incorrect, themes
     func getUser() async -> (String,Int,Int,Int,[String]){
         let users = db.collection("users")
         var result : (String,Int,Int,Int,[String]) = ("",0,0,0,[])
+        //print("User: \(UserDefaults.standard.value(forKey: "username")!)")
         do{
             let querySnapshot = try await users.whereField("username", isEqualTo: UserDefaults.standard.value(forKey: "username")!).getDocuments()
-            let dict = querySnapshot.documents[0].data()
-            
-           result = ((dict["Username"]) as! String,(dict["elo"]) as! Int,(dict["correct"]) as! Int,(dict["incorrect"]) as! Int,(dict["themes"]) as! [String])
-            
+            if let document = querySnapshot.documents.first {
+                let dict = document.data()
+                result = ((dict["username"]) as! String,(dict["elo"]) as! Int,(dict["correct"]) as! Int,(dict["incorrect"]) as! Int,(dict["themes"]) as! [String])
+            }
         }catch{
             print("error getting userInfo")
         }
         return result
     }
-
+    
+    func testFetchPuzzles() async {
+        // Check if user is logged in
+            guard let user = Auth.auth().currentUser else {
+                print("User is not logged in.")
+                return
+            }
+            let puzzlesCollection = db.collection("puzzles") // Ensure you reference the puzzles collection
+            do {
+                let querySnapshot = try await puzzlesCollection.limit(to: 10).getDocuments()
+                print("Number of documents retrieved: \(querySnapshot.documents.count)")
+                
+                if querySnapshot.documents.isEmpty {
+                    print("No documents found in the collection.")
+                } else {
+                    for puzzle in querySnapshot.documents {
+                        print("Puzzle ID: \(puzzle.documentID), Data: \(puzzle.data())")
+                    }
+                }
+            } catch {
+                print("Error fetching puzzles: \(error.localizedDescription)")
+            }
+        }
 }
 

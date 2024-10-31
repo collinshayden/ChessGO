@@ -8,22 +8,21 @@ import SwiftUI
 
 class UserService : ObservableObject {
     
-    var firebase = FireBaseService()
     @Published var username = ""
     @Published var elo = 0
     @Published var correct = 0
     @Published var incorrect = 0
-    @Published var tactics = []
+    @Published var themes = []
     
-    init()
-    {
-        Task{
-            let info = await firebase.getUser()
-            self.username = info.0
-            self.elo = info.1
-            self.correct = info.2
-            self.incorrect = info.3
-            self.tactics = info.4
-        }
+    init(){ }
+    
+    func updateUser(username : String, elo : Int, correct : Int, incorrect : Int, themes : [String]){
+        
+        self.username = username
+        self.elo = elo
+        self.correct = correct
+        self.incorrect = incorrect
+        self.themes = themes
+        
     }
 }

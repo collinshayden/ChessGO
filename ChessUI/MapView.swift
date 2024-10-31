@@ -4,6 +4,8 @@ import CoreLocation // just for the printResult()
 
 struct MapView: View {
     @EnvironmentObject var locationService: LocationService
+    @EnvironmentObject var userService: UserService
+    @EnvironmentObject var fireBaseService : FireBaseService
     @State private var name = ""
     // TODO: These states should be in the main view and set as binding here to update what view is shown there
     @State private var showMap = true
@@ -75,9 +77,9 @@ struct MapView: View {
                         .frame(height: 110)
                         HStack
                         {
-                            Text("Username").foregroundColor(.white)
+                            Text(" \(userService.username)").foregroundColor(.white).font(.custom("League Spartan", size: 32))
                             Spacer()
-                            Text("Elo").foregroundColor(.white)
+                            Text(" \(userService.elo)").foregroundColor(.white).font(.custom("League Spartan", size: 32))
                         }.padding(40)
                     }
                     
@@ -101,6 +103,10 @@ struct MapView: View {
                 }.ignoresSafeArea()
                
             }.onAppear{
+                Task{
+                    let info = await fireBaseService.getUser()
+                    userService.updateUser(username: info.0, elo: info.1, correct: info.2, incorrect: info.3, themes: info.4)
+                }
                 if showMap {
                     startRecording()
                 }
@@ -116,6 +122,8 @@ struct MapView: View {
 #Preview {
   MapView()
     .environmentObject(LocationService())
+    .environmentObject(UserService())
+    .environmentObject(FireBaseService())
 }
 
 
