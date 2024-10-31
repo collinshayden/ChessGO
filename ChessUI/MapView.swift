@@ -6,12 +6,14 @@ struct MapView: View {
     @EnvironmentObject var locationService: LocationService
     @EnvironmentObject var userService: UserService
     @EnvironmentObject var fireBaseService : FireBaseService
+    @EnvironmentObject var puzzleStore: PuzzleStore
     @State private var name = ""
     // TODO: These states should be in the main view and set as binding here to update what view is shown there
     @State private var showMap = true
     @State private var showChess = false
     @State private var showHome = false
     @State private var gradientOffset = UIScreen.main.bounds.height
+    @State private var curPuzzle = Puzzle()
   
   func printResult(location: CLLocation) {
     print("location received: \(location)")
@@ -40,7 +42,7 @@ struct MapView: View {
   
   var body: some View {
         if showChess{
-            PuzzleView(puzzle: Puzzle())
+            PuzzleView(puzzle: curPuzzle)
         }
       if showHome {
         HomeButtonView()
@@ -50,26 +52,42 @@ struct MapView: View {
                 // TODO: What do we want the user to be able to do? Pan, Pitch, Rotate, Zoom are the options
                 Map (position: $locationService.currentCameraPos,
                      interactionModes: [.rotate, .zoom, .pitch]) {
-                    Annotation("test", coordinate: CLLocationCoordinate2D(latitude: 37.335855, longitude: -122.0089189)) {
-                        PuzzleAnnotationView(showMap:$showMap, showChess:$showChess)
-                    }
                     if let userLoc = locationService.currentLoc {
-                        Annotation("user", coordinate:userLoc){
-                            ZStack {
-                                Circle()
-                                    .fill(.gray)
-                                    .opacity(0.3)
-                                    .frame(width: 44, height: 44)
-                                Circle()
-                                    .fill(.white)
-                                    .frame(width: 20, height: 20)
-                                Circle()
-                                    .fill(.blue)
-                                    .frame(width: 16, height: 16)
-                            }
-                        }
-                    }
-                }.ignoresSafeArea()
+                                        ForEach(0..<puzzleStore.allPuzzles.count, id: \.self) { puzzle in
+                                            if(!puzzleStore.allPuzzles[puzzle].isSet){
+                                                Annotation("Puzzle " + String(puzzleStore.allPuzzles[puzzle].val), coordinate:CLLocationCoordinate2D(latitude: userLoc.latitude + puzzleStore.allPuzzles[puzzle].locOffset.latitude, longitude: userLoc.longitude + puzzleStore.allPuzzles[puzzle].locOffset.longitude)) {
+                                                    PuzzleAnnotationView(showMap:$showMap, showChess:$showChess, val: $puzzleStore.allPuzzles[puzzle].val,
+                                                                         puzzle: $puzzleStore.allPuzzles[puzzle], curPuzzle: $curPuzzle)
+                                                }
+                                                // TODO: Establish that the puzzle should not move now
+                    //                            puzzleStore.allPuzzles[puzzle].finalLoc = CLLocationCoordinate2D(latitude: userLoc.latitude + puzzleStore.allPuzzles[puzzle].locOffset.latitude, longitude: userLoc.longitude + puzzleStore.allPuzzles[puzzle].locOffset.longitude)
+                    //                            puzzleStore.allPuzzles[puzzle].isSet = true
+                                            } 
+                                            else{
+                                                // This puzzle has already been placed relative to user location and shouldn't be moved
+                                                Annotation("Puzzle " + String(puzzleStore.allPuzzles[puzzle].val), coordinate:CLLocationCoordinate2D(latitude: userLoc.latitude + puzzleStore.allPuzzles[puzzle].locOffset.latitude, longitude: userLoc.longitude + puzzleStore.allPuzzles[puzzle].locOffset.longitude)) {
+                                                    PuzzleAnnotationView(showMap:$showMap, showChess:$showChess, val: $puzzleStore.allPuzzles[puzzle].val,
+                                                                         puzzle: $puzzleStore.allPuzzles[puzzle], curPuzzle: $curPuzzle)
+                                                }
+                                            }
+                                            
+                                        }
+                                        Annotation("user", coordinate:userLoc){
+                                            ZStack {
+                                                Circle()
+                                                    .fill(.gray)
+                                                    .opacity(0.3)
+                                                    .frame(width: 44, height: 44)
+                                                Circle()
+                                                    .fill(.white)
+                                                    .frame(width: 20, height: 20)
+                                                Circle()
+                                                    .fill(.blue)
+                                                    .frame(width: 16, height: 16)
+                                            }
+                                        }
+                                    }
+                                }.ignoresSafeArea()
                 
                 VStack{
                     ZStack{
@@ -124,6 +142,7 @@ struct MapView: View {
     .environmentObject(LocationService())
     .environmentObject(UserService())
     .environmentObject(FireBaseService())
+    .environmentObject(PuzzleStore())
 }
 
 

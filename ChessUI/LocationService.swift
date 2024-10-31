@@ -50,6 +50,7 @@ class LocationService: NSObject, CLLocationManagerDelegate, ObservableObject  {
     // TODO: This is where the location is being actively updated when startLocationUpdates is called
       // TODO: It still looks a little clunky when the update resets the camera position, so once we figure out what type of interaction we allow the user to do, we can adjust this.
       currentLoc = latestLocation.coordinate
+      print("updating location")
       currentRegion = MKCoordinateRegion (
           center: currentLoc!,
           span: MKCoordinateSpan(latitudeDelta: 0.003, longitudeDelta: 0.003)
@@ -90,3 +91,4 @@ class LocationService: NSObject, CLLocationManagerDelegate, ObservableObject  {
     }
   }
 }
+

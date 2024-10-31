@@ -14,8 +14,8 @@ struct PuzzleAnnotationView:View {
     @Binding var showChess: Bool
     @Binding var val: Int
     @Binding var puzzle: PuzzleInfo
+    @Binding var curPuzzle: Puzzle
     @EnvironmentObject var locationService: LocationService
-//    @Binding var id: String
     // TODO: Should have a Puzzle object associated with each of these
     // TODO: Should have a location assigned from some other function that generates random
     // TODO: locations for the puzzles (possibly with banned areas like over water/buildings)
@@ -25,18 +25,18 @@ struct PuzzleAnnotationView:View {
 //            ZStack(){
                 Button(action: {
                     if let userLoc = locationService.currentLoc {
-                        if abs(puzzle.loc.latitude - userLoc.latitude) <= 0.001 {
+                        // This will actually use the location once we decide how far away puzzles can be accessed from
+//                        if abs(puzzle.loc.latitude - userLoc.latitude) <= 0.1 {
                             print("close!")
                             print("transfering to puzzle xyz...")
+                        // Set the state of the puzzle in the MapView to pass to the PuzzleView
+                        curPuzzle = puzzle.puzzle
                             showMap.toggle()
                             showChess = true
-                        } else {
-                            print("too far!")
-                        }
-                        
-//                        print("transfering to puzzle xyz...")
-//                        showMap.toggle()
-//                        showChess = true
+                        // This will handle if a puzzle is too far away
+//                        } else {
+//                            print("too far!")
+//                        }
                     }
                 }) {
                     Text("").font(.system(size: 20))
@@ -51,8 +51,6 @@ struct PuzzleAnnotationView:View {
                 
                 
             }
-//            Text("Puzzle \(val)")
-//        }
     }
     
     
@@ -63,4 +61,5 @@ struct PuzzleAnnotationView:View {
 //    PuzzleAnnotationView(showMap:true)
 //
 //}
+
 
