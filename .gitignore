@@ -15,3 +15,5 @@ Pods/
 # Ignore user-specific files
 *.xcuserstate
 *.xcuserdatad/
+
+.DS_Store
