@@ -9,6 +9,7 @@ import SwiftUI
 
 struct RootView : View {
     @EnvironmentObject var fireBaseService : FireBaseService
+    @EnvironmentObject var userService : UserService
     var body: some View {
         VStack {
             if(fireBaseService.isLoggedIn){
@@ -33,5 +34,5 @@ struct RootView : View {
 #Preview{
     RootView().environmentObject(FireBaseService())
         .environmentObject(LocationService())
-        .environmentObject(PuzzleStore())
+        .environmentObject(UserService())
 }
