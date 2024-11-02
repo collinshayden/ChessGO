@@ -37,6 +37,7 @@ class PuzzleStore: ObservableObject {
     }
     
     func generateSimulatedPuzzles() {
+        print("generating")
         for i in 0...20{
             let long = (Double(Int.random(in: -2...2)) / 1000)
             let lat = (Double(Int.random(in: -2...2)) / 1000)

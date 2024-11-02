@@ -50,10 +50,16 @@ struct PuzzleAnnotationView:View {
                 .contentShape(Circle())
                 
                 
+        }.onAppear(){
+            // Once the puzzles appear on the map once relative to the user's location we want them to stay static
+            if(!puzzle.isSet) {
+                if let userLoc = locationService.currentLoc {
+                    puzzle.isSet = true
+                    puzzle.finalLoc = CLLocationCoordinate2D(latitude: userLoc.latitude + puzzle.locOffset.latitude, longitude: userLoc.longitude + puzzle.locOffset.longitude)
+                }
             }
+        }
     }
-    
-    
 }
 
 

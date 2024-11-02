@@ -31,6 +31,7 @@ struct ChessUIApp: App {
             .environmentObject(FireBaseService())
             .environmentObject(LocationService())
             .environmentObject(UserService())
+            .environmentObject(PuzzleStore())
         }
     }
 }

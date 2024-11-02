@@ -10,11 +10,12 @@ import SwiftUI
 struct RootView : View {
     @EnvironmentObject var fireBaseService : FireBaseService
     @EnvironmentObject var userService : UserService
+    @EnvironmentObject var locationService : LocationService
     var body: some View {
         VStack {
             if(fireBaseService.isLoggedIn){
-                MapView().environmentObject(LocationService()).environmentObject(FireBaseService())
-                    .environmentObject(PuzzleStore())
+                MapView()
+//                    .environmentObject(PuzzleStore())
             }
             else{
                 LoginView()
