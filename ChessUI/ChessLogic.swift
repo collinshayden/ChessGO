@@ -10,7 +10,7 @@ import SwiftUI
 import ChessKit
 
 struct Piece {
-    var id: Character?
+    var id: Character? = "0"
     var icon: Image?
 }
 
