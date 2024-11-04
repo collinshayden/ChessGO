@@ -132,16 +132,28 @@ struct board: View {
             .blur(radius: {logic.puzzleComplete ? 16 : 0}())
             .animation(.easeInOut, value: logic.puzzleComplete)
             
-            if logic.puzzleComplete {
-                VStack {
-                    Text("Good Job! ")
-                    Text("Old rating: \(logic.puzzle.rating)")
-                    Text("New rating: placeholder")
-                }
-                .padding(10)
-                .font(.system(size: 36))
-                .bold()
-            }
+            let duration = 1.0
+            let currentRating = Int(logic.puzzle.rating)!
+            let newRating = currentRating+100
+            var interpolatedRating = currentRating
+            
+            
+            //            if logic.puzzleComplete {
+            //                VStack {
+            //                    Text("Good Job! ")
+            //                    Timer.scheduledTimer(withTimeInterval: duration / Double(100), repeats: true) { timer in
+            //                        if currentRating >= newRating {
+            //                            timer.invalidate()
+            //                        } else {
+            //                            interpolatedRating += 1
+            //                            Text("New rating: \(interpolatedRating)")
+            //                        }
+            //                    }
+            //                }
+            //                .padding(10)
+            //                .font(.system(size: 36))
+            //                .bold()
+            //            }
         }
     }
 }
@@ -150,13 +162,15 @@ struct board: View {
 struct PuzzleView: View {
     // this controls what pieces are displayed on the board
     @StateObject var logic: BoardLogic
+    @State private var interpolatedRating: Int = 0
+    @State private var timer: Timer?
     
     init(puzzle: Puzzle) {
         _logic = StateObject(wrappedValue: BoardLogic(selectedPuzzle: puzzle))
     }
     // determines which orientation the board should be displayed
     static let white = true
-       
+    
     // colors for board squares
     static let whiteSquares = Color.white
     static let blackSquares = Color(red: 0.55, green: 0.43, blue: 0.07)
@@ -169,9 +183,41 @@ struct PuzzleView: View {
     
     
     var body: some View {
-        Text("ChessGo").font(.largeTitle).padding(40)
-        board(logic: logic)
+        VStack {
+            Text("ChessGo").font(.largeTitle).padding(40)
+            board(logic: logic)
+            if logic.puzzleComplete {
+                Text("Good Job!")
+                    .font(.title)
+                    .padding(.top, 20)
+                
+                Text("New Rating: \(interpolatedRating)")
+                    .font(.system(size: 36))
+                    .bold()
+                    .onAppear {
+                        startRatingAnimation()
+                    }
+                    .onDisappear {
+                        timer?.invalidate() // Stop the timer if view disappears
+                    }
+            }
+        }
     }
+    private func startRatingAnimation() {
+            let currentRating = Int(logic.puzzle.rating)!
+            let targetRating = currentRating + 100
+            let steps = abs(targetRating - currentRating)
+            let duration = 1.0 // seconds
+            interpolatedRating = currentRating
+
+            timer = Timer.scheduledTimer(withTimeInterval: duration / Double(steps), repeats: true) { timer in
+                if interpolatedRating >= targetRating {
+                    timer.invalidate()
+                } else {
+                    interpolatedRating += 1
+                }
+            }
+        }
 }
 
 #Preview {
