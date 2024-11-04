@@ -15,7 +15,6 @@ struct RootView : View {
         VStack {
             if(fireBaseService.isLoggedIn){
                 MapView()
-//                    .environmentObject(PuzzleStore())
             }
             else{
                 LoginView()
@@ -36,4 +35,5 @@ struct RootView : View {
     RootView().environmentObject(FireBaseService())
         .environmentObject(LocationService())
         .environmentObject(UserService())
+        .environmentObject(PuzzleStore())
 }
