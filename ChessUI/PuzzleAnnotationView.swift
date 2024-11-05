@@ -20,23 +20,29 @@ struct PuzzleAnnotationView:View {
     // TODO: Should have a location assigned from some other function that generates random
     // TODO: locations for the puzzles (possibly with banned areas like over water/buildings)
     
+    func getDistance(from: CLLocationCoordinate2D, to: CLLocationCoordinate2D) -> Double {
+        let xDistance = to.longitude - from.longitude
+        let yDistance = to.latitude - from.latitude
+        let totalDistance = (pow(xDistance, 2) + pow(yDistance, 2)).squareRoot()
+        return totalDistance
+    }
+    
     var body:some View {
         VStack(){
 //            ZStack(){
                 Button(action: {
                     if let userLoc = locationService.currentLoc {
-                        // This will actually use the location once we decide how far away puzzles can be accessed from
-//                        if abs(puzzle.loc.latitude - userLoc.latitude) <= 0.1 {
-                            print("close!")
+                        if getDistance(from: userLoc, to:puzzle.finalLoc) <= startDistanceFromUser * 2 {
+                            print("close enough!")
                             print("transfering to puzzle xyz...")
-                        // Set the state of the puzzle in the MapView to pass to the PuzzleView
-                        curPuzzle = puzzle.puzzle
+                            // Set the state of the puzzle in the MapView to pass to the PuzzleView
+                            curPuzzle = puzzle.puzzle
                             showMap.toggle()
                             showChess = true
                         // This will handle if a puzzle is too far away
-//                        } else {
-//                            print("too far!")
-//                        }
+                        } else {
+                            print("too far!")
+                        }
                     }
                 }) {
                     Text("").font(.system(size: 20))

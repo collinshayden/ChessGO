@@ -8,6 +8,10 @@
 import Foundation
 import MapKit
 
+let startDistanceFromUser = 0.0005
+let numPuzzlesOnMap = 100
+let longLatScalar = 10000.0
+
 class PuzzleInfo {
     let id: UUID = UUID()
     var val: Int
@@ -38,10 +42,15 @@ class PuzzleStore: ObservableObject {
     
     func generateSimulatedPuzzles() {
         print("generating")
-        for i in 0...20{
-            let long = (Double(Int.random(in: -2...2)) / 1000)
-            let lat = (Double(Int.random(in: -2...2)) / 1000)
-//            let testPuzzle = PuzzleInfo(val:i,loc:CLLocationCoordinate2D(latitude: lat, longitude: long), puzzle:Puzzle())
+        for i in 0...numPuzzlesOnMap{
+            var long = (Double(Int.random(in: -20...20)) / longLatScalar)
+            var lat = (Double(Int.random(in: -20...20)) / longLatScalar)
+            
+            while (pow(long, 2) + pow(lat, 2)).squareRoot() <= startDistanceFromUser{
+                long = (Double(Int.random(in: -20...20)) / longLatScalar)
+                lat = (Double(Int.random(in: -20...20)) / longLatScalar)
+            }
+            
             let testPuzzle = PuzzleInfo(val:i,locOffset:CLLocationCoordinate2D(latitude: lat, longitude: long))
 
             allPuzzles.append(testPuzzle)
