@@ -42,7 +42,8 @@ struct MapView: View {
   
   var body: some View {
         if showChess{
-            PuzzleView(puzzle: curPuzzle)
+            PuzzleView(puzzle: curPuzzle, showChess: $showChess, showMap: $showMap)
+                
         }
       if showHome {
         HomeButtonView()
@@ -128,6 +129,7 @@ struct MapView: View {
             .onDisappear {
                 stopRecording()
             }
+            .transition(.asymmetric(insertion: .move(edge: .bottom), removal: .opacity))
         }
     }
     

@@ -31,8 +31,10 @@ struct PuzzleAnnotationView:View {
                             print("transfering to puzzle xyz...")
                         // Set the state of the puzzle in the MapView to pass to the PuzzleView
                         curPuzzle = puzzle.puzzle
+                        withAnimation {
                             showMap.toggle()
                             showChess = true
+                        }
                         // This will handle if a puzzle is too far away
 //                        } else {
 //                            print("too far!")

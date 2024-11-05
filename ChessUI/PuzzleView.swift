@@ -158,12 +158,17 @@ struct board: View {
 struct PuzzleView: View {
     // this controls what pieces are displayed on the board
     @StateObject var logic: BoardLogic
-    init(puzzle: Puzzle) {
+    @Binding var showChess: Bool
+    @Binding var showMap: Bool
+    
+    init(puzzle: Puzzle, showChess: Binding<Bool>, showMap: Binding<Bool>) {
         _logic = StateObject(wrappedValue: BoardLogic(selectedPuzzle: puzzle))
+        _showChess = showChess
+        _showMap = showMap
     }
     // determines which orientation the board should be displayed
     static let white = true
-       
+    
     // colors for board squares
     static let whiteSquares = Color.white
     static let blackSquares = Color(red: 0.55, green: 0.43, blue: 0.07)
@@ -179,9 +184,25 @@ struct PuzzleView: View {
     var body: some View {
         Text("ChessGo").font(.largeTitle).padding(40)
         board(logic: logic)
+        Button(action: {
+            withAnimation {
+                showChess.toggle()
+                showMap.toggle()
+            }
+        }) {
+            Text("Back to Map")
+                .font(.headline)
+                .padding()
+                .background(Color.blue)
+                .foregroundColor(.white)
+                .cornerRadius(10)
+        }
+        .padding()
     }
 }
 
 #Preview {
-    PuzzleView(puzzle: Puzzle())
+    @State var showChess = true
+    @State var showMap = true
+    return PuzzleView(puzzle: Puzzle(), showChess: $showChess, showMap: $showMap)
 }
