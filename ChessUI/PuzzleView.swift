@@ -25,6 +25,7 @@ struct board: View {
     static let colLabels = ["h", "g", "f", "e", "d", "c", "b", "a"]
     @ObservedObject var logic: BoardLogic
     @State var showHints: Int = 0
+    @State private var displayElo: Float = 0
     
     
     // orient the rows based on board orientation
@@ -74,19 +75,23 @@ struct board: View {
                         ForEach(0..<8) {col in
                             let coord = cols[col] + String(rows[row])
                             let highlight = logic.lastMoveCoords?.contains(coord) ?? false
+                            let badMove = logic.secondClickedSquare == Square(coord) && logic.puzzleFailed
+                            let selected = logic.firstClickedSquare == Square(coord)
                             // hint=0 doesn't highlight, =1 shows source, =2 shows source/destination
                             let hint = self.showHints == 0 ? false : self.showHints == 1 ? logic.getHintSquares()[0] == coord : logic.getHintSquares().contains(coord)
                             // light/dark square assignment
                             let defaultSquareColor = (col+row) % 2 == 1 ? PuzzleView.whiteSquares : PuzzleView.blackSquares
                             // set square background color
-                            let squareColor = hint ? PuzzleView.hintColor : highlight ? PuzzleView.highlightColor : defaultSquareColor
+                            let squareColor = badMove ? PuzzleView.badColor : selected ? PuzzleView.selectedColor : hint ? PuzzleView.hintColor : highlight ? PuzzleView.highlightColor : defaultSquareColor
                             // square button actions
                             Button(action: {
-                                logic.click(pos: coord)
+                                if !logic.puzzleFailed {
+                                    logic.click(pos: coord)
+                                }
                                 self.showHints = 0
                             }) {
                                 let (orientedRow, orientedCol) = orientIndices(row, col)
-                                if logic.getPieces()[orientedRow][orientedCol].icon != nil {
+                                if logic.getPieces()[orientedRow][orientedCol].id != "0" {
                                     ZStack{
                                         if logic.checkLegalMove(pos: coord) {
                                             Circle()
@@ -115,7 +120,6 @@ struct board: View {
                     }
                 }
                 Text("\(logic.msg)")
-                    .foregroundStyle({logic.correct ? .green : .red}())
                     .padding(10)
                 
                 // doesnt allow user to get hints after they have finished the puzzle
@@ -128,19 +132,23 @@ struct board: View {
                     .foregroundColor(.white)
                     .cornerRadius(10)
                 }
+                
+                // doesnt allow user to get hints after they have finished the puzzle
+                if logic.puzzleFailed {
+                    Button("Retry") {
+                        logic.reset()
+                    }
+                    .padding(10)
+                    .background(Color.red)
+                    .foregroundColor(.white)
+                    .cornerRadius(10)
+                }
             }
-            .blur(radius: {logic.puzzleComplete ? 16 : 0}())
+            .blur(radius: {logic.puzzleComplete ? 18 : 0}())
             .animation(.easeInOut, value: logic.puzzleComplete)
             
             if logic.puzzleComplete {
-                VStack {
-                    Text("Good Job! ")
-                    Text("Old rating: \(logic.puzzle.rating)")
-                    Text("New rating: placeholder")
-                }
-                .padding(10)
-                .font(.system(size: 36))
-                .bold()
+                GameOverView(startElo: 1700, k: 100, board: logic)
             }
         }
     }
@@ -150,7 +158,6 @@ struct board: View {
 struct PuzzleView: View {
     // this controls what pieces are displayed on the board
     @StateObject var logic: BoardLogic
-    
     init(puzzle: Puzzle) {
         _logic = StateObject(wrappedValue: BoardLogic(selectedPuzzle: puzzle))
     }
@@ -161,8 +168,9 @@ struct PuzzleView: View {
     static let whiteSquares = Color.white
     static let blackSquares = Color(red: 0.55, green: 0.43, blue: 0.07)
     static let highlightColor = Color.green.opacity(0.5)
+    static let selectedColor = Color.yellow.opacity(0.7)
     static let hintColor = Color.blue.opacity(0.5)
-    
+    static let badColor = Color.red.opacity(0.75)
     
     static let boardLabel: CGFloat = 30
     static let squareSize = floor((UIScreen.main.bounds.size.width - PuzzleView.boardLabel)/8)

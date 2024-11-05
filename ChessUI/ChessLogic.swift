@@ -10,7 +10,7 @@ import SwiftUI
 import ChessKit
 
 struct Piece {
-    var id: Character?
+    var id: Character? = "0"
     var icon: Image?
 }
 
@@ -87,17 +87,4 @@ func parseFEN(fen: String) -> [[Piece]] {
     }
     
     return pieces
-}
-
-// based on https://pypi.org/project/elo/
-// https://en.wikipedia.org/wiki/Elo_rating_system
-// takes user rating and puzzle rating,
-func updateElo(userRating: Float, userKFactor: Float, puzzleRating: Int, correct: Bool) -> Float {
-    let score: Float = correct ? 1.0 : 0.0
-    let beta = 200
-    let f_factor = Float(2 * beta)
-    let diff = Float(puzzleRating) - Float(userRating)
-    let expectedScore = 1 / (1 + pow(10, diff / f_factor))
-    let adjust = score - expectedScore
-    return userRating + userKFactor * adjust
 }
