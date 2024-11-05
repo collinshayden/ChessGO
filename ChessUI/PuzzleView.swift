@@ -80,9 +80,9 @@ struct board: View {
                             // hint=0 doesn't highlight, =1 shows source, =2 shows source/destination
                             let hint = self.showHints == 0 ? false : self.showHints == 1 ? logic.getHintSquares()[0] == coord : logic.getHintSquares().contains(coord)
                             // light/dark square assignment
-                            let defaultSquareColor = (col+row) % 2 == 1 ? PuzzleView.whiteSquares : PuzzleView.blackSquares
+                            let defaultSquareColor = (col+row) % 2 == 1 ? colors.whiteSquares : colors.blackSquares
                             // set square background color
-                            let squareColor = badMove ? PuzzleView.badColor : selected ? PuzzleView.selectedColor : hint ? PuzzleView.hintColor : highlight ? PuzzleView.highlightColor : defaultSquareColor
+                            let squareColor = badMove ? colors.badColor : selected ? colors.selectedColor : hint ? colors.hintColor : highlight ? colors.highlightColor : defaultSquareColor
                             // square button actions
                             Button(action: {
                                 if !logic.puzzleFailed {
@@ -158,6 +158,7 @@ struct board: View {
 struct PuzzleView: View {
     // this controls what pieces are displayed on the board
     @StateObject var logic: BoardLogic
+    // showChess and showMap bindings are to toggle between views via button
     @Binding var showChess: Bool
     @Binding var showMap: Bool
     
@@ -168,15 +169,6 @@ struct PuzzleView: View {
     }
     // determines which orientation the board should be displayed
     static let white = true
-    
-    // colors for board squares
-    static let whiteSquares = Color.white
-    static let blackSquares = Color(red: 0.55, green: 0.43, blue: 0.07)
-    static let highlightColor = Color.green.opacity(0.5)
-    static let selectedColor = Color.yellow.opacity(0.7)
-    static let hintColor = Color.blue.opacity(0.5)
-    static let badColor = Color.red.opacity(0.75)
-    
     static let boardLabel: CGFloat = 30
     static let squareSize = floor((UIScreen.main.bounds.size.width - PuzzleView.boardLabel)/8)
     
