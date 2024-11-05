@@ -144,11 +144,11 @@ struct board: View {
                     .cornerRadius(10)
                 }
             }
-            .blur(radius: {logic.puzzleComplete ? 16 : 0}())
+            .blur(radius: {logic.puzzleComplete ? 18 : 0}())
             .animation(.easeInOut, value: logic.puzzleComplete)
             
             if logic.puzzleComplete {
-                
+                GameOverView(startElo: 1700, k: 100, board: logic)
             }
         }
     }

@@ -9,25 +9,43 @@ import SwiftUI
 
 struct GameOverView: View {
     @ObservedObject var logic: BoardLogic
-    @ObservedObject private var eloAnimator: AnimateElo
-    let k: Float
-    let startElo: Float
-    let newElo: Float
+    @State var displayElo: Double
+    @State var finished = false
+    let k: Double
+    let startElo: Double
+    let newElo: Double
     
-    init (startElo: Float, k: Float, board: BoardLogic) {
+    init (startElo: Double, k: Double, board: BoardLogic) {
         self.startElo = startElo
         self.k = k
         newElo = updateElo(userRating: startElo, userKFactor: k, puzzleRating: Int(board.puzzle.rating) ?? 0, correct: true)
-        eloAnimator = AnimateElo(startingElo: startElo, endElo: newElo)
+        displayElo = startElo
         logic = board
     }
     
     var body: some View {
         VStack(spacing: 6) {
-            if eloAnimator.finished {
+            if finished {
                 Text("Good Job! ")
                 Text("Old rating: \(Int(round(startElo)))")
-                Text("New rating: \(Int(round(newElo)))")
+            }
+            
+            HStack {
+                Text("New rating:")
+                Text("\(Int(round(displayElo)))")
+                    .numericAnimation(number: displayElo)
+                    .onAppear {
+                        withAnimation(.sinAnimation(duration: 6)) {
+                            displayElo = newElo
+                        } completion: {
+                            withAnimation(.easeInOut(duration: 2)) {
+                                finished = true
+                            }
+                        }
+                    }
+            }
+            
+            if finished {
                 Button ("Run that back") {
                     logic.reset()
                 }
@@ -35,13 +53,6 @@ struct GameOverView: View {
                 .background(Color.blue)
                 .foregroundColor(.white)
                 .cornerRadius(10)
-            } else {
-                Text("Elo \(Int(round(eloAnimator.displayElo)))")
-                Button ("Show new elo") {
-                    withAnimation(.sinAnimation) {
-                        eloAnimator.displayElo = eloAnimator.endElo
-                    }
-                }
             }
         }
         .padding(10)
@@ -50,20 +61,58 @@ struct GameOverView: View {
     }
 }
 
+// https://levelup.gitconnected.com/swiftui-animate-number-changes-3-ways-a9b3730f8ad8
+extension View {
+    func numericAnimation(number: Double) -> some View {
+        modifier(AnimatableNumberModifier(animatableData: number))
+    }
+}
+
+struct AnimatableNumberModifier: Animatable, ViewModifier {
+    var animatableData: Double {
+        willSet {
+            increasing = newValue > animatableData
+        }
+    }
+    var increasing: Bool = false
+    
+    func body(content: Content) -> some View {
+        if increasing {
+            Text("\(Int(floor(animatableData)))")
+        } else {
+            Text("\(Int(ceil(animatableData)))")
+        }
+    }
+}
+
+// https://swiftui-lab.com/swiftui-animations-part6/
 struct SinAnimation: CustomAnimation {
     let duration: TimeInterval
-    
     func animate<V>(value: V, time: TimeInterval, context: inout AnimationContext<V>) -> V? where V : VectorArithmetic {
         guard time < duration else {return nil}
-        print("t/d: \(time/duration) func: \(modifiedSin(x: time/duration)) expected val: \(Int(round(1700 + (1760-1700)*modifiedSin(x: time/duration))))")
-        return value.interpolated(towards: value, amount: modifiedSin(x: time/duration))
+        return value.scaled(by: modifiedSin(x: time/duration))
     }
 }
 
 extension Animation {
-    static func sinAnimation(duration: TimeInterval, target: Double) -> Animation { Animation(SinAnimation(duration: duration)) }
-                                                                       
-    static var sinAnimation: Animation { Animation(SinAnimation(duration: 10)) }
+    static func sinAnimation(duration: TimeInterval) -> Animation { Animation(SinAnimation(duration: duration))}
+}
+
+func modifiedSin(x: Double) -> Double {
+    return (sin(Double.pi * (x-0.5))+1)/2
+}
+
+// based on https://pypi.org/project/elo/
+// https://en.wikipedia.org/wiki/Elo_rating_system
+// takes user rating and puzzle rating,
+func updateElo(userRating: Double, userKFactor: Double, puzzleRating: Int, correct: Bool) -> Double {
+    let score: Double = correct ? 1.0 : 0.0
+    let beta = 200
+    let f_factor = Double(2 * beta)
+    let diff = Double(puzzleRating) - Double(userRating)
+    let expectedScore = 1 / (1 + pow(10, diff / f_factor))
+    let adjust = score - expectedScore
+    return userRating + userKFactor * adjust
 }
 
 #Preview {
