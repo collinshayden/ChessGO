@@ -88,34 +88,28 @@ class FireBaseService: ObservableObject{
             return false
         }
     }
-    //
+    
     func getPuzzle(_ min : Int , _ max : Int) async -> [String]{
+        let randomPuzzleRating = Int.random(in: min...max-15)
         let puzzles = db.collection("puzzles")
-            var choices : [[String]] = []
+            var selectedPuzzle : [String] = []
             do{
                 
-                let querySnapshot = try await puzzles.whereField("Rating", isGreaterThanOrEqualTo: min).whereField("Rating", isLessThanOrEqualTo: max).getDocuments()
+                let querySnapshot = try await puzzles.whereField("Rating", isGreaterThanOrEqualTo: randomPuzzleRating).whereField("Rating", isLessThanOrEqualTo: max).limit(to: 1).getDocuments()
                 
                 for puzzle in querySnapshot.documents{
-                    //return FEN, rating, moves instead
                     let dict = puzzle.data()
                     let Rating = (dict["Rating"]) as! Int
                     let FEN = dict["FEN"] as! String
                     let Moves = dict["Moves"] as! String
                     let Themes = dict["Themes"] as! String
                     
-                    choices.append([String(Rating),FEN,Moves,Themes])
+                    selectedPuzzle = [String(Rating), FEN, Moves, Themes]
                 }
             }catch{
                 print("Error executing query: \(error)")
             }
-        if let firstChoice = choices.first{
-            print(firstChoice)
-            return firstChoice
-        }else{
-            print("fail")
-            return []
-        }
+        return selectedPuzzle
     }
     //returns the user information from firebase in order, username, elo, correct, incorrect, themes
     func getUser() async -> (String,Int,Int,Int,[String]){

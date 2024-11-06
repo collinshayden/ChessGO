@@ -25,16 +25,17 @@ class Puzzle: ObservableObject {
     @Published var orientation: Bool
     @Published var rating: String
     @Published var fen: String
-    @Published var themes: String
+    @Published var themes: [String]
     
-    init(selectedPuzzle: [String] = ["q3k1nr/1pp1nQpp/3p4/1P2p3/4P3/B1PP1b2/B5PP/5K2 b k - 0 17","e8d7 a2e6 d7d8 f7f8","1760"]) {
-        self.pieces = parseFEN(fen: selectedPuzzle[0])
-        self.orientation = {selectedPuzzle[0].split(separator: " ")[1] == "b" ? true : false}()
+    // selected puzzle format: ["rating", "FEN", "solution", "themes"]
+    init(selectedPuzzle: [String] = ["1760","q3k1nr/1pp1nQpp/3p4/1P2p3/4P3/B1PP1b2/B5PP/5K2 b k - 0 17","e8d7 a2e6 d7d8 f7f8", "placeholder themes"]) {
+        self.pieces = parseFEN(fen: selectedPuzzle[1])
+        self.orientation = {selectedPuzzle[1].split(separator: " ")[1] == "b" ? true : false}()
         self.moves = [Move]()
-        self.rating = selectedPuzzle[2]
-        self.fen = selectedPuzzle[0]
-        self.themes = ""
-        for str in selectedPuzzle[1].split(separator: " ") {
+        self.rating = selectedPuzzle[0]
+        self.fen = selectedPuzzle[1]
+        self.themes = selectedPuzzle[3].split(separator: " ").map{String($0)}
+        for str in selectedPuzzle[2].split(separator: " ") {
             let source = Square(String(str.prefix(2)))
             let destination = Square(String(str.suffix(2)))
             self.moves.append(Move(source: source, destination: destination))

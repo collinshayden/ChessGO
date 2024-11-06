@@ -30,18 +30,18 @@ struct board: View {
     
     // orient the rows based on board orientation
     var rows: [Int] {
-        PuzzleView.white ? Array(1...8) : Array(1...8).reversed()
+        logic.puzzle.orientation ? Array(1...8) : Array(1...8).reversed()
     }
     
     // orient the cols based on board orientation
     var cols: [String] {
-        PuzzleView.white  ? board.colLabels.reversed() : board.colLabels
+        logic.puzzle.orientation  ? board.colLabels.reversed() : board.colLabels
     }
     
     // orients row/col indices based on board orientation
-    var orientIndices = { (row: Int, col: Int) -> (Int, Int) in
-        let orientedRow = PuzzleView.white ? 7 - row : row
-        let orientedCol = PuzzleView.white ? col : 7 - col
+    func orientIndices(_ row: Int, _ col: Int) -> (Int, Int) {
+        let orientedRow = logic.puzzle.orientation ? 7 - row : row
+        let orientedCol = logic.puzzle.orientation ? col : 7 - col
         return (orientedRow, orientedCol)
     }
     
@@ -161,6 +161,7 @@ struct PuzzleView: View {
     // showChess and showMap bindings are to toggle between views via button
     @Binding var showChess: Bool
     @Binding var showMap: Bool
+//    static var white: Bool = true
     
     init(puzzle: Puzzle, showChess: Binding<Bool>, showMap: Binding<Bool>) {
         _logic = StateObject(wrappedValue: BoardLogic(selectedPuzzle: puzzle))
@@ -168,28 +169,30 @@ struct PuzzleView: View {
         _showMap = showMap
     }
     // determines which orientation the board should be displayed
-    static let white = true
     static let boardLabel: CGFloat = 30
     static let squareSize = floor((UIScreen.main.bounds.size.width - PuzzleView.boardLabel)/8)
     
     
     var body: some View {
-        Text("ChessGo").font(.largeTitle).padding(40)
-        board(logic: logic)
-        Button(action: {
-            withAnimation {
-                showChess.toggle()
-                showMap.toggle()
+        VStack {
+            Text("ChessGo").font(.largeTitle).padding(40)
+            board(logic: logic)
+            Button(action: {
+                withAnimation {
+                    showChess.toggle()
+                    showMap.toggle()
+                }
+            }) {
+                Text("Back to Map")
+                    .font(.headline)
+                    .padding()
+                    .background(Color.blue)
+                    .foregroundColor(.white)
+                    .cornerRadius(10)
             }
-        }) {
-            Text("Back to Map")
-                .font(.headline)
-                .padding()
-                .background(Color.blue)
-                .foregroundColor(.white)
-                .cornerRadius(10)
+            .padding()
+            
         }
-        .padding()
     }
 }
 
