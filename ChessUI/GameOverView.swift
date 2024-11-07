@@ -25,13 +25,13 @@ struct GameOverView: View {
                 .opacity({finished ? 1 : 0}())
             Text("Old rating: \(user.elo)")
                 .opacity({finished ? 1 : 0}())
-
+            
             HStack {
                 Text("New rating:")
                 Text("\(displayElo)")
                     .numericAnimation(number: Double(displayElo))
                     .onAppear {
-                        withAnimation(.sinAnimation(duration: log10(newElo-startElo)+3)) {
+                        withAnimation(.sinAnimation(duration: log10(Double(newElo-user.elo))+3)) {
                             displayElo = newElo
                         } completion: {
                             withAnimation(.sinAnimation(duration: 2)) {
@@ -49,7 +49,7 @@ struct GameOverView: View {
             .foregroundColor(.white)
             .cornerRadius(10)
             .opacity({finished ? 1 : 0}())
-
+            
         }
         .padding(10)
         .font(.system(size: 36))
