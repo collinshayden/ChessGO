@@ -15,4 +15,12 @@ class colors {
     static let black = Color(red: 48/255, green: 48/255, blue: 48/255)
     static let orange = Color(red: 184 / 255, green: 84 / 255, blue: 35 / 255)
     static let yellow = Color(red: 245 / 255, green: 179 / 255, blue: 36 / 255)
+    
+    // PuzzleView colors
+    static let whiteSquares = Color.white
+    static let blackSquares = Color(red: 0.55, green: 0.43, blue: 0.07)
+    static let highlightColor = Color.green.opacity(0.5)
+    static let selectedColor = Color.yellow.opacity(0.7)
+    static let hintColor = Color.blue.opacity(0.5)
+    static let badColor = Color.red.opacity(0.75)
 }

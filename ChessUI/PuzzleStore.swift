@@ -82,8 +82,8 @@ class PuzzleStore: ObservableObject {
     func callPuzzles() async {
         for puzzle in allPuzzles {
 //             Should be able to generate specific puzzles for each annotation once we get firebase working with my id
-//            await puzzle.puzzle = Puzzle(selectedPuzzle:firebaseSerivce.getPuzzle(800,2000))
-            puzzle.puzzle = Puzzle()
+            await puzzle.puzzle = Puzzle(selectedPuzzle:firebaseSerivce.getPuzzle(1300,2000))
+//            puzzle.puzzle = Puzzle()
         }
     }
 }
