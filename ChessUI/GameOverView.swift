@@ -25,11 +25,11 @@ struct GameOverView: View {
     
     var body: some View {
         VStack(spacing: 6) {
-            if finished {
-                Text("Good Job! ")
-                Text("Old rating: \(Int(round(startElo)))")
-            }
-            
+            Text("Good Job! ")
+                .opacity({finished ? 1 : 0}())
+            Text("Old rating: \(Int(round(startElo)))")
+                .opacity({finished ? 1 : 0}())
+
             HStack {
                 Text("New rating:")
                 Text("\(Int(round(displayElo)))")
@@ -45,15 +45,15 @@ struct GameOverView: View {
                     }
             }
             
-            if finished {
-                Button ("Run that back") {
-                    logic.reset()
-                }
-                .padding(10)
-                .background(Color.blue)
-                .foregroundColor(.white)
-                .cornerRadius(10)
+            Button ("Run that back") {
+                logic.reset()
             }
+            .padding(10)
+            .background(Color.blue)
+            .foregroundColor(.white)
+            .cornerRadius(10)
+            .opacity({finished ? 1 : 0}())
+
         }
         .padding(10)
         .font(.system(size: 36))
@@ -116,5 +116,5 @@ func updateElo(userRating: Double, userKFactor: Double, puzzleRating: Int, corre
 }
 
 #Preview {
-    GameOverView(startElo: 1700, k: 100, board: BoardLogic(selectedPuzzle: Puzzle(selectedPuzzle: ["q3k1nr/1pp1nQpp/3p4/1P2p3/4P3/B1PP1b2/B5PP/5K2 b k - 0 17","e8d7 a2e6 d7d8 f7f8","1760"])))
+    GameOverView(startElo: 1700, k: 100, board: BoardLogic(selectedPuzzle: Puzzle(selectedPuzzle: ["1760", "q3k1nr/1pp1nQpp/3p4/1P2p3/4P3/B1PP1b2/B5PP/5K2 b k - 0 17","e8d7 a2e6 d7d8 f7f8", "placeholder_themes"])))
 }
