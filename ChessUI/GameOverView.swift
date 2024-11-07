@@ -21,35 +21,35 @@ struct GameOverView: View {
     
     var body: some View {
         VStack(spacing: 6) {
-            if finished {
-                Text("Good Job! ")
-                Text("Old rating: \(user.elo)")
-            }
-            
+            Text("Good Job! ")
+                .opacity({finished ? 1 : 0}())
+            Text("Old rating: \(user.elo)")
+                .opacity({finished ? 1 : 0}())
+
             HStack {
                 Text("New rating:")
                 Text("\(displayElo)")
                     .numericAnimation(number: Double(displayElo))
                     .onAppear {
-                        withAnimation(.sinAnimation(duration: 6)) {
+                        withAnimation(.sinAnimation(duration: log10(newElo-startElo)+3)) {
                             displayElo = newElo
                         } completion: {
-                            withAnimation(.easeInOut(duration: 2)) {
+                            withAnimation(.sinAnimation(duration: 2)) {
                                 finished = true
                             }
                         }
                     }
             }
             
-            if finished {
-                Button ("Run that back") {
-                    logic.reset()
-                }
-                .padding(10)
-                .background(Color.blue)
-                .foregroundColor(.white)
-                .cornerRadius(10)
+            Button ("Run that back") {
+                logic.reset()
             }
+            .padding(10)
+            .background(Color.blue)
+            .foregroundColor(.white)
+            .cornerRadius(10)
+            .opacity({finished ? 1 : 0}())
+
         }
         .padding(10)
         .font(.system(size: 36))
