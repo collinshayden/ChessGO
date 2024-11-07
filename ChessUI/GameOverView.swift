@@ -35,10 +35,10 @@ struct GameOverView: View {
                 Text("\(Int(round(displayElo)))")
                     .numericAnimation(number: displayElo)
                     .onAppear {
-                        withAnimation(.sinAnimation(duration: 6)) {
+                        withAnimation(.sinAnimation(duration: log10(newElo-startElo)+3)) {
                             displayElo = newElo
                         } completion: {
-                            withAnimation(.easeInOut(duration: 2)) {
+                            withAnimation(.sinAnimation(duration: 2)) {
                                 finished = true
                             }
                         }
