@@ -10,6 +10,7 @@
 		6E4732A02CC9749800DDFB36 /* PuzzleStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E47329F2CC9749800DDFB36 /* PuzzleStore.swift */; };
 		6E63E7DE2CC2C3C000183041 /* PuzzleAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E63E7DD2CC2C3C000183041 /* PuzzleAnnotationView.swift */; };
 		6E63E7E02CC2C56B00183041 /* BoardLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E63E7DF2CC2C56B00183041 /* BoardLogic.swift */; };
+		A1B5FF202CDD395A0019BBD6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A1B5FF1F2CDD395A0019BBD6 /* GoogleService-Info.plist */; };
 		A1BDB7E82CACDD92000FEDA1 /* ChessKit in Frameworks */ = {isa = PBXBuildFile; productRef = A1BDB7E72CACDD92000FEDA1 /* ChessKit */; };
 		B626D4E32CC6C05F00C22E4E /* RoundedButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B626D4E22CC6C05F00C22E4E /* RoundedButtonView.swift */; };
 		B626D4E72CC6C62800C22E4E /* LeagueSpartan.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B626D4E62CC6C62800C22E4E /* LeagueSpartan.ttf */; };
@@ -40,7 +41,6 @@
 		DB146E4C2CA5A10C00A145B7 /* PuzzleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB146E4B2CA5A10C00A145B7 /* PuzzleView.swift */; };
 		DB146E4E2CA5A10E00A145B7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DB146E4D2CA5A10E00A145B7 /* Assets.xcassets */; };
 		DB146E512CA5A10E00A145B7 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DB146E502CA5A10E00A145B7 /* Preview Assets.xcassets */; };
-		DB20B23E2CD879F900D4FEC2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DB20B23D2CD879F900D4FEC2 /* GoogleService-Info.plist */; };
 		DBD9DA0D2CD938A10003648B /* GameOverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD9DA0C2CD938A10003648B /* GameOverView.swift */; };
 /* End PBXBuildFile section */
 
@@ -48,6 +48,7 @@
 		6E47329F2CC9749800DDFB36 /* PuzzleStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PuzzleStore.swift; sourceTree = "<group>"; };
 		6E63E7DD2CC2C3C000183041 /* PuzzleAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PuzzleAnnotationView.swift; sourceTree = "<group>"; };
 		6E63E7DF2CC2C56B00183041 /* BoardLogic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoardLogic.swift; sourceTree = "<group>"; };
+		A1B5FF1F2CDD395A0019BBD6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B626D4E22CC6C05F00C22E4E /* RoundedButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedButtonView.swift; sourceTree = "<group>"; };
 		B626D4E62CC6C62800C22E4E /* LeagueSpartan.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = LeagueSpartan.ttf; sourceTree = "<group>"; };
 		B626D4E82CC6C65300C22E4E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -70,7 +71,6 @@
 		DB146E4B2CA5A10C00A145B7 /* PuzzleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PuzzleView.swift; sourceTree = "<group>"; };
 		DB146E4D2CA5A10E00A145B7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DB146E502CA5A10E00A145B7 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		DB20B23D2CD879F900D4FEC2 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		DBD9DA0C2CD938A10003648B /* GameOverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOverView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -95,10 +95,66 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A1AC308F2CDD430900FA1C54 /* Puzzle */ = {
+			isa = PBXGroup;
+			children = (
+				DB146E4B2CA5A10C00A145B7 /* PuzzleView.swift */,
+				6E63E7DF2CC2C56B00183041 /* BoardLogic.swift */,
+				DBD9DA0C2CD938A10003648B /* GameOverView.swift */,
+				DB06DB6A2CAEEBE400CBE7F3 /* ChessLogic.swift */,
+			);
+			path = Puzzle;
+			sourceTree = "<group>";
+		};
+		A1AC30902CDD431200FA1C54 /* Map */ = {
+			isa = PBXGroup;
+			children = (
+				B6EFACC92CC02188003DF466 /* MapView.swift */,
+				B6EFACC82CC02188003DF466 /* LocationService.swift */,
+				6E63E7DD2CC2C3C000183041 /* PuzzleAnnotationView.swift */,
+				6E47329F2CC9749800DDFB36 /* PuzzleStore.swift */,
+			);
+			path = Map;
+			sourceTree = "<group>";
+		};
+		A1AC30912CDD431600FA1C54 /* Firebase */ = {
+			isa = PBXGroup;
+			children = (
+				B6E5D7992CB7073100DF5139 /* FirebaseService.swift */,
+				B6E5D79D2CB7074300DF5139 /* LoginView.swift */,
+				B62DED3B2CD3CB5900E9C987 /* UserService.swift */,
+				B6E5D79B2CB7073C00DF5139 /* DBError.swift */,
+			);
+			path = Firebase;
+			sourceTree = "<group>";
+		};
+		A1AC30922CDD431D00FA1C54 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				DB146E492CA5A10C00A145B7 /* ChessUIApp.swift */,
+				B6EFACCC2CC0266C003DF466 /* RootView.swift */,
+				B626D4E92CC6CCBD00C22E4E /* Colors.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		A1AC30932CDD43C600FA1C54 /* SubViews */ = {
+			isa = PBXGroup;
+			children = (
+				B62DED382CD3CB5900E9C987 /* ProfileView.swift */,
+				B62DED392CD3CB5900E9C987 /* SettingsView.swift */,
+				B62DED3A2CD3CB5900E9C987 /* StatsView.swift */,
+				B626D4EF2CC731F800C22E4E /* DefaultButtonView.swift */,
+				B626D4ED2CC72D3100C22E4E /* HomeButtonView.swift */,
+				B626D4E22CC6C05F00C22E4E /* RoundedButtonView.swift */,
+			);
+			path = SubViews;
+			sourceTree = "<group>";
+		};
 		DB146E3D2CA5A10C00A145B7 = {
 			isa = PBXGroup;
 			children = (
-				DB20B23D2CD879F900D4FEC2 /* GoogleService-Info.plist */,
+				A1B5FF1F2CDD395A0019BBD6 /* GoogleService-Info.plist */,
 				DB146E482CA5A10C00A145B7 /* ChessUI */,
 				DB146E472CA5A10C00A145B7 /* Products */,
 			);
@@ -115,31 +171,15 @@
 		DB146E482CA5A10C00A145B7 /* ChessUI */ = {
 			isa = PBXGroup;
 			children = (
+				A1AC30922CDD431D00FA1C54 /* App */,
+				A1AC30912CDD431600FA1C54 /* Firebase */,
+				A1AC30902CDD431200FA1C54 /* Map */,
+				A1AC308F2CDD430900FA1C54 /* Puzzle */,
+				A1AC30932CDD43C600FA1C54 /* SubViews */,
 				B626D4E82CC6C65300C22E4E /* Info.plist */,
-				DB146E492CA5A10C00A145B7 /* ChessUIApp.swift */,
-				B6EFACC82CC02188003DF466 /* LocationService.swift */,
-				B6EFACC92CC02188003DF466 /* MapView.swift */,
-				B626D4E22CC6C05F00C22E4E /* RoundedButtonView.swift */,
-				B626D4E92CC6CCBD00C22E4E /* Colors.swift */,
-				B626D4ED2CC72D3100C22E4E /* HomeButtonView.swift */,
-				B626D4EF2CC731F800C22E4E /* DefaultButtonView.swift */,
-				B6E5D7992CB7073100DF5139 /* FirebaseService.swift */,
 				B626D4E62CC6C62800C22E4E /* LeagueSpartan.ttf */,
-				B6EFACCC2CC0266C003DF466 /* RootView.swift */,
-				DB06DB6A2CAEEBE400CBE7F3 /* ChessLogic.swift */,
-				6E63E7DF2CC2C56B00183041 /* BoardLogic.swift */,
-				B62DED382CD3CB5900E9C987 /* ProfileView.swift */,
-				B62DED392CD3CB5900E9C987 /* SettingsView.swift */,
-				B62DED3A2CD3CB5900E9C987 /* StatsView.swift */,
-				B62DED3B2CD3CB5900E9C987 /* UserService.swift */,
-				B6E5D79B2CB7073C00DF5139 /* DBError.swift */,
-				B6E5D79D2CB7074300DF5139 /* LoginView.swift */,
-				DB146E4B2CA5A10C00A145B7 /* PuzzleView.swift */,
-				DBD9DA0C2CD938A10003648B /* GameOverView.swift */,
 				DB146E4D2CA5A10E00A145B7 /* Assets.xcassets */,
 				DB146E4F2CA5A10E00A145B7 /* Preview Content */,
-				6E63E7DD2CC2C3C000183041 /* PuzzleAnnotationView.swift */,
-				6E47329F2CC9749800DDFB36 /* PuzzleStore.swift */,
 			);
 			path = ChessUI;
 			sourceTree = "<group>";
@@ -227,8 +267,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				DB146E512CA5A10E00A145B7 /* Preview Assets.xcassets in Resources */,
+				A1B5FF202CDD395A0019BBD6 /* GoogleService-Info.plist in Resources */,
 				B626D4E72CC6C62800C22E4E /* LeagueSpartan.ttf in Resources */,
-				DB20B23E2CD879F900D4FEC2 /* GoogleService-Info.plist in Resources */,
 				DB146E4E2CA5A10E00A145B7 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
