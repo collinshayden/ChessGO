@@ -16,7 +16,6 @@ struct PuzzleAnnotationView:View {
     @Binding var puzzle: PuzzleInfo
     @Binding var curPuzzle: Puzzle
     @EnvironmentObject var locationService: LocationService
-    // TODO: Should have a Puzzle object associated with each of these
     // TODO: Should have a location assigned from some other function that generates random
     // TODO: locations for the puzzles (possibly with banned areas like over water/buildings)
     
