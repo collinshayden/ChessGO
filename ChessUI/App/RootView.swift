@@ -11,6 +11,7 @@ struct RootView : View {
     @EnvironmentObject var fireBaseService : FireBaseService
     @EnvironmentObject var userService : UserService
     @EnvironmentObject var locationService : LocationService
+    @EnvironmentObject var puzzleStore: PuzzleStore
     var body: some View {
         VStack {
             if(fireBaseService.isLoggedIn){
@@ -35,5 +36,4 @@ struct RootView : View {
     RootView().environmentObject(FireBaseService())
         .environmentObject(LocationService())
         .environmentObject(UserService())
-        .environmentObject(PuzzleStore())
 }

@@ -80,10 +80,11 @@ class PuzzleStore: ObservableObject {
     // Firebase call to retrieve puzzles that fall within the appropriate elo range of the user
     // These puzzles are then each assigned to a unique puzzle object on the map
     func callPuzzles() async {
+        let user = await firebaseSerivce.getUser()
+        let userElo = user.1
+        let difficulty = 100 // TODO add difficulty to user data
         for puzzle in allPuzzles {
-//             Should be able to generate specific puzzles for each annotation once we get firebase working with my id
-            await puzzle.puzzle = Puzzle(selectedPuzzle:firebaseSerivce.getPuzzle(800,1000))
-//            puzzle.puzzle = Puzzle()
+            await puzzle.puzzle = Puzzle(selectedPuzzle:firebaseSerivce.getPuzzle(userElo - difficulty, userElo + difficulty))
         }
     }
 }
