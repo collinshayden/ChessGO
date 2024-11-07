@@ -55,7 +55,9 @@ class LocationService: NSObject, CLLocationManagerDelegate, ObservableObject  {
           center: currentLoc!,
           span: MKCoordinateSpan(latitudeDelta: 0.003, longitudeDelta: 0.003)
       )
-      currentCameraPos = MapCameraPosition.region(currentRegion!)
+//      currentCameraPos = MapCameraPosition.region(currentRegion!)
+      // This is used to set the pitch at an angle to start so that buildings appear 3D
+      currentCameraPos = MapCameraPosition.camera(MapCamera(centerCoordinate: currentRegion!.center, distance:1000, pitch: 40.0))
       // demo showing how to provide info asynchronously back to the main thread
       if let postResult = postResult {
         DispatchQueue.main.async {
