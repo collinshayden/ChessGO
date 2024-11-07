@@ -41,10 +41,9 @@ struct MapView: View {
   }
   
   var body: some View {
-        if showChess{
-            PuzzleView(puzzle: curPuzzle, showChess: $showChess, showMap: $showMap)
-                
-        }
+      if showChess{
+          PuzzleView(puzzle: curPuzzle, showChess: $showChess, showMap: $showMap).environmentObject(userService).environmentObject(fireBaseService)
+      }
       if showHome {
         HomeButtonView()
                   }
@@ -132,7 +131,6 @@ struct MapView: View {
             .transition(.asymmetric(insertion: .move(edge: .bottom), removal: .opacity))
         }
     }
-    
   }
 
 #Preview {

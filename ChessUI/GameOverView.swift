@@ -8,18 +8,14 @@
 import SwiftUI
 
 struct GameOverView: View {
+    @EnvironmentObject var user: UserService
+    @EnvironmentObject var firebaseService: FireBaseService
     @ObservedObject var logic: BoardLogic
-    @State var displayElo: Double
+    @State var displayElo: Int = 0
     @State var finished = false
-    let k: Double
-    let startElo: Double
-    let newElo: Double
+    @State var newElo: Int = 0
     
-    init (startElo: Double, k: Double, board: BoardLogic) {
-        self.startElo = startElo
-        self.k = k
-        newElo = updateElo(userRating: startElo, userKFactor: k, puzzleRating: Int(board.puzzle.rating) ?? 0, correct: true)
-        displayElo = startElo
+    init (board: BoardLogic) {
         logic = board
     }
     
@@ -27,13 +23,13 @@ struct GameOverView: View {
         VStack(spacing: 6) {
             if finished {
                 Text("Good Job! ")
-                Text("Old rating: \(Int(round(startElo)))")
+                Text("Old rating: \(user.elo)")
             }
             
             HStack {
                 Text("New rating:")
-                Text("\(Int(round(displayElo)))")
-                    .numericAnimation(number: displayElo)
+                Text("\(displayElo)")
+                    .numericAnimation(number: Double(displayElo))
                     .onAppear {
                         withAnimation(.sinAnimation(duration: 6)) {
                             displayElo = newElo
@@ -58,6 +54,13 @@ struct GameOverView: View {
         .padding(10)
         .font(.system(size: 36))
         .bold()
+        .onAppear {
+            newElo = updateElo(userRating: Double(user.elo), userKFactor: 100.0, puzzleRating: Int(logic.puzzle.rating) ?? 0, correct: true)
+            displayElo = user.elo
+            Task {
+                await firebaseService.updateUserAccount(username: user.username, elo: newElo, correct: user.correct+1, incorrect: user.incorrect, themes: ["placeholder"])
+            }
+        }
     }
 }
 
@@ -105,16 +108,16 @@ func modifiedSin(x: Double) -> Double {
 // based on https://pypi.org/project/elo/
 // https://en.wikipedia.org/wiki/Elo_rating_system
 // takes user rating and puzzle rating,
-func updateElo(userRating: Double, userKFactor: Double, puzzleRating: Int, correct: Bool) -> Double {
+func updateElo(userRating: Double, userKFactor: Double, puzzleRating: Int, correct: Bool) -> Int {
     let score: Double = correct ? 1.0 : 0.0
     let beta = 200
     let f_factor = Double(2 * beta)
     let diff = Double(puzzleRating) - Double(userRating)
     let expectedScore = 1 / (1 + pow(10, diff / f_factor))
     let adjust = score - expectedScore
-    return userRating + userKFactor * adjust
+    return Int(userRating + userKFactor * adjust)
 }
 
 #Preview {
-    GameOverView(startElo: 1700, k: 100, board: BoardLogic(selectedPuzzle: Puzzle(selectedPuzzle: ["q3k1nr/1pp1nQpp/3p4/1P2p3/4P3/B1PP1b2/B5PP/5K2 b k - 0 17","e8d7 a2e6 d7d8 f7f8","1760"])))
+    GameOverView(board: BoardLogic(selectedPuzzle: Puzzle(selectedPuzzle: ["q3k1nr/1pp1nQpp/3p4/1P2p3/4P3/B1PP1b2/B5PP/5K2 b k - 0 17","e8d7 a2e6 d7d8 f7f8","1760"]))).environmentObject(UserService())
 }

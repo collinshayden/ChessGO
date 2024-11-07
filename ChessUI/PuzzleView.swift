@@ -26,6 +26,8 @@ struct board: View {
     @ObservedObject var logic: BoardLogic
     @State var showHints: Int = 0
     @State private var displayElo: Float = 0
+    @EnvironmentObject var user: UserService
+    @EnvironmentObject var firebaseService: FireBaseService
     
     
     // orient the rows based on board orientation
@@ -148,7 +150,7 @@ struct board: View {
             .animation(.easeInOut, value: logic.puzzleComplete)
             
             if logic.puzzleComplete {
-                GameOverView(startElo: 1700, k: 100, board: logic)
+                GameOverView(board: logic)
             }
         }
     }
@@ -156,12 +158,13 @@ struct board: View {
 
 
 struct PuzzleView: View {
+    @EnvironmentObject var user: UserService
+    @EnvironmentObject var firebaseService: FireBaseService
     // this controls what pieces are displayed on the board
     @StateObject var logic: BoardLogic
     // showChess and showMap bindings are to toggle between views via button
     @Binding var showChess: Bool
     @Binding var showMap: Bool
-//    static var white: Bool = true
     
     init(puzzle: Puzzle, showChess: Binding<Bool>, showMap: Binding<Bool>) {
         _logic = StateObject(wrappedValue: BoardLogic(selectedPuzzle: puzzle))
@@ -177,6 +180,7 @@ struct PuzzleView: View {
         VStack {
             Text("ChessGo").font(.largeTitle).padding(40)
             board(logic: logic)
+            
             Button(action: {
                 withAnimation {
                     showChess.toggle()

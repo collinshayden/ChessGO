@@ -128,6 +128,23 @@ class FireBaseService: ObservableObject{
         return result
     }
     
+    func updateUserAccount(username : String, elo : Int, correct : Int, incorrect : Int, themes : [String]) async -> Bool {
+        do {
+            try await db.collection("users").document("\(username)").setData([
+                "username" : username,
+                "elo" : elo,
+                "correct" : correct,
+                "incorrect" : incorrect,
+                "themes" : themes
+            ])
+            return true
+        }
+        catch {
+            print("Error updating user information: \(error.localizedDescription)")
+            return false
+        }
+    }
+    
     func testFetchPuzzles() async {
         // Check if user is logged in
             guard let user = Auth.auth().currentUser else {
