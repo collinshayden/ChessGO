@@ -8,8 +8,8 @@
 import Foundation
 import MapKit
 
-let startDistanceFromUser = 0.0005
-let numPuzzlesOnMap = 100
+let startDistanceFromUser = 0.001
+let numPuzzlesOnMap = 20
 let longLatScalar = 10000.0
 let totalOffsetScalar = 60
 let puzzleSpacing = 0.0005
