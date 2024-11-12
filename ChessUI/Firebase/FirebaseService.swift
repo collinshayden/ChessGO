@@ -43,11 +43,11 @@ class FireBaseService: ObservableObject{
           }
         try await db.collection("users").document("\(username)").setData([
                 "username" : username,
-                "elo" : [400],
+                "elo" : [1000],
                 "correct" : 0,
                 "incorrect" : 0,
                 "themes" : [],
-                "k" : 250
+                "k" : 400
             ])
         
         }
@@ -90,13 +90,19 @@ class FireBaseService: ObservableObject{
         }
     }
     
-    func getPuzzle(_ min : Int , _ max : Int) async -> [String]{
-        let randomPuzzleRating = Int.random(in: min...max-15)
+    func getPuzzle(userElo: Int, difficulty: Int) async -> [String]{
+        // adjust puzzle range based on difficulty
+        // if difficulty is 0, the range will be +- 100 points from user elo
+        // enforces bounds to be within 1-3000
+        let lowerBound = max(userElo - 100 + difficulty, 1)
+        let upperBound = min(userElo + 100 + difficulty, 3000)
+        
+        let randomPuzzleRating = Int.random(in: lowerBound...upperBound)
         let puzzles = db.collection("puzzles")
             var selectedPuzzle : [String] = []
             do{
                 
-                let querySnapshot = try await puzzles.whereField("Rating", isGreaterThanOrEqualTo: randomPuzzleRating).whereField("Rating", isLessThanOrEqualTo: max).limit(to: 1).getDocuments()
+                let querySnapshot = try await puzzles.whereField("Rating", isGreaterThanOrEqualTo: randomPuzzleRating).whereField("Rating", isLessThanOrEqualTo: upperBound).limit(to: 1).getDocuments()
                 
                 for puzzle in querySnapshot.documents{
                     let dict = puzzle.data()
