@@ -46,7 +46,8 @@ class FireBaseService: ObservableObject{
                 "elo" : 400,
                 "correct" : 0,
                 "incorrect" : 0,
-                "themes" : []
+                "themes" : [],
+                "k" : 250
             ])
         
         }
@@ -112,15 +113,15 @@ class FireBaseService: ObservableObject{
         return selectedPuzzle
     }
     //returns the user information from firebase in order, username, elo, correct, incorrect, themes
-    func getUser() async -> (String,Int,Int,Int,[String]){
+    func getUser() async -> (String,Int,Int,Int,[String],Int){
         let users = db.collection("users")
-        var result : (String,Int,Int,Int,[String]) = ("",0,0,0,[])
+        var result : (String,Int,Int,Int,[String],Int) = ("",0,0,0,[],0)
         //print("User: \(UserDefaults.standard.value(forKey: "username")!)")
         do{
             let querySnapshot = try await users.whereField("username", isEqualTo: UserDefaults.standard.value(forKey: "username")!).getDocuments()
             if let document = querySnapshot.documents.first {
                 let dict = document.data()
-                result = ((dict["username"]) as! String,(dict["elo"]) as! Int,(dict["correct"]) as! Int,(dict["incorrect"]) as! Int,(dict["themes"]) as! [String])
+                result = ((dict["username"]) as! String,(dict["elo"]) as! Int,(dict["correct"]) as! Int,(dict["incorrect"]) as! Int,(dict["themes"]) as! [String], (dict["k"]) as! Int)
             }
         }catch{
             print("error getting userInfo")
@@ -128,14 +129,15 @@ class FireBaseService: ObservableObject{
         return result
     }
     
-    func updateUserAccount(username : String, elo : Int, correct : Int, incorrect : Int, themes : [String]) async -> Bool {
+    func updateUserAccount(username : String, elo : Int, correct : Int, incorrect : Int, themes : [String], k : Int)async -> Bool {
         do {
             try await db.collection("users").document("\(username)").setData([
                 "username" : username,
                 "elo" : elo,
                 "correct" : correct,
                 "incorrect" : incorrect,
-                "themes" : themes
+                "themes" : themes,
+                "k" : k
             ])
             return true
         }

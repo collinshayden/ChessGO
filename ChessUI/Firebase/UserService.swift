@@ -10,20 +10,20 @@ class UserService : ObservableObject {
     
     @Published var username = ""
     @Published var elo: Int = 0
-//    @Published var kFactor: Double = 100.0
     @Published var correct = 0
     @Published var incorrect = 0
     @Published var themes = []
+    @Published var k = 0
     
     init(){ }
     
-    func updateUser(username : String, elo : Int, correct : Int, incorrect : Int, themes : [String]){
+    func updateUser(username : String, elo : Int, correct : Int, incorrect : Int, themes : [String], k : Int){
         self.username = username
         self.elo = elo
-//        self.kFactor = kFactor
         self.correct = correct
         self.incorrect = incorrect
         self.themes = themes
+        self.k = k
         
     }
 }
