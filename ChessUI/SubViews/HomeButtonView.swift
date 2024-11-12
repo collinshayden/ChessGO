@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct HomeButtonView : View {
-    
+    @EnvironmentObject var settings: Settings
     @State private var buttonOffset: CGFloat = 200
     @State private var gradientOffset = UIScreen.main.bounds.height
     @State private var showMap = false
@@ -16,12 +16,12 @@ struct HomeButtonView : View {
     @State private var showStats = false
     @State private var showProfile = false
     
-  
+    
     var body: some View {
         if showMap{
             MapView()
         }else if showSettings{
-            SettingsView()
+            SettingsView(showSettings: $showSettings, showMap: $showMap)
         }else if showStats{
             StatsView()
         }else if showProfile{

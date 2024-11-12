@@ -28,6 +28,7 @@ struct board: View {
     @State private var displayElo: Float = 0
     @EnvironmentObject var user: UserService
     @EnvironmentObject var firebaseService: FireBaseService
+    @EnvironmentObject var settings: Settings
     
     
     // orient the rows based on board orientation
@@ -82,7 +83,7 @@ struct board: View {
                             // hint=0 doesn't highlight, =1 shows source, =2 shows source/destination
                             let hint = self.showHints == 0 ? false : self.showHints == 1 ? logic.getHintSquares()[0] == coord : logic.getHintSquares().contains(coord)
                             // light/dark square assignment
-                            let defaultSquareColor = (col+row) % 2 == 1 ? colors.whiteSquares : colors.blackSquares
+                            let defaultSquareColor = (col+row) % 2 == 1 ? settings.boardTheme.lightColor : settings.boardTheme.darkColor
                             // set square background color
                             let squareColor = badMove ? colors.badColor : selected ? colors.selectedColor : hint ? colors.hintColor : highlight ? colors.highlightColor : defaultSquareColor
                             // square button actions

@@ -7,6 +7,8 @@ struct MapView: View {
     @EnvironmentObject var userService: UserService
     @EnvironmentObject var fireBaseService : FireBaseService
     @EnvironmentObject var puzzleStore: PuzzleStore
+    @EnvironmentObject var settings: Settings
+    
     @State private var name = ""
     // TODO: These states should be in the main view and set as binding here to update what view is shown there
     @State private var showMap = true
@@ -14,6 +16,7 @@ struct MapView: View {
     @State private var showHome = false
     @State private var gradientOffset = UIScreen.main.bounds.height
     @State private var curPuzzle = Puzzle()
+    
   
   func printResult(location: CLLocation) {
     print("location received: \(location)")
@@ -45,7 +48,7 @@ struct MapView: View {
           PuzzleView(puzzle: curPuzzle, showChess: $showChess, showMap: $showMap).environmentObject(userService).environmentObject(fireBaseService)
       }
       if showHome {
-        HomeButtonView()
+          HomeButtonView().environmentObject(settings)
                   }
         if showMap {
             ZStack{
@@ -120,9 +123,8 @@ struct MapView: View {
                 Task{
                     let info = await fireBaseService.getUser()
                     userService.updateUser(username: info.0, elo: info.1, correct: info.2, incorrect: info.3, themes: info.4, k: info.5)
-                    let difficulty = 100
                     for puzzle in puzzleStore.allPuzzles {
-                        await puzzle.puzzle = Puzzle(selectedPuzzle:fireBaseService.getPuzzle(userService.elo.last! - difficulty, userService.elo.last! + difficulty))
+                        await puzzle.puzzle = Puzzle(selectedPuzzle:fireBaseService.getPuzzle(userElo: userService.elo.last!, difficulty: settings.puzzleDifficulty))
                     }
                 }
                 if showMap {

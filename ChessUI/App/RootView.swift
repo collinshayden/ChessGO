@@ -12,6 +12,7 @@ struct RootView : View {
     @EnvironmentObject var userService : UserService
     @EnvironmentObject var locationService : LocationService
     @EnvironmentObject var puzzleStore: PuzzleStore
+    @EnvironmentObject var settings: Settings
     var body: some View {
         VStack {
             if(fireBaseService.isLoggedIn){
