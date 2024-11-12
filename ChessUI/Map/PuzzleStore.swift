@@ -36,14 +36,9 @@ class PuzzleInfo {
 // Takes care of the randomness of generation and spacing of puzzles from user and each other
 class PuzzleStore: ObservableObject {
     @Published var allPuzzles: [PuzzleInfo]
-    var firebaseSerivce: FireBaseService = FireBaseService()
     init() {
         allPuzzles = []
         generatePuzzles()
-        Task{
-            await callPuzzles()
-        }
-        
     }
     
     // Verifies that a puzzle cannot be within puzzleSpacing distance from another puzzle
@@ -76,16 +71,4 @@ class PuzzleStore: ObservableObject {
             allPuzzles.append(testPuzzle)
         }
     }
-    
-    // Firebase call to retrieve puzzles that fall within the appropriate elo range of the user
-    // These puzzles are then each assigned to a unique puzzle object on the map
-    func callPuzzles() async {
-//        let user = await firebaseSerivce.getUser()
-        let userElo = 1000
-        let difficulty = 100 // TODO add difficulty to user data
-        for puzzle in allPuzzles {
-            await puzzle.puzzle = Puzzle(selectedPuzzle:firebaseSerivce.getPuzzle(userElo - difficulty, userElo + difficulty))
-        }
-    }
 }
-
