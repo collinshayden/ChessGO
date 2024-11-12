@@ -93,7 +93,7 @@ struct MapView: View {
                         {
                             Text(" \(userService.username)").foregroundColor(.white).font(.custom("League Spartan", size: 32))
                             Spacer()
-                            Text(" \(userService.elo)").foregroundColor(.white).font(.custom("League Spartan", size: 32))
+                            Text(" \(userService.elo.last ?? 0)").foregroundColor(.white).font(.custom("League Spartan", size: 32))
                         }.padding(40)
                     }
                     

@@ -23,7 +23,7 @@ struct GameOverView: View {
         VStack(spacing: 6) {
             Text("Good Job! ")
                 .opacity({finished ? 1 : 0}())
-            Text("Old rating: \(user.elo)")
+            Text("Old rating: \(Int(user.elo.last!))")
                 .opacity({finished ? 1 : 0}())
             
             HStack {
@@ -31,7 +31,7 @@ struct GameOverView: View {
                 Text("\(displayElo)")
                     .numericAnimation(number: Double(displayElo))
                     .onAppear {
-                        withAnimation(.sinAnimation(duration: log10(Double(newElo-user.elo[user.elo.count-1]))+3)) {
+                        withAnimation(.sinAnimation(duration: log10(Double(newElo-user.elo.last!))+3)) {
                             displayElo = newElo
                         } completion: {
                             withAnimation(.sinAnimation(duration: 2)) {
@@ -55,10 +55,12 @@ struct GameOverView: View {
         .font(.system(size: 36))
         .bold()
         .onAppear {
-            newElo = updateElo(userRating: Double(user.elo[user.elo.count-1]), userKFactor: 100.0, puzzleRating: Int(logic.puzzle.rating) ?? 0, correct: true)
-            displayElo = user.elo[user.elo.count-1]
+            newElo = updateElo(userRating: Double(user.elo.last!), userKFactor: 100.0, puzzleRating: Int(logic.puzzle.rating) ?? 0, correct: true)
+            displayElo = user.elo.last!
+            var eloHistory = user.elo
+            eloHistory.append(newElo)
             Task {
-                await firebaseService.updateUserAccount(username: user.username, elo: newElo, correct: user.correct+1, incorrect: user.incorrect, themes: ["placeholder"], k: user.k)
+                await firebaseService.updateUserAccount(username: user.username, elo: eloHistory, correct: user.correct+1, incorrect: user.incorrect, themes: ["placeholder"], k: user.k)
             }
         }
     }
