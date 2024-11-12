@@ -119,7 +119,7 @@ struct MapView: View {
             }.onAppear{
                 Task{
                     let info = await fireBaseService.getUser()
-                    userService.updateUser(username: info.0, elo: info.1, correct: info.2, incorrect: info.3, themes: info.4)
+                    userService.updateUser(username: info.0, elo: info.1, correct: info.2, incorrect: info.3, themes: info.4, k: info.5)
                 }
                 if showMap {
                     startRecording()

@@ -9,7 +9,7 @@ import SwiftUI
 class UserService : ObservableObject {
     
     @Published var username = ""
-    @Published var elo: Int = 0
+    @Published var elo : [Int] = []
     @Published var correct = 0
     @Published var incorrect = 0
     @Published var themes = []
@@ -17,13 +17,12 @@ class UserService : ObservableObject {
     
     init(){ }
     
-    func updateUser(username : String, elo : Int, correct : Int, incorrect : Int, themes : [String], k : Int){
+    func updateUser(username : String, elo : [Int], correct : Int, incorrect : Int, themes : [String], k : Int){
         self.username = username
         self.elo = elo
         self.correct = correct
         self.incorrect = incorrect
         self.themes = themes
         self.k = k
-        
     }
 }

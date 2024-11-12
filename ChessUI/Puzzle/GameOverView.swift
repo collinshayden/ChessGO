@@ -31,7 +31,7 @@ struct GameOverView: View {
                 Text("\(displayElo)")
                     .numericAnimation(number: Double(displayElo))
                     .onAppear {
-                        withAnimation(.sinAnimation(duration: log10(Double(newElo-user.elo))+3)) {
+                        withAnimation(.sinAnimation(duration: log10(Double(newElo-user.elo[user.elo.count-1]))+3)) {
                             displayElo = newElo
                         } completion: {
                             withAnimation(.sinAnimation(duration: 2)) {
@@ -55,10 +55,10 @@ struct GameOverView: View {
         .font(.system(size: 36))
         .bold()
         .onAppear {
-            newElo = updateElo(userRating: Double(user.elo), userKFactor: 100.0, puzzleRating: Int(logic.puzzle.rating) ?? 0, correct: true)
-            displayElo = user.elo
+            newElo = updateElo(userRating: Double(user.elo[user.elo.count-1]), userKFactor: 100.0, puzzleRating: Int(logic.puzzle.rating) ?? 0, correct: true)
+            displayElo = user.elo[user.elo.count-1]
             Task {
-                await firebaseService.updateUserAccount(username: user.username, elo: newElo, correct: user.correct+1, incorrect: user.incorrect, themes: ["placeholder"])
+                await firebaseService.updateUserAccount(username: user.username, elo: newElo, correct: user.correct+1, incorrect: user.incorrect, themes: ["placeholder"], k: user.k)
             }
         }
     }

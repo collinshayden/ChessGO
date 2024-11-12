@@ -12,8 +12,8 @@ import FirebaseCore
 struct ChessUIApp: App {
     
     init() {
-        
         FirebaseApp.configure()
+        UserDefaults.standard.removePersistentDomain(forName: Bundle.main.bundleIdentifier!)
     }
     
     var body: some Scene {
