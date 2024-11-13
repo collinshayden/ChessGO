@@ -9,7 +9,7 @@ import SwiftUI
 
 struct GameOverView: View {
     @EnvironmentObject var user: UserService
-    @EnvironmentObject var firebaseService: FireBaseService
+    @EnvironmentObject var fireBaseService: FireBaseService
     @ObservedObject var logic: BoardLogic
     @State var displayElo: Int = 0
     @State var finished = false
@@ -55,12 +55,12 @@ struct GameOverView: View {
         .font(.system(size: 36))
         .bold()
         .onAppear {
-            newElo = updateElo(userRating: Double(user.elo.last!), userKFactor: 100.0, puzzleRating: Int(logic.puzzle.rating) ?? 0, correct: true)
+            newElo = updateElo(userRating: Double(user.elo.last!), userKFactor: Double(user.k), puzzleRating: Int(logic.puzzle.rating), correct: true)
             displayElo = user.elo.last!
             var eloHistory = user.elo
             eloHistory.append(newElo)
             Task {
-                await firebaseService.updateUserAccount(username: user.username, elo: eloHistory, correct: user.correct+1, incorrect: user.incorrect, themes: ["placeholder"], k: user.k)
+                await fireBaseService.updateUserAccount(username: user.username, elo: eloHistory, correct: user.correct+1, incorrect: user.incorrect, themes: ["placeholder"], k: user.k)
             }
         }
     }
