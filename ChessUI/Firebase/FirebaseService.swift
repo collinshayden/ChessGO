@@ -90,7 +90,7 @@ class FireBaseService: ObservableObject{
         }
     }
     
-    func getPuzzle(userElo: Int, difficulty: Int) async -> [String]{
+    func getPuzzle(userElo: Int, difficulty: Int, quantity: Int) async -> [Puzzle]{
         // adjust puzzle range based on difficulty
         // if difficulty is 0, the range will be +- 100 points from user elo
         // enforces bounds to be within 1-3000
@@ -99,24 +99,24 @@ class FireBaseService: ObservableObject{
         
         let randomPuzzleRating = Int.random(in: lowerBound...upperBound)
         let puzzles = db.collection("puzzles")
-            var selectedPuzzle : [String] = []
+            var selectedPuzzles : [Puzzle] = []
             do{
                 
-                let querySnapshot = try await puzzles.whereField("Rating", isGreaterThanOrEqualTo: randomPuzzleRating).whereField("Rating", isLessThanOrEqualTo: upperBound).limit(to: 1).getDocuments()
+                let querySnapshot = try await puzzles.whereField("Rating", isGreaterThanOrEqualTo: randomPuzzleRating).whereField("Rating", isLessThanOrEqualTo: upperBound).limit(to: quantity).getDocuments()
                 
                 for puzzle in querySnapshot.documents{
                     let dict = puzzle.data()
-                    let Rating = (dict["Rating"]) as! Int
-                    let FEN = dict["FEN"] as! String
-                    let Moves = dict["Moves"] as! String
-                    let Themes = dict["Themes"] as! String
+                    let rating = (dict["Rating"]) as! Int
+                    let fen = dict["FEN"] as! String
+                    let moves = dict["Moves"] as! String
+                    let themes = dict["Themes"] as! String
                     
-                    selectedPuzzle = [String(Rating), FEN, Moves, Themes]
+                    selectedPuzzles.append(Puzzle(rating, fen, moves, themes))
                 }
             }catch{
                 print("Error executing query: \(error)")
             }
-        return selectedPuzzle
+        return selectedPuzzles
     }
     //returns the user information from firebase in order, username, elo, correct, incorrect, themes
     func getUser() async -> (String,[Int],Int,Int,[String],Int){

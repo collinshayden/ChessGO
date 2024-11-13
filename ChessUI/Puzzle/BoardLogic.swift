@@ -119,7 +119,7 @@ class BoardLogic : ObservableObject {
     }
     
     func getPieces() -> [[Piece]] {
-        return parseFEN(fen: self.boardState.position.fen)
+        return parseFEN(self.boardState.position.fen)
     }
     
     func getHintSquares() -> [String] {
