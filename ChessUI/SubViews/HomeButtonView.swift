@@ -15,6 +15,7 @@ struct HomeButtonView : View {
     @State private var showSettings = false
     @State private var showStats = false
     @State private var showProfile = false
+    @State private var showPuzzleRush = false
     
     
     var body: some View {
@@ -26,6 +27,8 @@ struct HomeButtonView : View {
             StatsView()
         }else if showProfile{
             ProfileView()
+        } else if showPuzzleRush {
+            PuzzleRushView(showPuzzleRush: $showPuzzleRush, showMap: $showMap)
         }
         else{
             
@@ -44,6 +47,9 @@ struct HomeButtonView : View {
                 
                 VStack{
                     Spacer()
+                    DefaultButtonView(buttonImage: "flame", action: { showPuzzleRush = true})
+                            .padding(.bottom, 5)
+                            .offset(y: buttonOffset + 15)
                     DefaultButtonView(buttonImage: "gear", action: { showSettings = true})
                             .padding(.bottom, 5)
                             .offset(y: buttonOffset + 15)

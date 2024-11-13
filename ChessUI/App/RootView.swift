@@ -12,7 +12,11 @@ struct RootView : View {
     @EnvironmentObject var userService : UserService
     @EnvironmentObject var locationService : LocationService
     @EnvironmentObject var puzzleStore: PuzzleStore
+    @EnvironmentObject var puzzleRushStore: PuzzleRushStore
     @EnvironmentObject var settings: Settings
+    
+    
+    
     var body: some View {
         VStack {
             if(fireBaseService.isLoggedIn){
@@ -28,6 +32,9 @@ struct RootView : View {
                         try await fireBaseService.signIn(username)
                     }
                 }
+            }
+            Task {
+                puzzleRushStore.puzzles = await fireBaseService.getPuzzleRushPuzzles()
             }
         }
     }

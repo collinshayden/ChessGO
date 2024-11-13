@@ -90,3 +90,7 @@ func parseFEN(_ fen: String) -> [[Piece]] {
     
     return pieces
 }
+
+class PuzzleRushStore: ObservableObject {
+    @Published var puzzles: [Puzzle] = []
+}

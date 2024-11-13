@@ -13,6 +13,7 @@
 		A172E7062CE3CC0200938AA2 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = A172E7052CE3CC0200938AA2 /* Settings.swift */; };
 		A198B1062CDD5C660009E8BD /* .localized in Resources */ = {isa = PBXBuildFile; fileRef = A198B1032CDD5C660009E8BD /* .localized */; };
 		A198B1072CDD5C660009E8BD /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A198B1042CDD5C660009E8BD /* GoogleService-Info.plist */; };
+		A19DA20C2CE44F9C00552C80 /* PuzzleRushView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19DA20B2CE44F9C00552C80 /* PuzzleRushView.swift */; };
 		A1BDB7E82CACDD92000FEDA1 /* ChessKit in Frameworks */ = {isa = PBXBuildFile; productRef = A1BDB7E72CACDD92000FEDA1 /* ChessKit */; };
 		B626D4E32CC6C05F00C22E4E /* RoundedButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B626D4E22CC6C05F00C22E4E /* RoundedButtonView.swift */; };
 		B626D4E72CC6C62800C22E4E /* LeagueSpartan.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B626D4E62CC6C62800C22E4E /* LeagueSpartan.ttf */; };
@@ -53,6 +54,7 @@
 		A172E7052CE3CC0200938AA2 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		A198B1032CDD5C660009E8BD /* .localized */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .localized; sourceTree = "<group>"; };
 		A198B1042CDD5C660009E8BD /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		A19DA20B2CE44F9C00552C80 /* PuzzleRushView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PuzzleRushView.swift; sourceTree = "<group>"; };
 		B626D4E22CC6C05F00C22E4E /* RoundedButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedButtonView.swift; sourceTree = "<group>"; };
 		B626D4E62CC6C62800C22E4E /* LeagueSpartan.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = LeagueSpartan.ttf; sourceTree = "<group>"; };
 		B626D4E82CC6C65300C22E4E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -113,6 +115,7 @@
 			isa = PBXGroup;
 			children = (
 				DB146E4B2CA5A10C00A145B7 /* PuzzleView.swift */,
+				A19DA20B2CE44F9C00552C80 /* PuzzleRushView.swift */,
 				6E63E7DF2CC2C56B00183041 /* BoardLogic.swift */,
 				DBD9DA0C2CD938A10003648B /* GameOverView.swift */,
 				DB06DB6A2CAEEBE400CBE7F3 /* ChessLogic.swift */,
@@ -318,6 +321,7 @@
 				B626D4F02CC7320D00C22E4E /* DefaultButtonView.swift in Sources */,
 				A172E7062CE3CC0200938AA2 /* Settings.swift in Sources */,
 				B626D4E32CC6C05F00C22E4E /* RoundedButtonView.swift in Sources */,
+				A19DA20C2CE44F9C00552C80 /* PuzzleRushView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
