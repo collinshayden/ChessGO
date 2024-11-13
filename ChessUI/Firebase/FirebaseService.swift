@@ -118,6 +118,66 @@ class FireBaseService: ObservableObject{
             }
         return selectedPuzzles
     }
+    
+    // this allows getPuzzleRushPuzzles to split into tasks on different threads and safely append to puzzleList
+    actor PuzzleListManager {
+        private(set) var puzzleList: [Puzzle] = []
+
+        func append(puzzle: Puzzle) {
+            puzzleList.append(puzzle)
+        }
+
+        func getList() -> [Puzzle] {
+            return puzzleList
+        }
+    }
+    
+    // gets 52 puzzles from firebase, 2 from each rating bucket of size 100 (e.g. rating 400-500, 2300-2400, etc)
+    func getPuzzleRushPuzzles() async -> [Puzzle] {
+        let puzzleListManager = PuzzleListManager()
+        
+        // this function needs to call a bunch of firebase queries to get a few puzzles per rating bucket.
+        // it splits each firebase call into a task on a new thread, thus calling all the firebase queries concurrently
+        // as justification, without multithreading, this function took ~20-25 seconds to complete
+        // with multithreading, it takes ~5 seconds
+        await withTaskGroup(of: Void.self) { group in
+            // loop through each rating bucket and save two puzzles from each bucket
+            for ratingBucket in stride(from: 400, to: 3000, by: 100) {
+                group.addTask {
+                    // get a random puzzle rating in bucket
+                    let randomPuzzleRating = Int.random(in: ratingBucket...ratingBucket + 100)
+                    do {
+                        let querySnapshot = try await self.db.collection("puzzles")
+                            .whereField("Rating", isGreaterThanOrEqualTo: randomPuzzleRating)
+                            .whereField("Rating", isLessThanOrEqualTo: randomPuzzleRating + 30)
+                            // order by puzzleId to get more random results so limit(2) doesn't return two puzzles with same rating
+                            .order(by: "PuzzleId")
+                            .limit(to: 2)
+                            .getDocuments()
+
+                        // unpack data
+                        for puzzle in querySnapshot.documents {
+                            let dict = puzzle.data()
+                            let rating = dict["Rating"] as! Int
+                            let fen = dict["FEN"] as! String
+                            let moves = dict["Moves"] as! String
+                            let themes = dict["Themes"] as! String
+
+                            // use actor to append to thread-safe puzzleList
+                            await puzzleListManager.append(puzzle: Puzzle(rating, fen, moves, themes))
+                        }
+                    } catch {
+                        print("Error executing query: \(error)")
+                    }
+                }
+            }
+        }
+        
+        await print("loaded \(puzzleListManager.getList().count) puzzles sucessfully")
+        // returns puzzle list sorted by rating ascending
+        return await puzzleListManager.getList().sorted { $0.rating < $1.rating }
+    }
+    
     //returns the user information from firebase in order, username, elo, correct, incorrect, themes
     func getUser() async -> (String,[Int],Int,Int,[String],Int){
         let users = db.collection("users")
