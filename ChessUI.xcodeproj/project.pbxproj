@@ -11,10 +11,9 @@
 		6E63E7DE2CC2C3C000183041 /* PuzzleAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E63E7DD2CC2C3C000183041 /* PuzzleAnnotationView.swift */; };
 		6E63E7E02CC2C56B00183041 /* BoardLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E63E7DF2CC2C56B00183041 /* BoardLogic.swift */; };
 		A172E7062CE3CC0200938AA2 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = A172E7052CE3CC0200938AA2 /* Settings.swift */; };
-		A198B1062CDD5C660009E8BD /* .localized in Resources */ = {isa = PBXBuildFile; fileRef = A198B1032CDD5C660009E8BD /* .localized */; };
-		A198B1072CDD5C660009E8BD /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A198B1042CDD5C660009E8BD /* GoogleService-Info.plist */; };
 		A19DA20C2CE44F9C00552C80 /* PuzzleRushView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19DA20B2CE44F9C00552C80 /* PuzzleRushView.swift */; };
 		A1BDB7E82CACDD92000FEDA1 /* ChessKit in Frameworks */ = {isa = PBXBuildFile; productRef = A1BDB7E72CACDD92000FEDA1 /* ChessKit */; };
+		A1CB9BF82CE521460029917E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A1CB9BF72CE521460029917E /* GoogleService-Info.plist */; };
 		B626D4E32CC6C05F00C22E4E /* RoundedButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B626D4E22CC6C05F00C22E4E /* RoundedButtonView.swift */; };
 		B626D4E72CC6C62800C22E4E /* LeagueSpartan.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B626D4E62CC6C62800C22E4E /* LeagueSpartan.ttf */; };
 		B626D4EA2CC6CCC100C22E4E /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = B626D4E92CC6CCBD00C22E4E /* Colors.swift */; };
@@ -52,9 +51,8 @@
 		6E63E7DD2CC2C3C000183041 /* PuzzleAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PuzzleAnnotationView.swift; sourceTree = "<group>"; };
 		6E63E7DF2CC2C56B00183041 /* BoardLogic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoardLogic.swift; sourceTree = "<group>"; };
 		A172E7052CE3CC0200938AA2 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
-		A198B1032CDD5C660009E8BD /* .localized */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .localized; sourceTree = "<group>"; };
-		A198B1042CDD5C660009E8BD /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		A19DA20B2CE44F9C00552C80 /* PuzzleRushView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PuzzleRushView.swift; sourceTree = "<group>"; };
+		A1CB9BF72CE521460029917E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		B626D4E22CC6C05F00C22E4E /* RoundedButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedButtonView.swift; sourceTree = "<group>"; };
 		B626D4E62CC6C62800C22E4E /* LeagueSpartan.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = LeagueSpartan.ttf; sourceTree = "<group>"; };
 		B626D4E82CC6C65300C22E4E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -101,16 +99,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		A198B1052CDD5C660009E8BD /* Downloads */ = {
-			isa = PBXGroup;
-			children = (
-				A198B1032CDD5C660009E8BD /* .localized */,
-				A198B1042CDD5C660009E8BD /* GoogleService-Info.plist */,
-			);
-			name = Downloads;
-			path = ../../../../../Downloads;
-			sourceTree = "<group>";
-		};
 		A1AC308F2CDD430900FA1C54 /* Puzzle */ = {
 			isa = PBXGroup;
 			children = (
@@ -172,7 +160,6 @@
 		DB146E3D2CA5A10C00A145B7 = {
 			isa = PBXGroup;
 			children = (
-				A198B1052CDD5C660009E8BD /* Downloads */,
 				DB146E482CA5A10C00A145B7 /* ChessUI */,
 				DB146E472CA5A10C00A145B7 /* Products */,
 			);
@@ -189,6 +176,7 @@
 		DB146E482CA5A10C00A145B7 /* ChessUI */ = {
 			isa = PBXGroup;
 			children = (
+				A1CB9BF72CE521460029917E /* GoogleService-Info.plist */,
 				A1AC30922CDD431D00FA1C54 /* App */,
 				A1AC30912CDD431600FA1C54 /* Firebase */,
 				A1AC30902CDD431200FA1C54 /* Map */,
@@ -285,10 +273,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				DB146E512CA5A10E00A145B7 /* Preview Assets.xcassets in Resources */,
+				A1CB9BF82CE521460029917E /* GoogleService-Info.plist in Resources */,
 				B626D4E72CC6C62800C22E4E /* LeagueSpartan.ttf in Resources */,
-				A198B1072CDD5C660009E8BD /* GoogleService-Info.plist in Resources */,
 				DB146E4E2CA5A10E00A145B7 /* Assets.xcassets in Resources */,
-				A198B1062CDD5C660009E8BD /* .localized in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
