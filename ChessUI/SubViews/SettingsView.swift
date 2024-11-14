@@ -30,6 +30,16 @@ struct SettingsView : View {
             }
             
             HStack {
+                Text("Animation Speed")
+                Picker("Animation Speed", selection: $settings.animationSpeed) {
+                    ForEach(settings.animationSpeeds, id: \.value) { speed in
+                        Text("\(speed.label) (\(String(format: "%.2f", speed.value))s)")
+                            .tag(speed.value)
+                    }
+                }
+            }
+            
+            HStack {
                 Text("Board Theme")
                 Picker("Board Theme", selection: $settings.boardTheme) {
                     ForEach(settings.themes, id: \.self) { theme in
