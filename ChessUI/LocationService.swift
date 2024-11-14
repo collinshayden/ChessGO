@@ -18,6 +18,7 @@ class LocationService: NSObject, CLLocationManagerDelegate, ObservableObject  {
   @Published var checkServiceResult: CheckServiceResult = .notChecked
     @Published var currentLoc: CLLocationCoordinate2D?
     @Published var currentRegion: MKCoordinateRegion?
+    @Published var currentHeading: CLLocationDirection = CLLocationDirection()
     @Published var currentCameraPos: MapCameraPosition = .region(MKCoordinateRegion(
         center: CLLocationCoordinate2D(latitude: 0, longitude: 0),
         span: MKCoordinateSpan(latitudeDelta: 0.003, longitudeDelta: 0.003)
@@ -55,9 +56,14 @@ class LocationService: NSObject, CLLocationManagerDelegate, ObservableObject  {
           center: currentLoc!,
           span: MKCoordinateSpan(latitudeDelta: 0.003, longitudeDelta: 0.003)
       )
+      print("################################")
+      if let heading = locationManager?.heading?.magneticHeading{
+          currentHeading = heading
+      }
+//      currentHeading = (locationManager?.heading?.magneticHeading)!
 //      currentCameraPos = MapCameraPosition.region(currentRegion!)
       // This is used to set the pitch at an angle to start so that buildings appear 3D
-      currentCameraPos = MapCameraPosition.camera(MapCamera(centerCoordinate: currentRegion!.center, distance:1000, pitch: 40.0))
+      currentCameraPos = MapCameraPosition.camera(MapCamera(centerCoordinate: currentRegion!.center, distance:1000, heading: currentHeading, pitch: 40.0))
       // demo showing how to provide info asynchronously back to the main thread
       if let postResult = postResult {
         DispatchQueue.main.async {
@@ -84,12 +90,14 @@ class LocationService: NSObject, CLLocationManagerDelegate, ObservableObject  {
   func startRecording(name: String) async {
     if serviceAvailable {
       locationManager?.startUpdatingLocation()
+      locationManager?.startUpdatingHeading()
     }
   }
   
   func stopRecording() async {
     if serviceAvailable {
       locationManager?.stopUpdatingLocation()
+      locationManager?.stopUpdatingHeading()
     }
   }
 }

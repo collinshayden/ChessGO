@@ -7,9 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6E3944F52CDD14C50033B78C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6E3944F42CDD14C50033B78C /* GoogleService-Info.plist */; };
 		6E4732A02CC9749800DDFB36 /* PuzzleStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E47329F2CC9749800DDFB36 /* PuzzleStore.swift */; };
 		6E63E7DE2CC2C3C000183041 /* PuzzleAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E63E7DD2CC2C3C000183041 /* PuzzleAnnotationView.swift */; };
 		6E63E7E02CC2C56B00183041 /* BoardLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E63E7DF2CC2C56B00183041 /* BoardLogic.swift */; };
+		6E97DD522CE3A9CB0069FCD7 /* MotionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E97DD512CE3A9CB0069FCD7 /* MotionService.swift */; };
 		A1BDB7E82CACDD92000FEDA1 /* ChessKit in Frameworks */ = {isa = PBXBuildFile; productRef = A1BDB7E72CACDD92000FEDA1 /* ChessKit */; };
 		B626D4E32CC6C05F00C22E4E /* RoundedButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B626D4E22CC6C05F00C22E4E /* RoundedButtonView.swift */; };
 		B626D4E72CC6C62800C22E4E /* LeagueSpartan.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B626D4E62CC6C62800C22E4E /* LeagueSpartan.ttf */; };
@@ -40,14 +42,15 @@
 		DB146E4C2CA5A10C00A145B7 /* PuzzleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB146E4B2CA5A10C00A145B7 /* PuzzleView.swift */; };
 		DB146E4E2CA5A10E00A145B7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DB146E4D2CA5A10E00A145B7 /* Assets.xcassets */; };
 		DB146E512CA5A10E00A145B7 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DB146E502CA5A10E00A145B7 /* Preview Assets.xcassets */; };
-		DB20B23E2CD879F900D4FEC2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DB20B23D2CD879F900D4FEC2 /* GoogleService-Info.plist */; };
 		DBD9DA0D2CD938A10003648B /* GameOverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD9DA0C2CD938A10003648B /* GameOverView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6E3944F42CDD14C50033B78C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		6E47329F2CC9749800DDFB36 /* PuzzleStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PuzzleStore.swift; sourceTree = "<group>"; };
 		6E63E7DD2CC2C3C000183041 /* PuzzleAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PuzzleAnnotationView.swift; sourceTree = "<group>"; };
 		6E63E7DF2CC2C56B00183041 /* BoardLogic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoardLogic.swift; sourceTree = "<group>"; };
+		6E97DD512CE3A9CB0069FCD7 /* MotionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotionService.swift; sourceTree = "<group>"; };
 		B626D4E22CC6C05F00C22E4E /* RoundedButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedButtonView.swift; sourceTree = "<group>"; };
 		B626D4E62CC6C62800C22E4E /* LeagueSpartan.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = LeagueSpartan.ttf; sourceTree = "<group>"; };
 		B626D4E82CC6C65300C22E4E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -70,7 +73,6 @@
 		DB146E4B2CA5A10C00A145B7 /* PuzzleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PuzzleView.swift; sourceTree = "<group>"; };
 		DB146E4D2CA5A10E00A145B7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DB146E502CA5A10E00A145B7 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		DB20B23D2CD879F900D4FEC2 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		DBD9DA0C2CD938A10003648B /* GameOverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOverView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -98,7 +100,7 @@
 		DB146E3D2CA5A10C00A145B7 = {
 			isa = PBXGroup;
 			children = (
-				DB20B23D2CD879F900D4FEC2 /* GoogleService-Info.plist */,
+				6E3944F42CDD14C50033B78C /* GoogleService-Info.plist */,
 				DB146E482CA5A10C00A145B7 /* ChessUI */,
 				DB146E472CA5A10C00A145B7 /* Products */,
 			);
@@ -140,6 +142,7 @@
 				DB146E4F2CA5A10E00A145B7 /* Preview Content */,
 				6E63E7DD2CC2C3C000183041 /* PuzzleAnnotationView.swift */,
 				6E47329F2CC9749800DDFB36 /* PuzzleStore.swift */,
+				6E97DD512CE3A9CB0069FCD7 /* MotionService.swift */,
 			);
 			path = ChessUI;
 			sourceTree = "<group>";
@@ -227,8 +230,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				DB146E512CA5A10E00A145B7 /* Preview Assets.xcassets in Resources */,
+				6E3944F52CDD14C50033B78C /* GoogleService-Info.plist in Resources */,
 				B626D4E72CC6C62800C22E4E /* LeagueSpartan.ttf in Resources */,
-				DB20B23E2CD879F900D4FEC2 /* GoogleService-Info.plist in Resources */,
 				DB146E4E2CA5A10E00A145B7 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -257,6 +260,7 @@
 				B62DED3D2CD3CB5900E9C987 /* UserService.swift in Sources */,
 				B62DED3E2CD3CB5900E9C987 /* ProfileView.swift in Sources */,
 				B62DED3F2CD3CB5900E9C987 /* SettingsView.swift in Sources */,
+				6E97DD522CE3A9CB0069FCD7 /* MotionService.swift in Sources */,
 				6E63E7DE2CC2C3C000183041 /* PuzzleAnnotationView.swift in Sources */,
 				DB06DB6B2CAEEBE400CBE7F3 /* ChessLogic.swift in Sources */,
 				B626D4F02CC7320D00C22E4E /* DefaultButtonView.swift in Sources */,

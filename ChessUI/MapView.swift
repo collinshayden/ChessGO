@@ -7,6 +7,7 @@ struct MapView: View {
     @EnvironmentObject var userService: UserService
     @EnvironmentObject var fireBaseService : FireBaseService
     @EnvironmentObject var puzzleStore: PuzzleStore
+    var motionService = MotionService()
     @State private var name = ""
     // TODO: These states should be in the main view and set as binding here to update what view is shown there
     @State private var showMap = true
@@ -14,6 +15,7 @@ struct MapView: View {
     @State private var showHome = false
     @State private var gradientOffset = UIScreen.main.bounds.height
     @State private var curPuzzle = Puzzle()
+    @State private var currentHeading: CLLocationDirection = 0
   
   func printResult(location: CLLocation) {
     print("location received: \(location)")
@@ -25,6 +27,8 @@ struct MapView: View {
       // Asyncronously call the locationService while running this main thread
     Task {
       await locationService.startRecording(name: name)
+//        motionService.startMagnetometer()
+        motionService.startGyros()
     }
       
     let currentDate = Date.now
@@ -49,10 +53,11 @@ struct MapView: View {
         HomeButtonView()
                   }
         if showMap {
+            Text("\(locationService.currentHeading)")
             ZStack{
                 // TODO: What do we want the user to be able to do? Pan, Pitch, Rotate, Zoom are the options
                 Map (position: $locationService.currentCameraPos,
-                     interactionModes: [.rotate, .zoom, .pitch]) {
+                     interactionModes: [.rotate]) {
                     if let userLoc = locationService.currentLoc {
                         ForEach(0..<puzzleStore.allPuzzles.count, id: \.self) { puzzle in
                             if(!puzzleStore.allPuzzles[puzzle].isSet){
@@ -84,7 +89,7 @@ struct MapView: View {
                             }
                         }
                     }
-                }.ignoresSafeArea()
+                }.ignoresSafeArea().animation(Animation.easeInOut(duration: 0.1), value:locationService.currentHeading)
                 
                 VStack{
                     ZStack{
