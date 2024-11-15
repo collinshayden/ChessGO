@@ -29,6 +29,8 @@ struct board: View {
     @EnvironmentObject var user: UserService
     @EnvironmentObject var firebaseService: FireBaseService
     @EnvironmentObject var settings: Settings
+    @Binding var puzzleRushIndex: Int?
+    @Binding var puzzleRushEnd: Bool?
     
     
     // orient the rows based on board orientation
@@ -122,35 +124,49 @@ struct board: View {
                         }
                     }
                 }
-                Text("\(logic.msg)")
-                    .padding(10)
-                
-                // doesnt allow user to get hints after they have finished the puzzle
-                if !logic.puzzleComplete {
-                    Button(showHints == 0 ? "Get a Hint" : "Second Hint") {
-                        showHints += 1
+                if puzzleRushIndex == nil {
+                    Text("\(logic.msg)")
+                        .padding(10)
+                    // doesnt allow user to get hints after they have finished the puzzle
+                    if !logic.puzzleComplete {
+                        Button(showHints == 0 ? "Get a Hint" : "Second Hint") {
+                            showHints += 1
+                        }
+                        .padding(10)
+                        .background(Color.blue)
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
                     }
-                    .padding(10)
-                    .background(Color.blue)
-                    .foregroundColor(.white)
-                    .cornerRadius(10)
+                    
+                    // doesnt allow user to get hints after they have finished the puzzle
+                    if logic.puzzleFailed {
+                        Button("Retry") {
+                            logic.reset()
+                        }
+                        .padding(10)
+                        .background(Color.red)
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
+                    }
+                }
+                else {
+                    if logic.puzzleComplete {
+                        Text("Puzzle Complete!").onAppear {
+                            puzzleRushIndex! += 1
+                        }
+                    }
+                    if logic.puzzleFailed {
+                        Text("Puzzle Failed").onAppear {
+                            puzzleRushEnd! = true
+                        }
+                    }
                 }
                 
-                // doesnt allow user to get hints after they have finished the puzzle
-                if logic.puzzleFailed {
-                    Button("Retry") {
-                        logic.reset()
-                    }
-                    .padding(10)
-                    .background(Color.red)
-                    .foregroundColor(.white)
-                    .cornerRadius(10)
-                }
             }
-            .blur(radius: {logic.puzzleComplete ? 18 : 0}())
+            .blur(radius: {logic.puzzleComplete && puzzleRushIndex == nil ? 18 : 0}())
             .animation(.easeInOut, value: logic.puzzleComplete)
             
-            if logic.puzzleComplete {
+            if logic.puzzleComplete && puzzleRushIndex == nil {
                 GameOverView(board: logic)
             }
         }
@@ -180,7 +196,7 @@ struct PuzzleView: View {
     var body: some View {
         VStack {
             Text("ChessGo").font(.largeTitle).padding(40)
-            board(logic: logic)
+            board(logic: logic, puzzleRushIndex: .constant(nil), puzzleRushEnd: .constant(nil))
             
             Button(action: {
                 withAnimation {
