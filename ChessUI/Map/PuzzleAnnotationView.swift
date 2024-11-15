@@ -48,7 +48,8 @@ struct PuzzleAnnotationView:View {
                 }) {
                     Text("").font(.system(size: 20))
                         .padding()
-                        .background(Circle().fill(Color.blue).frame(height:100))
+//                        .background(Circle().fill(Color.blue).frame(height:100))
+                        .background(Image(.puzzle).resizable().frame(width:75, height:60))
                         .frame(minWidth: 500)
                 }
                 // This frame height adjusts the "clickable" area of the annotation on the map

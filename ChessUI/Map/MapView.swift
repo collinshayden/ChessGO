@@ -60,18 +60,18 @@ struct MapView: View {
             ZStack{
                 // TODO: What do we want the user to be able to do? Pan, Pitch, Rotate, Zoom are the options
                 Map (position: $locationService.currentCameraPos,
-                     interactionModes: [.rotate]) {
+                     interactionModes: []) {
                     if let userLoc = locationService.currentLoc {
                         ForEach(0..<puzzleStore.allPuzzles.count, id: \.self) { puzzle in
                             if(!puzzleStore.allPuzzles[puzzle].isSet){
-                                Annotation("Puzzle " + String(puzzleStore.allPuzzles[puzzle].val), coordinate:CLLocationCoordinate2D(latitude: userLoc.latitude + puzzleStore.allPuzzles[puzzle].locOffset.latitude, longitude: userLoc.longitude + puzzleStore.allPuzzles[puzzle].locOffset.longitude)) {
+                                /*Annotation("Puzzle " + String(puzzleStore.allPuzzles[puzzle].val),*/Annotation("", coordinate:CLLocationCoordinate2D(latitude: userLoc.latitude + puzzleStore.allPuzzles[puzzle].locOffset.latitude, longitude: userLoc.longitude + puzzleStore.allPuzzles[puzzle].locOffset.longitude)) {
                                     PuzzleAnnotationView(showMap:$showMap, showChess:$showChess, val: $puzzleStore.allPuzzles[puzzle].val,
                                                          puzzle: $puzzleStore.allPuzzles[puzzle], curPuzzle: $curPuzzle)
                                         }
                                     }
                             else{
                                 // This puzzle has already been placed relative to user location and shouldn't be moved
-                                Annotation("Puzzle " + String(puzzleStore.allPuzzles[puzzle].val), coordinate:CLLocationCoordinate2D(latitude:  puzzleStore.allPuzzles[puzzle].finalLoc.latitude, longitude: puzzleStore.allPuzzles[puzzle].finalLoc.longitude)) {
+                                /*Annotation("Puzzle " + String(puzzleStore.allPuzzles[puzzle].val),*/Annotation("", coordinate:CLLocationCoordinate2D(latitude:  puzzleStore.allPuzzles[puzzle].finalLoc.latitude, longitude: puzzleStore.allPuzzles[puzzle].finalLoc.longitude)) {
                                     PuzzleAnnotationView(showMap:$showMap, showChess:$showChess, val: $puzzleStore.allPuzzles[puzzle].val,
                                                          puzzle: $puzzleStore.allPuzzles[puzzle], curPuzzle: $curPuzzle)
                                 }
