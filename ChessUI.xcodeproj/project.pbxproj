@@ -10,10 +10,12 @@
 		6E4732A02CC9749800DDFB36 /* PuzzleStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E47329F2CC9749800DDFB36 /* PuzzleStore.swift */; };
 		6E63E7DE2CC2C3C000183041 /* PuzzleAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E63E7DD2CC2C3C000183041 /* PuzzleAnnotationView.swift */; };
 		6E63E7E02CC2C56B00183041 /* BoardLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E63E7DF2CC2C56B00183041 /* BoardLogic.swift */; };
+		6E8B57C92CE64CED00FF5A95 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6E8B57C82CE64CED00FF5A95 /* GoogleService-Info.plist */; };
+		6E8B57CB2CE64D7E00FF5A95 /* MotionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E8B57CA2CE64D7E00FF5A95 /* MotionService.swift */; };
+		6E8B57CD2CE651F700FF5A95 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E8B57CC2CE651F700FF5A95 /* Profile.swift */; };
 		A172E7062CE3CC0200938AA2 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = A172E7052CE3CC0200938AA2 /* Settings.swift */; };
 		A19DA20C2CE44F9C00552C80 /* PuzzleRushView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19DA20B2CE44F9C00552C80 /* PuzzleRushView.swift */; };
 		A1BDB7E82CACDD92000FEDA1 /* ChessKit in Frameworks */ = {isa = PBXBuildFile; productRef = A1BDB7E72CACDD92000FEDA1 /* ChessKit */; };
-		A1CB9BF82CE521460029917E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A1CB9BF72CE521460029917E /* GoogleService-Info.plist */; };
 		B626D4E32CC6C05F00C22E4E /* RoundedButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B626D4E22CC6C05F00C22E4E /* RoundedButtonView.swift */; };
 		B626D4E72CC6C62800C22E4E /* LeagueSpartan.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B626D4E62CC6C62800C22E4E /* LeagueSpartan.ttf */; };
 		B626D4EA2CC6CCC100C22E4E /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = B626D4E92CC6CCBD00C22E4E /* Colors.swift */; };
@@ -50,9 +52,11 @@
 		6E47329F2CC9749800DDFB36 /* PuzzleStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PuzzleStore.swift; sourceTree = "<group>"; };
 		6E63E7DD2CC2C3C000183041 /* PuzzleAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PuzzleAnnotationView.swift; sourceTree = "<group>"; };
 		6E63E7DF2CC2C56B00183041 /* BoardLogic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoardLogic.swift; sourceTree = "<group>"; };
+		6E8B57C82CE64CED00FF5A95 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		6E8B57CA2CE64D7E00FF5A95 /* MotionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotionService.swift; sourceTree = "<group>"; };
+		6E8B57CC2CE651F700FF5A95 /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		A172E7052CE3CC0200938AA2 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		A19DA20B2CE44F9C00552C80 /* PuzzleRushView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PuzzleRushView.swift; sourceTree = "<group>"; };
-		A1CB9BF72CE521460029917E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		B626D4E22CC6C05F00C22E4E /* RoundedButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedButtonView.swift; sourceTree = "<group>"; };
 		B626D4E62CC6C62800C22E4E /* LeagueSpartan.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = LeagueSpartan.ttf; sourceTree = "<group>"; };
 		B626D4E82CC6C65300C22E4E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -118,6 +122,7 @@
 				B6EFACC82CC02188003DF466 /* LocationService.swift */,
 				6E63E7DD2CC2C3C000183041 /* PuzzleAnnotationView.swift */,
 				6E47329F2CC9749800DDFB36 /* PuzzleStore.swift */,
+				6E8B57CA2CE64D7E00FF5A95 /* MotionService.swift */,
 			);
 			path = Map;
 			sourceTree = "<group>";
@@ -147,6 +152,7 @@
 			isa = PBXGroup;
 			children = (
 				B62DED382CD3CB5900E9C987 /* ProfileView.swift */,
+				6E8B57CC2CE651F700FF5A95 /* Profile.swift */,
 				B62DED392CD3CB5900E9C987 /* SettingsView.swift */,
 				A172E7052CE3CC0200938AA2 /* Settings.swift */,
 				B62DED3A2CD3CB5900E9C987 /* StatsView.swift */,
@@ -176,7 +182,7 @@
 		DB146E482CA5A10C00A145B7 /* ChessUI */ = {
 			isa = PBXGroup;
 			children = (
-				A1CB9BF72CE521460029917E /* GoogleService-Info.plist */,
+				6E8B57C82CE64CED00FF5A95 /* GoogleService-Info.plist */,
 				A1AC30922CDD431D00FA1C54 /* App */,
 				A1AC30912CDD431600FA1C54 /* Firebase */,
 				A1AC30902CDD431200FA1C54 /* Map */,
@@ -273,7 +279,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DB146E512CA5A10E00A145B7 /* Preview Assets.xcassets in Resources */,
-				A1CB9BF82CE521460029917E /* GoogleService-Info.plist in Resources */,
+				6E8B57C92CE64CED00FF5A95 /* GoogleService-Info.plist in Resources */,
 				B626D4E72CC6C62800C22E4E /* LeagueSpartan.ttf in Resources */,
 				DB146E4E2CA5A10E00A145B7 /* Assets.xcassets in Resources */,
 			);
@@ -291,6 +297,7 @@
 				DBD9DA0D2CD938A10003648B /* GameOverView.swift in Sources */,
 				DB146E4C2CA5A10C00A145B7 /* PuzzleView.swift in Sources */,
 				B626D4EA2CC6CCC100C22E4E /* Colors.swift in Sources */,
+				6E8B57CB2CE64D7E00FF5A95 /* MotionService.swift in Sources */,
 				B6EFACCA2CC02188003DF466 /* MapView.swift in Sources */,
 				B6EFACCD2CC02670003DF466 /* RootView.swift in Sources */,
 				B6EFACCB2CC02188003DF466 /* LocationService.swift in Sources */,
@@ -301,6 +308,7 @@
 				6E4732A02CC9749800DDFB36 /* PuzzleStore.swift in Sources */,
 				B62DED3C2CD3CB5900E9C987 /* StatsView.swift in Sources */,
 				B62DED3D2CD3CB5900E9C987 /* UserService.swift in Sources */,
+				6E8B57CD2CE651F700FF5A95 /* Profile.swift in Sources */,
 				B62DED3E2CD3CB5900E9C987 /* ProfileView.swift in Sources */,
 				B62DED3F2CD3CB5900E9C987 /* SettingsView.swift in Sources */,
 				6E63E7DE2CC2C3C000183041 /* PuzzleAnnotationView.swift in Sources */,

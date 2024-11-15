@@ -8,6 +8,8 @@ struct MapView: View {
     @EnvironmentObject var fireBaseService : FireBaseService
     @EnvironmentObject var puzzleStore: PuzzleStore
     @EnvironmentObject var settings: Settings
+    @EnvironmentObject var profile: Profile
+    var motionService = MotionService()
     
     @State private var name = ""
     // TODO: These states should be in the main view and set as binding here to update what view is shown there
@@ -16,6 +18,7 @@ struct MapView: View {
     @State private var showHome = false
     @State private var gradientOffset = UIScreen.main.bounds.height
     @State private var curPuzzle = Puzzle()
+    @State private var currentHeading: CLLocationDirection = 0
     
   
   func printResult(location: CLLocation) {
@@ -28,6 +31,9 @@ struct MapView: View {
       // Asyncronously call the locationService while running this main thread
     Task {
       await locationService.startRecording(name: name)
+        //        motionService.startMagnetometer()
+
+                motionService.startGyros()
     }
       
     let currentDate = Date.now
@@ -54,7 +60,7 @@ struct MapView: View {
             ZStack{
                 // TODO: What do we want the user to be able to do? Pan, Pitch, Rotate, Zoom are the options
                 Map (position: $locationService.currentCameraPos,
-                     interactionModes: [.rotate, .zoom, .pitch]) {
+                     interactionModes: [.rotate]) {
                     if let userLoc = locationService.currentLoc {
                         ForEach(0..<puzzleStore.allPuzzles.count, id: \.self) { puzzle in
                             if(!puzzleStore.allPuzzles[puzzle].isSet){
@@ -73,20 +79,21 @@ struct MapView: View {
                         }
                         Annotation("user", coordinate:userLoc){
                             ZStack {
-                                Circle()
-                                    .fill(.gray)
-                                    .opacity(0.3)
-                                    .frame(width: 44, height: 44)
-                                Circle()
-                                    .fill(.white)
-                                    .frame(width: 20, height: 20)
-                                Circle()
-                                    .fill(.blue)
-                                    .frame(width: 16, height: 16)
+                                profile.pieces[profile.pieceChoice].resizable().frame(width:40, height:40)
+//                                Circle()
+//                                    .fill(.gray)
+//                                    .opacity(0.3)
+//                                    .frame(width: 44, height: 44)
+//                                Circle()
+//                                    .fill(.white)
+//                                    .frame(width: 20, height: 20)
+//                                Circle()
+//                                    .fill(.blue)
+//                                    .frame(width: 16, height: 16)
                             }
                         }
                     }
-                }.ignoresSafeArea()
+                }.ignoresSafeArea().animation(Animation.easeInOut(duration: 0.1), value:locationService.currentHeading)
                 
                 VStack{
                     ZStack{

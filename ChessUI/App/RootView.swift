@@ -14,6 +14,7 @@ struct RootView : View {
     @EnvironmentObject var puzzleStore: PuzzleStore
     @EnvironmentObject var puzzleRushStore: PuzzleRushStore
     @EnvironmentObject var settings: Settings
+    @EnvironmentObject var profile: Profile
     
     
     

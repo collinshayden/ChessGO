@@ -24,6 +24,7 @@ struct ChessUIApp: App {
             .environmentObject(UserService())
             .environmentObject(PuzzleStore())
             .environmentObject(Settings())
+            .environmentObject(Profile())
             .environmentObject(PuzzleRushStore())
         }
     }
