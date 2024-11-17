@@ -22,12 +22,14 @@ class PuzzleInfo {
     var finalLoc: CLLocationCoordinate2D
     var puzzle: Puzzle
     var isSet: Bool
+    var isSolved: Bool
     
     init(val: Int, locOffset: CLLocationCoordinate2D) {
         self.val = val
         self.locOffset = locOffset
         self.puzzle = Puzzle()
         self.isSet = false
+        self.isSolved = false
         self.finalLoc = CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0)
     }
 }
