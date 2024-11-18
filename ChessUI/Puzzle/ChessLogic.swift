@@ -9,18 +9,13 @@ import Foundation
 import SwiftUI
 import ChessKit
 
-struct Piece {
-    var id: Character? = "0"
-    var icon: Image?
-}
-
 struct Move : Equatable {
     var source : Square
     var destination : Square
 }
 
 class Puzzle: ObservableObject {
-    @Published var pieces = [[Piece]]()
+    @Published var pieces = [[Character]]()
     @Published var moves = [Move]()
     @Published var orientation: Bool
     @Published var rating: Int
@@ -44,25 +39,9 @@ class Puzzle: ObservableObject {
     }
 }
 
-func parseFEN(_ fen: String) -> [[Piece]] {
-    // piece id to icon dictionary
-    let pieceImages: Dictionary<Character, Image> = [
-        "p": Image(.chessPdt45Svg),
-        "r": Image(.chessRdt45Svg),
-        "n": Image(.chessNdt45Svg),
-        "b": Image(.chessBdt45Svg),
-        "q": Image(.chessQdt45Svg),
-        "k": Image(.chessKdt45Svg),
-        "P": Image(.chessPlt45Svg),
-        "R": Image(.chessRlt45Svg),
-        "N": Image(.chessNlt45Svg),
-        "B": Image(.chessBlt45Svg),
-        "Q": Image(.chessQlt45Svg),
-        "K": Image(.chessKlt45Svg)
-    ]
-    
+func parseFEN(_ fen: String) -> [[Character]] {
     // array of arrays which holds pieces [row][col]
-    var pieces: [[Piece]] = [[],[],[],[],[],[],[],[]]
+    var pieces: [[Character]] = [[],[],[],[],[],[],[],[]]
     
     // tracks location of each piece in FEN
     var row = 0
@@ -75,16 +54,14 @@ func parseFEN(_ fen: String) -> [[Piece]] {
         } else if char.isNumber {
             let n = Int(String(char))
             for _ in 0..<n! {
-                pieces[row].append(Piece())
+                pieces[row].append(Character("0"))
             }
             // checks if all pieces have been read
         } else if char == " " {
             break
             // adds a piece
         } else {
-            pieces[row].append(Piece(
-                id: char,
-                icon: pieceImages[char]))
+            pieces[row].append(char)
         }
     }
     

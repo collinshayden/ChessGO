@@ -20,7 +20,7 @@ class BoardLogic : ObservableObject {
     var msg: String = ""
     var puzzleComplete = false
     var puzzleFailed = false
-    
+    var promoting = false
     
     init(selectedPuzzle: Puzzle) {
         puzzle = selectedPuzzle
@@ -54,7 +54,7 @@ class BoardLogic : ObservableObject {
         }
     }
     
-    func click(pos: String) {
+    func click(pos: String) -> ChessKit.Move? {
         // if the clicked piece is the user's color, select it as move origin
         if boardState.position.sideToMove == boardState.position.piece(at: Square(pos))?.color {
             firstClickedSquare = Square(pos)
@@ -64,13 +64,14 @@ class BoardLogic : ObservableObject {
             if !checkLegalMove(pos: pos) {
                 firstClickedSquare = nil
                 legalMoves = []
-                return
+                return nil
             }
             
             secondClickedSquare = Square(pos)
             
+            
             // move user's piece
-            boardState.move(pieceAt: firstClickedSquare!, to: secondClickedSquare!)
+            let mv = boardState.move(pieceAt: firstClickedSquare!, to: secondClickedSquare!)
             lastMoveCoords = [firstClickedSquare!.notation, secondClickedSquare!.notation]
             
             // check if the move was correct
@@ -81,14 +82,14 @@ class BoardLogic : ObservableObject {
                 if moveNum == puzzle.moves.count {
                     msg = "Puzzle Complete!"
                     puzzleComplete = true
-                    return
+                    return nil
                 }
             // set puzzle failed flag if the move wasn't correct and show constructive criticism
             } else {
                 msg = "You disgust me. Hint: \(puzzle.moves[moveNum].source.notation)"
                 legalMoves = []
                 puzzleFailed = true
-                return
+                return nil
             }
             // move computer's piece
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [self] in
@@ -102,7 +103,14 @@ class BoardLogic : ObservableObject {
             firstClickedSquare = nil
             secondClickedSquare = nil
             legalMoves = []
+            
+            if mv != nil {
+                if (mv!.end.rank == 8 || mv!.end.rank == 1) && mv!.piece.kind == .pawn {
+                    promoting = true
+                }
+            }
         }
+        return nil
     }
             
     
@@ -118,7 +126,7 @@ class BoardLogic : ObservableObject {
         return puzzle
     }
     
-    func getPieces() -> [[Piece]] {
+    func getPieces() -> [[Character]] {
         return parseFEN(self.boardState.position.fen)
     }
     

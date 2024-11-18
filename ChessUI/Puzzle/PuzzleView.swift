@@ -31,8 +31,8 @@ struct board: View {
     @EnvironmentObject var settings: Settings
     @Binding var puzzleRushIndex: Int?
     @Binding var puzzleRushEnd: Bool?
-    
-    
+    @State var promotionSelection: Piece.Kind = .pawn
+
     // orient the rows based on board orientation
     var rows: [Int] {
         logic.puzzle.orientation ? Array(1...8) : Array(1...8).reversed()
@@ -53,8 +53,16 @@ struct board: View {
     var body: some View {
         ZStack {
             VStack(spacing: 0) {
+                
                 Text("Puzzle Rating: \(logic.puzzle.rating)")
                     .bold()
+                
+                Picker(selection: $promotionSelection, label: Text("Promote")) {
+                    let icons = logic.puzzle.orientation ? Constants.whiteImages : Constants.blackImages
+                    ForEach(Array(icons.keys), id: \.self) {key in
+                        icons[key]
+                    }
+                }
                 
                 HStack(spacing: 0) {
                     // this is just white space to align the col text labels with the board
@@ -90,13 +98,13 @@ struct board: View {
                             let squareColor = badMove ? colors.badColor : selected ? colors.selectedColor : hint ? colors.hintColor : highlight ? colors.highlightColor : defaultSquareColor
                             // square button actions
                             Button(action: {
-                                if !logic.puzzleFailed {
-                                    logic.click(pos: coord)
+                                if !logic.promoting && !logic.puzzleFailed {
+                                    var mv = logic.click(pos: coord)
                                 }
                                 self.showHints = 0
                             }) {
                                 let (orientedRow, orientedCol) = orientIndices(row, col)
-                                if logic.getPieces()[orientedRow][orientedCol].id != "0" {
+                                if logic.getPieces()[orientedRow][orientedCol] != "0" {
                                     ZStack{
                                         if logic.checkLegalMove(pos: coord) {
                                             Circle()
@@ -106,7 +114,7 @@ struct board: View {
                                                     height: PuzzleView.squareSize-7)
                                         }
                                         
-                                        logic.getPieces()[orientedRow][orientedCol].icon?
+                                        Constants.pieceImages[logic.getPieces()[orientedRow][orientedCol]]?
                                             .resizable()
                                     }
                                 } else if logic.checkLegalMove(pos: coord) {
