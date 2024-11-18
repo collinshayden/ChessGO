@@ -9,6 +9,7 @@ import SwiftUI
 
 struct HomeButtonView : View {
     @EnvironmentObject var settings: Settings
+    @EnvironmentObject var profile: Profile
     @State private var buttonOffset: CGFloat = 200
     @State private var gradientOffset = UIScreen.main.bounds.height
     @State private var showMap = false

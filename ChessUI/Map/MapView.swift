@@ -54,7 +54,7 @@ struct MapView: View {
           PuzzleView(puzzle: curPuzzle, showChess: $showChess, showMap: $showMap).environmentObject(userService).environmentObject(fireBaseService)
       }
       if showHome {
-          HomeButtonView().environmentObject(settings)
+          HomeButtonView().environmentObject(settings).environmentObject(profile).environmentObject(locationService)
                   }
         if showMap {
             ZStack{
@@ -66,14 +66,14 @@ struct MapView: View {
                             if(!puzzleStore.allPuzzles[puzzle].isSet){
                                 /*Annotation("Puzzle " + String(puzzleStore.allPuzzles[puzzle].val),*/Annotation("", coordinate:CLLocationCoordinate2D(latitude: userLoc.latitude + puzzleStore.allPuzzles[puzzle].locOffset.latitude, longitude: userLoc.longitude + puzzleStore.allPuzzles[puzzle].locOffset.longitude)) {
                                     PuzzleAnnotationView(showMap:$showMap, showChess:$showChess, val: $puzzleStore.allPuzzles[puzzle].val,
-                                                         puzzle: $puzzleStore.allPuzzles[puzzle], curPuzzle: $curPuzzle)
+                                                         puzzle: $puzzleStore.allPuzzles[puzzle], curPuzzle: $curPuzzle).environmentObject(locationService)
                                         }
                                     }
                             else{
                                 // This puzzle has already been placed relative to user location and shouldn't be moved
                                 /*Annotation("Puzzle " + String(puzzleStore.allPuzzles[puzzle].val),*/Annotation("", coordinate:CLLocationCoordinate2D(latitude:  puzzleStore.allPuzzles[puzzle].finalLoc.latitude, longitude: puzzleStore.allPuzzles[puzzle].finalLoc.longitude)) {
                                     PuzzleAnnotationView(showMap:$showMap, showChess:$showChess, val: $puzzleStore.allPuzzles[puzzle].val,
-                                                         puzzle: $puzzleStore.allPuzzles[puzzle], curPuzzle: $curPuzzle)
+                                                         puzzle: $puzzleStore.allPuzzles[puzzle], curPuzzle: $curPuzzle).environmentObject(locationService)
                                 }
                             }
                         }
