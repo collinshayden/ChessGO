@@ -31,8 +31,8 @@ struct board: View {
     @EnvironmentObject var settings: Settings
     @Binding var puzzleRushIndex: Int?
     @Binding var puzzleRushEnd: Bool?
-    
-    
+    @State var promotionSelection: Piece.Kind = .queen
+
     // orient the rows based on board orientation
     var rows: [Int] {
         logic.puzzle.orientation ? Array(1...8) : Array(1...8).reversed()
@@ -53,8 +53,32 @@ struct board: View {
     var body: some View {
         ZStack {
             VStack(spacing: 0) {
+                var mv: ChessKit.Move?
                 Text("Puzzle Rating: \(logic.puzzle.rating)")
                     .bold()
+                
+                // control promotions after a pawn is moved to the final rank
+                HStack() {
+                    Button("Promote to: ") {
+                        logic.promotePiece(mv: mv!, piece: promotionSelection)
+                    }
+                    let icons = logic.puzzle.orientation ? Constants.whiteImages : Constants.blackImages
+                    Menu {
+                        Picker("Piece promotion", selection: $promotionSelection) {
+                            ForEach(Array(icons.keys), id: \.self) {key in
+                                icons[key].tag(key)
+                            }
+                        }.frame(
+                            width: PuzzleView.squareSize,
+                            height: PuzzleView.squareSize,
+                            alignment: .center)
+                    } label: {
+                        icons[promotionSelection]?.resizable()
+                    }.frame(
+                        width: PuzzleView.squareSize,
+                        height: PuzzleView.squareSize,
+                        alignment: .center)
+                }.opacity(logic.promoting ? 1: 0)
                 
                 HStack(spacing: 0) {
                     // this is just white space to align the col text labels with the board
@@ -90,13 +114,13 @@ struct board: View {
                             let squareColor = badMove ? colors.badColor : selected ? colors.selectedColor : hint ? colors.hintColor : highlight ? colors.highlightColor : defaultSquareColor
                             // square button actions
                             Button(action: {
-                                if !logic.puzzleFailed {
-                                    logic.click(pos: coord)
+                                if !logic.promoting && !logic.puzzleFailed {
+                                    var mv = logic.click(pos: coord)
                                 }
                                 self.showHints = 0
                             }) {
                                 let (orientedRow, orientedCol) = orientIndices(row, col)
-                                if logic.getPieces()[orientedRow][orientedCol].id != "0" {
+                                if logic.getPieces()[orientedRow][orientedCol] != "0" {
                                     ZStack{
                                         if logic.checkLegalMove(pos: coord) {
                                             Circle()
@@ -105,8 +129,7 @@ struct board: View {
                                                     width: PuzzleView.squareSize-7,
                                                     height: PuzzleView.squareSize-7)
                                         }
-                                        
-                                        logic.getPieces()[orientedRow][orientedCol].icon?
+                                        Constants.pieceImages[logic.getPieces()[orientedRow][orientedCol]]?
                                             .resizable()
                                     }
                                 } else if logic.checkLegalMove(pos: coord) {
