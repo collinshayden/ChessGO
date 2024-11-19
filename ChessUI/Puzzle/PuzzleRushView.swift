@@ -16,40 +16,79 @@ struct PuzzleRushView: View {
     @State var puzzleRushEnd: Bool? = false
     @Binding var showPuzzleRush: Bool
     @Binding var showMap: Bool
+    @State var start: Bool = false
     
     
     var body: some View {
         VStack {
             Text("Puzzle Rush").font(.largeTitle).padding(40)
-            Text("\(puzzleRushIndex!+1)").font(.largeTitle).padding(40)
             
-            if puzzleRushIndex! < puzzleRushStore.puzzles.count {
-                var logic = BoardLogic(selectedPuzzle: puzzleRushStore.puzzles[puzzleRushIndex!])
-                if !puzzleRushEnd! {
-                    board(logic: logic, puzzleRushIndex: $puzzleRushIndex, puzzleRushEnd: $puzzleRushEnd)
-                }
-                else {
-                    Text("Game Over")
-                    Text("Score: \(puzzleRushIndex!)").onAppear {
-                        Task {
-                            puzzleRushStore.puzzles = await fireBaseService.getPuzzleRushPuzzles()
-                        }
+            if !start {
+                Button(action: {
+                    withAnimation {
+                        start.toggle()
                     }
-                    Button(action: {
-                        puzzleRushEnd = false
-                        puzzleRushIndex = 0
-                    }) {
-                        Text("Restart")
-                            .font(.headline)
-                            .padding()
-                            .background(Color.blue)
-                            .foregroundColor(.white)
-                            .cornerRadius(10)
-                    }
+                }) {
+                    Text("Start!")
+                        .font(.headline)
+                        .padding()
+                        .background(Color.blue)
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
                 }
             }
             else {
-                Text("Congratulations, you reached the max puzzle rush score of \(puzzleRushStore.puzzles.count)!")
+                if puzzleRushStore.puzzles.count == 0 {
+                    Text("Loading Puzzles...").font(.largeTitle).padding(40)
+                    Text("Please wait").font(.largeTitle).padding(40)
+                }
+                else {
+                    if puzzleRushIndex! < puzzleRushStore.puzzles.count {
+                        var logic = BoardLogic(selectedPuzzle: puzzleRushStore.puzzles[puzzleRushIndex!])
+                        if !puzzleRushEnd! {
+                            Text("Score: \(puzzleRushIndex!)").font(.largeTitle).padding(40)
+                            board(logic: logic, puzzleRushIndex: $puzzleRushIndex, puzzleRushEnd: $puzzleRushEnd)
+                        }
+                        else {
+                            VStack {
+                                Text("Game Over").font(.largeTitle).padding(40).onAppear {
+                                    Task {
+                                        puzzleRushStore.puzzles = await fireBaseService.getPuzzleRushPuzzles()
+                                    }
+                                }
+                                Text("Your Score: \(puzzleRushIndex!)").font(.largeTitle).padding(40)
+                            }.animation(.easeInOut, value: puzzleRushEnd)
+                        }
+                    }
+                    else {
+                        Text("Congratulations!").font(.largeTitle).padding(40)
+                        Text("You reached the max puzzle rush score of \(puzzleRushStore.puzzles.count)!")
+                    }
+                }
+                Button(action: {
+                    puzzleRushEnd = false
+                    puzzleRushIndex = 0
+                }) {
+                    Text("Restart")
+                        .font(.headline)
+                        .padding()
+                        .background(Color.blue)
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
+                }
+            }
+            Button(action: {
+                withAnimation {
+                    showPuzzleRush.toggle()
+                    showMap.toggle()
+                }
+            }) {
+                Text("Back to Map")
+                    .font(.headline)
+                    .padding()
+                    .background(Color.blue)
+                    .foregroundColor(.white)
+                    .cornerRadius(10)
             }
         }
     }
