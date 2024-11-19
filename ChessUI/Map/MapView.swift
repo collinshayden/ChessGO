@@ -76,10 +76,17 @@ struct MapView: View {
                             }
                         }
                         Annotation(userService.username, coordinate:userLoc){
-                            ZStack {
-                                profile.pieces[profile.pieceChoice].resizable().frame(width:80, height:80)
-                            }.environment(\.font, .custom("League Spartan", size: 32))
+                            VStack{
+                                ZStack {
+                                    profile.pieces[profile.pieceChoice].resizable().frame(width:80, height:80)
+                                }
+                                ZStack{
+                                    Text(userService.username).foregroundColor(.black).shadow(color:.gray, radius:3)
+                                }
+                            }.environment(\.font, .custom("League Spartan", size: 25))
                         }
+                        // Hide initial label so we can style the text
+                        .annotationTitles(.hidden)
                     }
                 }.ignoresSafeArea().animation(Animation.easeInOut(duration: 0.1), value:locationService.currentHeading)
                 
