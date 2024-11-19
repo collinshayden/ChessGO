@@ -10,7 +10,6 @@
 		6E4732A02CC9749800DDFB36 /* PuzzleStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E47329F2CC9749800DDFB36 /* PuzzleStore.swift */; };
 		6E63E7DE2CC2C3C000183041 /* PuzzleAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E63E7DD2CC2C3C000183041 /* PuzzleAnnotationView.swift */; };
 		6E63E7E02CC2C56B00183041 /* BoardLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E63E7DF2CC2C56B00183041 /* BoardLogic.swift */; };
-		6E8B57C92CE64CED00FF5A95 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6E8B57C82CE64CED00FF5A95 /* GoogleService-Info.plist */; };
 		6E8B57CB2CE64D7E00FF5A95 /* MotionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E8B57CA2CE64D7E00FF5A95 /* MotionService.swift */; };
 		6E8B57CD2CE651F700FF5A95 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E8B57CC2CE651F700FF5A95 /* Profile.swift */; };
 		A172E7062CE3CC0200938AA2 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = A172E7052CE3CC0200938AA2 /* Settings.swift */; };
@@ -41,6 +40,8 @@
 		B6EFACCB2CC02188003DF466 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6EFACC82CC02188003DF466 /* LocationService.swift */; };
 		B6EFACCD2CC02670003DF466 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6EFACCC2CC0266C003DF466 /* RootView.swift */; };
 		DB06DB6B2CAEEBE400CBE7F3 /* ChessLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB06DB6A2CAEEBE400CBE7F3 /* ChessLogic.swift */; };
+		DB11FB262CEB083900B3BED7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DB11FB252CEB083900B3BED7 /* GoogleService-Info.plist */; };
+		DB11FB282CEBA83500B3BED7 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB11FB272CEBA83500B3BED7 /* Constants.swift */; };
 		DB146E4A2CA5A10C00A145B7 /* ChessUIApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB146E492CA5A10C00A145B7 /* ChessUIApp.swift */; };
 		DB146E4C2CA5A10C00A145B7 /* PuzzleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB146E4B2CA5A10C00A145B7 /* PuzzleView.swift */; };
 		DB146E4E2CA5A10E00A145B7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DB146E4D2CA5A10E00A145B7 /* Assets.xcassets */; };
@@ -52,7 +53,6 @@
 		6E47329F2CC9749800DDFB36 /* PuzzleStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PuzzleStore.swift; sourceTree = "<group>"; };
 		6E63E7DD2CC2C3C000183041 /* PuzzleAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PuzzleAnnotationView.swift; sourceTree = "<group>"; };
 		6E63E7DF2CC2C56B00183041 /* BoardLogic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoardLogic.swift; sourceTree = "<group>"; };
-		6E8B57C82CE64CED00FF5A95 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		6E8B57CA2CE64D7E00FF5A95 /* MotionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotionService.swift; sourceTree = "<group>"; };
 		6E8B57CC2CE651F700FF5A95 /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		A172E7052CE3CC0200938AA2 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
@@ -74,6 +74,8 @@
 		B6EFACC92CC02188003DF466 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		B6EFACCC2CC0266C003DF466 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		DB06DB6A2CAEEBE400CBE7F3 /* ChessLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChessLogic.swift; sourceTree = "<group>"; };
+		DB11FB252CEB083900B3BED7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
+		DB11FB272CEBA83500B3BED7 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		DB146E462CA5A10C00A145B7 /* ChessUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChessUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB146E492CA5A10C00A145B7 /* ChessUIApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChessUIApp.swift; sourceTree = "<group>"; };
 		DB146E4B2CA5A10C00A145B7 /* PuzzleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PuzzleView.swift; sourceTree = "<group>"; };
@@ -144,6 +146,7 @@
 				DB146E492CA5A10C00A145B7 /* ChessUIApp.swift */,
 				B6EFACCC2CC0266C003DF466 /* RootView.swift */,
 				B626D4E92CC6CCBD00C22E4E /* Colors.swift */,
+				DB11FB272CEBA83500B3BED7 /* Constants.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -182,7 +185,7 @@
 		DB146E482CA5A10C00A145B7 /* ChessUI */ = {
 			isa = PBXGroup;
 			children = (
-				6E8B57C82CE64CED00FF5A95 /* GoogleService-Info.plist */,
+				DB11FB252CEB083900B3BED7 /* GoogleService-Info.plist */,
 				A1AC30922CDD431D00FA1C54 /* App */,
 				A1AC30912CDD431600FA1C54 /* Firebase */,
 				A1AC30902CDD431200FA1C54 /* Map */,
@@ -279,7 +282,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DB146E512CA5A10E00A145B7 /* Preview Assets.xcassets in Resources */,
-				6E8B57C92CE64CED00FF5A95 /* GoogleService-Info.plist in Resources */,
+				DB11FB262CEB083900B3BED7 /* GoogleService-Info.plist in Resources */,
 				B626D4E72CC6C62800C22E4E /* LeagueSpartan.ttf in Resources */,
 				DB146E4E2CA5A10E00A145B7 /* Assets.xcassets in Resources */,
 			);
@@ -299,6 +302,7 @@
 				B626D4EA2CC6CCC100C22E4E /* Colors.swift in Sources */,
 				6E8B57CB2CE64D7E00FF5A95 /* MotionService.swift in Sources */,
 				B6EFACCA2CC02188003DF466 /* MapView.swift in Sources */,
+				DB11FB282CEBA83500B3BED7 /* Constants.swift in Sources */,
 				B6EFACCD2CC02670003DF466 /* RootView.swift in Sources */,
 				B6EFACCB2CC02188003DF466 /* LocationService.swift in Sources */,
 				B626D4EE2CC72D3D00C22E4E /* HomeButtonView.swift in Sources */,
