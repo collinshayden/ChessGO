@@ -26,22 +26,19 @@ class Constants {
         "K": Image(.chessKlt45Svg)
     ]
     
-    static let whiteImages: Dictionary<Character, Image> = [
-        "p": Image(.chessPdt45Svg),
-        "r": Image(.chessRdt45Svg),
-        "n": Image(.chessNdt45Svg),
-        "b": Image(.chessBdt45Svg),
-        "q": Image(.chessQdt45Svg),
-        "k": Image(.chessKdt45Svg)
+    static let whiteImages: Dictionary<Piece.Kind, Image> = [
+        .rook: Image(.chessRlt45Svg),
+        .knight: Image(.chessNlt45Svg),
+        .bishop: Image(.chessBlt45Svg),
+        .queen: Image(.chessQlt45Svg),
+        .king: Image(.chessKlt45Svg)
     ]
     
-    static let blackImages: Dictionary<Character, Image> = [
-        "P": Image(.chessPlt45Svg),
-        "R": Image(.chessRlt45Svg),
-        "N": Image(.chessNlt45Svg),
-        "B": Image(.chessBlt45Svg),
-        "Q": Image(.chessQlt45Svg),
-        "K": Image(.chessKlt45Svg)
+    static let blackImages: Dictionary<Piece.Kind, Image> = [
+        .rook: Image(.chessRdt45Svg),
+        .knight: Image(.chessNdt45Svg),
+        .bishop: Image(.chessBdt45Svg),
+        .queen: Image(.chessQdt45Svg),
     ]
     
     // piece id to piece kind dictionary
@@ -52,11 +49,14 @@ class Constants {
         "b": .bishop,
         "q": .queen,
         "k": .king,
-        "P": .pawn,
-        "R": .rook,
-        "N": .knight,
-        "B": .bishop,
-        "Q": .queen,
-        "K": .king
+    ]
+    
+    static let kindsId: Dictionary<Piece.Kind, Character> = [
+        .pawn: "p",
+        .rook: "r",
+        .knight: "n",
+        .bishop: "b",
+        .queen: "q",
+        .king: "k",
     ]
 }

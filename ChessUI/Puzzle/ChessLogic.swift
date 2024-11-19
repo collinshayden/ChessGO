@@ -12,6 +12,7 @@ import ChessKit
 struct Move : Equatable {
     var source : Square
     var destination : Square
+    var promotion: Character?
 }
 
 class Puzzle: ObservableObject {
@@ -32,9 +33,15 @@ class Puzzle: ObservableObject {
         self.themes = themes.split(separator: " ").map{String($0)}
         self.moves = [Move]()
         for str in moves.split(separator: " ") {
-            let source = Square(String(str.prefix(2)))
-            let destination = Square(String(str.suffix(2)))
-            self.moves.append(Move(source: source, destination: destination))
+            let characters = Array(str)
+            let source = Square(String(characters[...1]))
+            let destination = Square(String(characters[2...3]))
+            if (characters.count == 4) {
+                self.moves.append(Move(source: source, destination: destination))
+            } else {
+                let piece = characters[4]
+                self.moves.append(Move(source: source, destination: destination, promotion: piece))
+            }
         }
     }
 }

@@ -31,7 +31,7 @@ struct board: View {
     @EnvironmentObject var settings: Settings
     @Binding var puzzleRushIndex: Int?
     @Binding var puzzleRushEnd: Bool?
-    @State var promotionSelection: Piece.Kind = .pawn
+    @State var promotionSelection: Piece.Kind = .queen
 
     // orient the rows based on board orientation
     var rows: [Int] {
@@ -53,16 +53,32 @@ struct board: View {
     var body: some View {
         ZStack {
             VStack(spacing: 0) {
-                
+                var mv: ChessKit.Move?
                 Text("Puzzle Rating: \(logic.puzzle.rating)")
                     .bold()
                 
-                Picker(selection: $promotionSelection, label: Text("Promote")) {
-                    let icons = logic.puzzle.orientation ? Constants.whiteImages : Constants.blackImages
-                    ForEach(Array(icons.keys), id: \.self) {key in
-                        icons[key]
+                // control promotions after a pawn is moved to the final rank
+                HStack() {
+                    Button("Promote to: ") {
+                        logic.promotePiece(mv: mv!, piece: promotionSelection)
                     }
-                }
+                    let icons = logic.puzzle.orientation ? Constants.whiteImages : Constants.blackImages
+                    Menu {
+                        Picker("Piece promotion", selection: $promotionSelection) {
+                            ForEach(Array(icons.keys), id: \.self) {key in
+                                icons[key].tag(key)
+                            }
+                        }.frame(
+                            width: PuzzleView.squareSize,
+                            height: PuzzleView.squareSize,
+                            alignment: .center)
+                    } label: {
+                        icons[promotionSelection]?.resizable()
+                    }.frame(
+                        width: PuzzleView.squareSize,
+                        height: PuzzleView.squareSize,
+                        alignment: .center)
+                }.opacity(logic.promoting ? 1: 0)
                 
                 HStack(spacing: 0) {
                     // this is just white space to align the col text labels with the board
@@ -113,7 +129,6 @@ struct board: View {
                                                     width: PuzzleView.squareSize-7,
                                                     height: PuzzleView.squareSize-7)
                                         }
-                                        
                                         Constants.pieceImages[logic.getPieces()[orientedRow][orientedCol]]?
                                             .resizable()
                                     }
