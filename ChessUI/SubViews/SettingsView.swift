@@ -15,28 +15,29 @@ struct SettingsView : View {
     
     // TODO make UI look nicer
     var body : some View {
-        Text("Settings").font(.largeTitle).padding(40)
-        Spacer()
-        VStack(spacing: 20) {
+        
+        VStack() {
+            Text("Settings").font(.custom("League Spartan", size : 40))
+            Spacer()
             
             HStack {
-                Text("Puzzle Difficulty")
+                Text("Puzzle Difficulty").font(.custom("League Spartan", size : 20))
                 Picker("Puzzle Difficulty", selection: $settings.puzzleDifficulty) {
                     ForEach(settings.difficulties, id: \.value) { difficulty in
                         Text("\(difficulty.label) (\(formatValue(difficulty.value)))")
                             .tag(difficulty.value)
                     }
-                }
+                }.accentColor(.white)
             }
             
             HStack {
-                Text("Animation Speed")
+                Text("Animation Speed").font(.custom("League Spartan", size : 20))
                 Picker("Animation Speed", selection: $settings.animationSpeed) {
                     ForEach(settings.animationSpeeds, id: \.value) { speed in
                         Text("\(speed.label) (\(String(format: "%.2f", speed.value))s)")
                             .tag(speed.value)
                     }
-                }
+                }.accentColor(.white)
             }
             
             HStack {
@@ -56,24 +57,23 @@ struct SettingsView : View {
                     }
                 }
                 .pickerStyle(.wheel)
-                .frame(maxWidth: 80)
             }
+            Spacer()
+            DefaultButtonView(buttonImage: "xmark", action: { showSettings = false ; showMap = true})
         }
-        .font(.title2)
-        Spacer()
-        Button(action: {
-            withAnimation {
-                showSettings.toggle()
-                showMap.toggle()
-            }
-        }) {
-            Text("Back to Map")
-                .font(.headline)
-                .padding()
-                .background(Color.blue)
-                .foregroundColor(.white)
-                .cornerRadius(10)
-        }
+        .padding(20)
+        .environment(\.font, .custom("League Spartan", size : 32))
+        .foregroundColor(.white)
+        .background(LinearGradient(
+            gradient: Gradient(colors: [
+                colors.darkGreen,
+                colors.vermontGreen,
+                colors.lightGreen
+            ]),
+            startPoint: .top,
+            endPoint: .bottom
+        ))
+        
     }
     
     // helper function to add the "+" for positive difficulties

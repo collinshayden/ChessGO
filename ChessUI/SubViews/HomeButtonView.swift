@@ -25,7 +25,7 @@ struct HomeButtonView : View {
         }else if showSettings{
             SettingsView(showSettings: $showSettings, showMap: $showMap)
         }else if showStats{
-            StatsView()
+            StatsView(showStats: $showStats, showMap: $showMap)
         }else if showProfile{
             ProfileView(showProfile: $showProfile, showMap: $showMap)
         } else if showPuzzleRush {

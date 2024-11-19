@@ -33,6 +33,7 @@
 		B6BFA56B2CB7062000F1DA5F /* FirebaseFunctions in Frameworks */ = {isa = PBXBuildFile; productRef = B6BFA56A2CB7062000F1DA5F /* FirebaseFunctions */; };
 		B6BFA56D2CB7062000F1DA5F /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = B6BFA56C2CB7062000F1DA5F /* FirebaseStorage */; };
 		B6BFA56F2CB7062000F1DA5F /* FirebaseStorageCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = B6BFA56E2CB7062000F1DA5F /* FirebaseStorageCombine-Community */; };
+		B6DEE9AF2CEC18170091CBCB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B6DEE9AE2CEC18170091CBCB /* GoogleService-Info.plist */; };
 		B6E5D79A2CB7073700DF5139 /* FirebaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6E5D7992CB7073100DF5139 /* FirebaseService.swift */; };
 		B6E5D79C2CB7074000DF5139 /* DBError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6E5D79B2CB7073C00DF5139 /* DBError.swift */; };
 		B6E5D79E2CB7074800DF5139 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6E5D79D2CB7074300DF5139 /* LoginView.swift */; };
@@ -67,6 +68,7 @@
 		B62DED392CD3CB5900E9C987 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		B62DED3A2CD3CB5900E9C987 /* StatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsView.swift; sourceTree = "<group>"; };
 		B62DED3B2CD3CB5900E9C987 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
+		B6DEE9AE2CEC18170091CBCB /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B6E5D7992CB7073100DF5139 /* FirebaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseService.swift; sourceTree = "<group>"; };
 		B6E5D79B2CB7073C00DF5139 /* DBError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBError.swift; sourceTree = "<group>"; };
 		B6E5D79D2CB7074300DF5139 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
