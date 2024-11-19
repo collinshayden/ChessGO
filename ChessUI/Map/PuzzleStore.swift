@@ -12,6 +12,7 @@ let startDistanceFromUser = 0.0005
 let numPuzzlesOnMap = 40
 let longLatScalar = 10000.0
 let totalOffsetScalar = 60
+let starterPuzzleScalar = 5
 let puzzleSpacing = 0.0005
 
 // Stores location of puzzle object on map as well as the actual puzzle associated with it
@@ -61,9 +62,21 @@ class PuzzleStore: ObservableObject {
     // Each puzzle object is given a random location that conforms to the restrictions
     // of proximity to user and other puzzles
     func generatePuzzles() {
-        for i in 0...numPuzzlesOnMap{
-            var long = (Double(Int.random(in: -totalOffsetScalar...totalOffsetScalar)) / longLatScalar)
-            var lat = (Double(Int.random(in: -totalOffsetScalar...totalOffsetScalar)) / longLatScalar)
+        // Make sure a puzzle is in range when the user starts
+        var long = (Double(Int.random(in: -starterPuzzleScalar...starterPuzzleScalar)) / longLatScalar)
+        var lat = (Double(Int.random(in: -starterPuzzleScalar...starterPuzzleScalar)) / longLatScalar)
+        
+        while (pow(long, 2) + pow(lat, 2)).squareRoot() <= startDistanceFromUser || checkInvalidLocationFor(possiblePuzzleLoc: CLLocationCoordinate2D(latitude: lat, longitude: long)){
+            long = (Double(Int.random(in: -starterPuzzleScalar...starterPuzzleScalar)) / longLatScalar)
+            lat = (Double(Int.random(in: -starterPuzzleScalar...starterPuzzleScalar)) / longLatScalar)
+        }
+        let starterPuzzle = PuzzleInfo(val:numPuzzlesOnMap,locOffset:CLLocationCoordinate2D(latitude: lat, longitude: long))
+        allPuzzles.append(starterPuzzle)
+        
+        // Randomly generate the remaining puzzles within a much larger range
+        for i in 0..<numPuzzlesOnMap{
+            long = (Double(Int.random(in: -totalOffsetScalar...totalOffsetScalar)) / longLatScalar)
+            lat = (Double(Int.random(in: -totalOffsetScalar...totalOffsetScalar)) / longLatScalar)
             
             while (pow(long, 2) + pow(lat, 2)).squareRoot() <= startDistanceFromUser || checkInvalidLocationFor(possiblePuzzleLoc: CLLocationCoordinate2D(latitude: lat, longitude: long)){
                 long = (Double(Int.random(in: -totalOffsetScalar...totalOffsetScalar)) / longLatScalar)

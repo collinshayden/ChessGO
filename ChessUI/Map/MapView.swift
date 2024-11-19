@@ -19,8 +19,7 @@ struct MapView: View {
     @State private var gradientOffset = UIScreen.main.bounds.height
     @State private var curPuzzle = Puzzle()
     @State private var currentHeading: CLLocationDirection = 0
-    
-  
+        
   func printResult(location: CLLocation) {
     print("location received: \(location)")
   }
@@ -58,39 +57,28 @@ struct MapView: View {
                   }
         if showMap {
             ZStack{
-                // TODO: What do we want the user to be able to do? Pan, Pitch, Rotate, Zoom are the options
                 Map (position: $locationService.currentCameraPos,
                      interactionModes: []) {
                     if let userLoc = locationService.currentLoc {
                         ForEach(0..<puzzleStore.allPuzzles.count, id: \.self) { puzzle in
                             if(!puzzleStore.allPuzzles[puzzle].isSet){
-                                /*Annotation("Puzzle " + String(puzzleStore.allPuzzles[puzzle].val),*/Annotation("", coordinate:CLLocationCoordinate2D(latitude: userLoc.latitude + puzzleStore.allPuzzles[puzzle].locOffset.latitude, longitude: userLoc.longitude + puzzleStore.allPuzzles[puzzle].locOffset.longitude)) {
+                                Annotation("", coordinate:CLLocationCoordinate2D(latitude: userLoc.latitude + puzzleStore.allPuzzles[puzzle].locOffset.latitude, longitude: userLoc.longitude + puzzleStore.allPuzzles[puzzle].locOffset.longitude)) {
                                     PuzzleAnnotationView(showMap:$showMap, showChess:$showChess, val: $puzzleStore.allPuzzles[puzzle].val,
                                                          puzzle: $puzzleStore.allPuzzles[puzzle], curPuzzle: $curPuzzle).environmentObject(locationService)
                                         }
                                     }
                             else{
                                 // This puzzle has already been placed relative to user location and shouldn't be moved
-                                /*Annotation("Puzzle " + String(puzzleStore.allPuzzles[puzzle].val),*/Annotation("", coordinate:CLLocationCoordinate2D(latitude:  puzzleStore.allPuzzles[puzzle].finalLoc.latitude, longitude: puzzleStore.allPuzzles[puzzle].finalLoc.longitude)) {
+                                Annotation("", coordinate:CLLocationCoordinate2D(latitude:  puzzleStore.allPuzzles[puzzle].finalLoc.latitude, longitude: puzzleStore.allPuzzles[puzzle].finalLoc.longitude)) {
                                     PuzzleAnnotationView(showMap:$showMap, showChess:$showChess, val: $puzzleStore.allPuzzles[puzzle].val,
                                                          puzzle: $puzzleStore.allPuzzles[puzzle], curPuzzle: $curPuzzle).environmentObject(locationService)
                                 }
                             }
                         }
-                        Annotation("user", coordinate:userLoc){
+                        Annotation(userService.username, coordinate:userLoc){
                             ZStack {
-                                profile.pieces[profile.pieceChoice].resizable().frame(width:40, height:40)
-//                                Circle()
-//                                    .fill(.gray)
-//                                    .opacity(0.3)
-//                                    .frame(width: 44, height: 44)
-//                                Circle()
-//                                    .fill(.white)
-//                                    .frame(width: 20, height: 20)
-//                                Circle()
-//                                    .fill(.blue)
-//                                    .frame(width: 16, height: 16)
-                            }
+                                profile.pieces[profile.pieceChoice].resizable().frame(width:80, height:80)
+                            }.environment(\.font, .custom("League Spartan", size: 32))
                         }
                     }
                 }.ignoresSafeArea().animation(Animation.easeInOut(duration: 0.1), value:locationService.currentHeading)
