@@ -53,14 +53,13 @@ struct board: View {
     var body: some View {
         ZStack {
             VStack(spacing: 0) {
-                var mv: ChessKit.Move?
                 Text("Puzzle Rating: \(logic.puzzle.rating)")
                     .bold()
                 
                 // control promotions after a pawn is moved to the final rank
                 HStack() {
                     Button("Promote to: ") {
-                        logic.promotePiece(mv: mv!, piece: promotionSelection)
+                        logic.promotePiece(piece: promotionSelection)
                     }
                     let icons = logic.puzzle.orientation ? Constants.whiteImages : Constants.blackImages
                     Menu {

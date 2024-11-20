@@ -25,7 +25,7 @@ class Puzzle: ObservableObject {
     
     // selected puzzle format: ["rating", "FEN", "solution", "themes"]
     // ["1760","q3k1nr/1pp1nQpp/3p4/1P2p3/4P3/B1PP1b2/B5PP/5K2 b k - 0 17","e8d7 a2e6 d7d8 f7f8", "placeholder themes"]
-    init(_ rating: Int = 1760, _ fen: String = "q3k1nr/1pp1nQpp/3p4/1P2p3/4P3/B1PP1b2/B5PP/5K2 b k - 0 17", _ moves: String = "e8d7 a2e6 d7d8 f7f8", _ themes: String = "placeholder themes") {
+    init(_ rating: Int = 1760, _ fen: String = "1rb2rk1/q5P1/4p2p/3p3p/3P1P2/2P5/2QK3P/3R2R1 b - - 0 29", _ moves: String = "f8f7 c2h7 g8h7 g7g8q", _ themes: String = "placeholder themes") {
         self.rating = rating
         self.fen = fen
         self.pieces = parseFEN(fen)

@@ -21,6 +21,7 @@ class BoardLogic : ObservableObject {
     var puzzleComplete = false
     var puzzleFailed = false
     var promoting = false
+    var mv: ChessKit.Move?
     
     init(selectedPuzzle: Puzzle) {
         puzzle = selectedPuzzle
@@ -57,7 +58,7 @@ class BoardLogic : ObservableObject {
         }
     }
     
-    func click(pos: String) -> ChessKit.Move? {
+    func click(pos: String) {
         // if the clicked piece is the user's color, select it as move origin
         if boardState.position.sideToMove == boardState.position.piece(at: Square(pos))?.color {
             firstClickedSquare = Square(pos)
@@ -67,22 +68,22 @@ class BoardLogic : ObservableObject {
             if !checkLegalMove(pos: pos) {
                 firstClickedSquare = nil
                 legalMoves = []
-                return nil
+                return
             }
             
             secondClickedSquare = Square(pos)
             
             
             // move user's piece
-            let mv = boardState.move(pieceAt: firstClickedSquare!, to: secondClickedSquare!)!
+            mv = boardState.move(pieceAt: firstClickedSquare!, to: secondClickedSquare!)!
             lastMoveCoords = [firstClickedSquare!.notation, secondClickedSquare!.notation]
             
             // check if the piece needs to be promoted
-            if (mv.end.rank == 1 || mv.end.rank == 8) && mv.piece.kind == .pawn {
+            if (mv!.end.rank == 1 || mv!.end.rank == 8) && mv!.piece.kind == .pawn {
                 withAnimation(.easeIn) {
                     promoting = true
                 }
-                return mv
+                return
             }
             
             // check if the move was correct
@@ -93,14 +94,14 @@ class BoardLogic : ObservableObject {
                 if moveNum == puzzle.moves.count {
                     msg = "Puzzle Complete!"
                     puzzleComplete = true
-                    return nil
+                    return
                 }
             // set puzzle failed flag if the move wasn't correct and show constructive criticism
             } else {
                 msg = "You disgust me. Hint: \(puzzle.moves[moveNum].source.notation)"
                 legalMoves = []
                 puzzleFailed = true
-                return nil
+                return
             }
             // move computer's piece
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [self] in
@@ -118,11 +119,11 @@ class BoardLogic : ObservableObject {
             secondClickedSquare = nil
             legalMoves = []
         }
-        return nil
+        return
     }
     
-    func promotePiece(mv: ChessKit.Move, piece: Piece.Kind) {
-        boardState.completePromotion(of: mv, to: piece)
+    func promotePiece(piece: Piece.Kind) {
+        boardState.completePromotion(of: mv!, to: piece)
         
         // check if the move was correct
         if puzzle.moves[moveNum] == Move(source: firstClickedSquare!, destination: secondClickedSquare!, promotion: Constants.kindsId[piece]) {
