@@ -179,7 +179,9 @@ struct board: View {
                     }
                     if logic.puzzleFailed {
                         Text("Puzzle Failed").onAppear {
-                            puzzleRushEnd! = true
+                            withAnimation {
+                                puzzleRushEnd = true
+                            }
                         }
                     }
                 }
