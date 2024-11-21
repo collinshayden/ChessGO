@@ -59,6 +59,7 @@ class LocationService: NSObject, CLLocationManagerDelegate, ObservableObject  {
       print("################################")
       if let heading = locationManager?.heading?.magneticHeading{
           currentHeading = heading
+          print(currentHeading)
       }
 //      currentHeading = (locationManager?.heading?.magneticHeading)!
 //      currentCameraPos = MapCameraPosition.region(currentRegion!)
