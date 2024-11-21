@@ -32,7 +32,7 @@ class MotionService: NSObject, CLLocationManagerDelegate, ObservableObject  {
                 // Get the gyro data.
                 if let data = self.motionManager?.magnetometerData {
                     self.currentMagnetometer = data
-                    print(self.currentMagnetometer?.magneticField)
+//                    print(self.currentMagnetometer?.magneticField)
 //                    print(data)
                 
                 }
@@ -65,9 +65,9 @@ class MotionService: NSObject, CLLocationManagerDelegate, ObservableObject  {
                 let x = data.rotationRate.x
                 let y = data.rotationRate.y
                 let z = data.rotationRate.z
-                print("x: \(x)")
-                 print("y: \(y)")
-                 print("z: \(z)")
+//                print("x: \(x)")
+//                 print("y: \(y)")
+//                 print("z: \(z)")
 
 
                 // Use the gyroscope data in your app.

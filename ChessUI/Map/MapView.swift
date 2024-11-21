@@ -20,6 +20,14 @@ struct MapView: View {
     @State private var curPuzzle = Puzzle()
     @State private var currentHeading: CLLocationDirection = 0
         
+    
+    func manualLocUpdate() {
+        locationService.currentRegion = MKCoordinateRegion (
+            center: locationService.currentLoc!,
+            span: MKCoordinateSpan(latitudeDelta: 0.003, longitudeDelta: 0.003)
+        )
+        locationService.currentCameraPos = MapCameraPosition.camera(MapCamera(centerCoordinate: locationService.currentRegion!.center, distance:1000, heading: currentHeading, pitch: 40.0))
+    }
   func printResult(location: CLLocation) {
     print("location received: \(location)")
   }
@@ -61,13 +69,13 @@ struct MapView: View {
                      interactionModes: []) {
                     if let userLoc = locationService.currentLoc {
                         ForEach(0..<puzzleStore.allPuzzles.count, id: \.self) { puzzle in
-                            if(!puzzleStore.allPuzzles[puzzle].isSet){
+                            if(!puzzleStore.allPuzzles[puzzle].isSet && !puzzleStore.allPuzzles[puzzle].isSolved){
                                 Annotation("", coordinate:CLLocationCoordinate2D(latitude: userLoc.latitude + puzzleStore.allPuzzles[puzzle].locOffset.latitude, longitude: userLoc.longitude + puzzleStore.allPuzzles[puzzle].locOffset.longitude)) {
                                     PuzzleAnnotationView(showMap:$showMap, showChess:$showChess, val: $puzzleStore.allPuzzles[puzzle].val,
                                                          puzzle: $puzzleStore.allPuzzles[puzzle], curPuzzle: $curPuzzle).environmentObject(locationService)
                                         }
                                     }
-                            else{
+                            else if !puzzleStore.allPuzzles[puzzle].isSolved {
                                 // This puzzle has already been placed relative to user location and shouldn't be moved
                                 Annotation("", coordinate:CLLocationCoordinate2D(latitude:  puzzleStore.allPuzzles[puzzle].finalLoc.latitude, longitude: puzzleStore.allPuzzles[puzzle].finalLoc.longitude)) {
                                     PuzzleAnnotationView(showMap:$showMap, showChess:$showChess, val: $puzzleStore.allPuzzles[puzzle].val,
@@ -75,15 +83,12 @@ struct MapView: View {
                                 }
                             }
                         }
-                        Annotation(userService.username, coordinate:userLoc){
+                        Annotation("", coordinate:userLoc){
                             VStack{
                                 ZStack {
                                     profile.pieces[profile.pieceChoice].resizable().frame(width:80, height:80)
                                 }
-                                ZStack{
-                                    Text(userService.username).foregroundColor(.black).shadow(color:.gray, radius:3)
-                                }
-                            }.environment(\.font, .custom("League Spartan", size: 25))
+                            }
                         }
                         // Hide initial label so we can style the text
                         .annotationTitles(.hidden)
@@ -120,6 +125,45 @@ struct MapView: View {
                         .cornerRadius(100)
                     }.padding(50)
                 }.ignoresSafeArea()
+                // Uncomment this for arrow keys to move user
+    //            /**
+                HStack{
+                    VStack{
+                        Button( action: {
+                            print("moving forward")
+                            locationService.currentLoc?.latitude = (locationService.currentLoc?.latitude ?? 0.0) + 0.0003
+                            manualLocUpdate()
+
+                        }, label: {
+                            Image(systemName: "arrow.up").imageScale(.large).foregroundColor(.white).background(.blue).cornerRadius(3)
+                        })
+                        HStack{
+                            Button( action: {
+                                print("moving left")
+                                locationService.currentLoc?.longitude = (locationService.currentLoc?.longitude ?? 0.0) - 0.0003
+                                manualLocUpdate()
+                            }, label: {
+                                Image(systemName: "arrow.left").imageScale(.large).foregroundColor(.white).background(.blue).cornerRadius(3)
+                            })
+                            Button( action: {
+                                print("moving right")
+                                locationService.currentLoc?.longitude = (locationService.currentLoc?.longitude ?? 0.0) + 0.0003
+                                manualLocUpdate()
+                            }, label: {
+                                Image(systemName: "arrow.right").imageScale(.large).foregroundColor(.white).background(.blue).cornerRadius(3)
+                            })
+                        }
+                        Button( action: {
+                            print("moving back")
+                            locationService.currentLoc?.latitude = (locationService.currentLoc?.latitude ?? 0.0) - 0.0003
+                            manualLocUpdate()
+                        }, label: {
+                            Image(systemName: "arrow.down").imageScale(.large).foregroundColor(.white).background(.blue).cornerRadius(3)
+                        })
+                    }
+                    Spacer()
+                }.padding()
+//                */
                 
             }.onAppear{
                 Task{
@@ -129,7 +173,6 @@ struct MapView: View {
                     for (index, puzzle) in puzzleList.enumerated() {
                         puzzleStore.allPuzzles[index].puzzle = puzzle
                     }
-                    print("puzzles loaded")
                 }
                 if showMap {
                     startRecording()
