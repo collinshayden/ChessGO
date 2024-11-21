@@ -40,20 +40,14 @@ struct GameOverView: View {
                         }
                     }
             }
-            
-            Button ("Run that back") {
-                logic.reset()
-            }
-            .padding(10)
-            .background(Color.blue)
-            .foregroundColor(.white)
-            .cornerRadius(10)
+            RoundedButtonView(buttonText: "Reset", action: { logic.reset()})
             .opacity({finished ? 1 : 0}())
             
+        
         }
         .padding(10)
-        .font(.system(size: 36))
-        .bold()
+        .environment(\.font, .custom("League Spartan", size: 32))
+        .foregroundColor(Color.white)
         .onAppear {
             newElo = updateElo(userRating: Double(user.elo.last!), userKFactor: Double(user.k), puzzleRating: Int(logic.puzzle.rating), correct: true)
             displayElo = user.elo.last!

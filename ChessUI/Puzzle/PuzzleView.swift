@@ -55,7 +55,6 @@ struct board: View {
             VStack(spacing: 0) {
                 var mv: ChessKit.Move?
                 Text("Puzzle Rating: \(logic.puzzle.rating)")
-                    .bold()
                 
                 // control promotions after a pawn is moved to the final rank
                 HStack() {
@@ -152,13 +151,7 @@ struct board: View {
                         .padding(10)
                     // doesnt allow user to get hints after they have finished the puzzle
                     if !logic.puzzleComplete {
-                        Button(showHints == 0 ? "Get a Hint" : "Second Hint") {
-                            showHints += 1
-                        }
-                        .padding(10)
-                        .background(Color.blue)
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
+                        RoundedButtonView(buttonText: showHints == 0 ? "Get a Hint" : "Second Hint", action: {showHints += 1 })
                     }
                     
                     // doesnt allow user to get hints after they have finished the puzzle
@@ -190,7 +183,6 @@ struct board: View {
             }
             .blur(radius: {logic.puzzleComplete && puzzleRushIndex == nil ? 18 : 0}())
             .animation(.easeInOut, value: logic.puzzleComplete)
-            
             if logic.puzzleComplete && puzzleRushIndex == nil {
                 GameOverView(board: logic)
             }
@@ -220,25 +212,17 @@ struct PuzzleView: View {
     
     var body: some View {
         VStack {
-            Text("ChessGo").font(.largeTitle).padding(40)
+            Text("ChessGo").font(.largeTitle).padding(40).bold()
             board(logic: logic, puzzleRushIndex: .constant(nil), puzzleRushEnd: .constant(nil))
-            
-            Button(action: {
+            RoundedButtonView(buttonText: "Back", action: {
                 withAnimation {
-                    showChess.toggle()
-                    showMap.toggle()
-                }
-            }) {
-                Text("Back to Map")
-                    .font(.headline)
-                    .padding()
-                    .background(Color.blue)
-                    .foregroundColor(.white)
-                    .cornerRadius(10)
-            }
-            .padding()
-            
-        }
+                showChess.toggle()
+                showMap.toggle()
+            }})
+        }.padding(20)
+        .environment(\.font, .custom("League Spartan", size: 32))
+        .foregroundColor(.white)
+        .background(colors.vermontGreen)
     }
 }
 
