@@ -32,7 +32,7 @@ class BoardLogic : ObservableObject {
             withAnimation(.easeInOut(duration: 0.5)) {
                 let cMv = boardState.move(pieceAt: puzzle.moves[0].source, to: puzzle.moves[0].destination)
                 if puzzle.moves[0].promotion != nil {
-                    boardState.completePromotion(of: cMv!, to: Constants.idKinds[puzzle.moves[moveNum].promotion!]!)
+                    boardState.completePromotion(of: cMv!, to: Constants.idKinds[puzzle.moves[0].promotion!]!)
                 }
                 lastMoveCoords = [puzzle.moves[0].source.notation, puzzle.moves[0].destination.notation]
             }
