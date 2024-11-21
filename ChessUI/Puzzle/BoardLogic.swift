@@ -30,7 +30,10 @@ class BoardLogic : ObservableObject {
         // take computer's first move
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [self] in
             withAnimation(.easeInOut(duration: 0.5)) {
-                _ = boardState.move(pieceAt: puzzle.moves[0].source, to: puzzle.moves[0].destination)
+                let cMv = boardState.move(pieceAt: puzzle.moves[0].source, to: puzzle.moves[0].destination)
+                if puzzle.moves[0].promotion != nil {
+                    boardState.completePromotion(of: cMv!, to: Constants.idKinds[puzzle.moves[moveNum].promotion!]!)
+                }
                 lastMoveCoords = [puzzle.moves[0].source.notation, puzzle.moves[0].destination.notation]
             }
         }
@@ -49,7 +52,7 @@ class BoardLogic : ObservableObject {
         boardState = Board(position: Position(fen: puzzle.fen)!)
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [self] in
             withAnimation(.easeInOut(duration: 0.5)) {
-                var cMv = boardState.move(pieceAt: puzzle.moves[0].source, to: puzzle.moves[0].destination)
+                let cMv = boardState.move(pieceAt: puzzle.moves[0].source, to: puzzle.moves[0].destination)
                 if puzzle.moves[0].promotion != nil {
                     boardState.completePromotion(of: cMv!, to: Constants.idKinds[puzzle.moves[moveNum].promotion!]!)
                 }
@@ -106,7 +109,7 @@ class BoardLogic : ObservableObject {
             // move computer's piece
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [self] in
                 withAnimation(.easeInOut(duration: 0.5)) {
-                    var cMv = boardState.move(pieceAt: puzzle.moves[moveNum].source, to: puzzle.moves[moveNum].destination)
+                    let cMv = boardState.move(pieceAt: puzzle.moves[moveNum].source, to: puzzle.moves[moveNum].destination)
                     if puzzle.moves[moveNum].promotion != nil {
                         boardState.completePromotion(of: cMv!, to: Constants.idKinds[puzzle.moves[moveNum].promotion!]!)
                     }
@@ -146,7 +149,7 @@ class BoardLogic : ObservableObject {
         // move computer's piece
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [self] in
             withAnimation(.easeInOut(duration: 0.5)) {
-                var cMv = boardState.move(pieceAt: puzzle.moves[moveNum].source, to: puzzle.moves[moveNum].destination)
+                let cMv = boardState.move(pieceAt: puzzle.moves[moveNum].source, to: puzzle.moves[moveNum].destination)
                 if puzzle.moves[moveNum].promotion != nil {
                     boardState.completePromotion(of: cMv!, to: Constants.idKinds[puzzle.moves[moveNum].promotion!]!)
                 }
