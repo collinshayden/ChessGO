@@ -76,7 +76,7 @@ struct board: View {
                         width: PuzzleView.squareSize,
                         height: PuzzleView.squareSize,
                         alignment: .center)
-                }.opacity(logic.promoting ? 1: 0)
+                }.opacity(logic.promoting ? 1 : 0)
                 
                 HStack(spacing: 0) {
                     // this is just white space to align the col text labels with the board
@@ -94,7 +94,7 @@ struct board: View {
                 ForEach((0..<8).reversed(), id: \.self) {row in
                     HStack(spacing: 0) {
                         // row lables
-                        Text(String(rows[row]) + "  ")
+                        Text(String(rows[row]))
                             .frame(
                                 width: PuzzleView.boardLabel,
                                 height: PuzzleView.squareSize,
@@ -113,7 +113,7 @@ struct board: View {
                             // square button actions
                             Button(action: {
                                 if !logic.promoting && !logic.puzzleFailed {
-                                    var mv = logic.click(pos: coord)
+                                    logic.click(pos: coord)
                                 }
                                 self.showHints = 0
                             }) {
@@ -154,7 +154,7 @@ struct board: View {
                     }
                     
                     // doesnt allow user to get hints after they have finished the puzzle
-                    if logic.puzzleFailed {
+                    if logic.puzzleComplete && logic.eloChanged {
                         Button("Retry") {
                             logic.reset()
                         }
@@ -180,9 +180,9 @@ struct board: View {
                 }
                 
             }
-            .blur(radius: {logic.puzzleComplete && puzzleRushIndex == nil ? 18 : 0}())
+            .blur(radius: {logic.puzzleComplete && !logic.eloChanged && puzzleRushIndex == nil ? 18 : 0}())
             .animation(.easeInOut, value: logic.puzzleComplete)
-            if logic.puzzleComplete && puzzleRushIndex == nil {
+            if logic.puzzleComplete && puzzleRushIndex == nil && !logic.eloChanged {
                 GameOverView(board: logic)
             }
         }

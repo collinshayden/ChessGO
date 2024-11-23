@@ -50,7 +50,7 @@ struct PuzzleRushView: View {
                     }
                     else {
                         if puzzleRushIndex! < puzzleRushStore.puzzles.count {
-                            var logic = BoardLogic(selectedPuzzle: puzzleRushStore.puzzles[puzzleRushIndex!])
+                            let logic = BoardLogic(selectedPuzzle: puzzleRushStore.puzzles[puzzleRushIndex!])
                             if !puzzleRushEnd! {
                                 Text("Score: \(puzzleRushIndex!)").font(.largeTitle).padding(40)
                                 board(logic: logic, puzzleRushIndex: $puzzleRushIndex, puzzleRushEnd: $puzzleRushEnd)
@@ -79,6 +79,9 @@ struct PuzzleRushView: View {
                     RoundedButtonView(buttonText: "Back to Map", action: {withAnimation {
                         showPuzzleRush.toggle()
                         showMap.toggle()
+                        Task {
+                            puzzleRushStore.puzzles = await fireBaseService.getPuzzleRushPuzzles()
+                        }
                     }})
                 }
             }

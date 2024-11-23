@@ -21,6 +21,7 @@ class BoardLogic : ObservableObject {
     var puzzleComplete = false
     var puzzleFailed = false
     var promoting = false
+    var eloChanged = false
     var mv: ChessKit.Move?
     
     init(selectedPuzzle: Puzzle) {
@@ -30,7 +31,10 @@ class BoardLogic : ObservableObject {
         // take computer's first move
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [self] in
             withAnimation(.easeInOut(duration: 0.5)) {
-                _ = boardState.move(pieceAt: puzzle.moves[0].source, to: puzzle.moves[0].destination)
+                let cMv = boardState.move(pieceAt: puzzle.moves[0].source, to: puzzle.moves[0].destination)
+                if puzzle.moves[0].promotion != nil {
+                    boardState.completePromotion(of: cMv!, to: Constants.idKinds[puzzle.moves[0].promotion!]!)
+                }
                 lastMoveCoords = [puzzle.moves[0].source.notation, puzzle.moves[0].destination.notation]
             }
         }
@@ -38,18 +42,20 @@ class BoardLogic : ObservableObject {
     
     // resets all the board vars to restart the puzzle
     func reset() {
-        legalMoves = []
-        firstClickedSquare = nil
-        secondClickedSquare = nil
-        moveNum = 1 // set to 1 because the computer is the first move which will be taken now
-        msg = "Resetting the board"
-        puzzleComplete = false
-        puzzleFailed = false
-        // take computer's first move
-        boardState = Board(position: Position(fen: puzzle.fen)!)
+        withAnimation(.easeInOut) {
+            legalMoves = []
+            firstClickedSquare = nil
+            secondClickedSquare = nil
+            moveNum = 1 // set to 1 because the computer is the first move which will be taken now
+            msg = "Resetting the board"
+            puzzleComplete = false
+            puzzleFailed = false
+            // take computer's first move
+            boardState = Board(position: Position(fen: puzzle.fen)!)
+        }
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [self] in
             withAnimation(.easeInOut(duration: 0.5)) {
-                var cMv = boardState.move(pieceAt: puzzle.moves[0].source, to: puzzle.moves[0].destination)
+                let cMv = boardState.move(pieceAt: puzzle.moves[0].source, to: puzzle.moves[0].destination)
                 if puzzle.moves[0].promotion != nil {
                     boardState.completePromotion(of: cMv!, to: Constants.idKinds[puzzle.moves[moveNum].promotion!]!)
                 }
@@ -101,12 +107,13 @@ class BoardLogic : ObservableObject {
                 msg = "You disgust me. Hint: \(puzzle.moves[moveNum].source.notation)"
                 legalMoves = []
                 puzzleFailed = true
+                puzzleComplete = true
                 return
             }
             // move computer's piece
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [self] in
                 withAnimation(.easeInOut(duration: 0.5)) {
-                    var cMv = boardState.move(pieceAt: puzzle.moves[moveNum].source, to: puzzle.moves[moveNum].destination)
+                    let cMv = boardState.move(pieceAt: puzzle.moves[moveNum].source, to: puzzle.moves[moveNum].destination)
                     if puzzle.moves[moveNum].promotion != nil {
                         boardState.completePromotion(of: cMv!, to: Constants.idKinds[puzzle.moves[moveNum].promotion!]!)
                     }
@@ -123,6 +130,14 @@ class BoardLogic : ObservableObject {
     }
     
     func promotePiece(piece: Piece.Kind) {
+        // after the move is made, reset the origin/target and legal moves
+        defer {
+            firstClickedSquare = nil
+            secondClickedSquare = nil
+            legalMoves = []
+            promoting = false
+        }
+        
         boardState.completePromotion(of: mv!, to: piece)
         
         // check if the move was correct
@@ -140,13 +155,14 @@ class BoardLogic : ObservableObject {
             msg = "You disgust me. Hint: \(puzzle.moves[moveNum].source.notation)"
             legalMoves = []
             puzzleFailed = true
+            puzzleComplete = true
             return
         }
         
         // move computer's piece
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [self] in
             withAnimation(.easeInOut(duration: 0.5)) {
-                var cMv = boardState.move(pieceAt: puzzle.moves[moveNum].source, to: puzzle.moves[moveNum].destination)
+                let cMv = boardState.move(pieceAt: puzzle.moves[moveNum].source, to: puzzle.moves[moveNum].destination)
                 if puzzle.moves[moveNum].promotion != nil {
                     boardState.completePromotion(of: cMv!, to: Constants.idKinds[puzzle.moves[moveNum].promotion!]!)
                 }
@@ -154,11 +170,6 @@ class BoardLogic : ObservableObject {
             }
             moveNum += 1
         }
-        
-        // after the move is made, reset the origin/target and legal moves
-        firstClickedSquare = nil
-        secondClickedSquare = nil
-        legalMoves = []
     }
             
     

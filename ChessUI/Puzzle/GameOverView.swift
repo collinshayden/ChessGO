@@ -31,7 +31,7 @@ struct GameOverView: View {
                 Text("\(displayElo)")
                     .numericAnimation(number: Double(displayElo))
                     .onAppear {
-                        withAnimation(.sinAnimation(duration: log10(Double(newElo-user.elo.last!))+3)) {
+                        withAnimation(.sinAnimation(duration: log10(Double(abs(newElo-user.elo.last!)))+3)) {
                             displayElo = newElo
                         } completion: {
                             withAnimation(.sinAnimation(duration: 2)) {
@@ -40,7 +40,10 @@ struct GameOverView: View {
                         }
                     }
             }
-            RoundedButtonView(buttonText: "Reset", action: { logic.reset()})
+            RoundedButtonView(buttonText: "Reset", action: {
+                logic.eloChanged = true
+                logic.reset()
+            })
             .opacity({finished ? 1 : 0}())
             
         
@@ -49,12 +52,18 @@ struct GameOverView: View {
         .environment(\.font, .custom("League Spartan", size: 32))
         .foregroundColor(Color.white)
         .onAppear {
-            newElo = updateElo(userRating: Double(user.elo.last!), userKFactor: Double(user.k), puzzleRating: Int(logic.puzzle.rating), correct: true)
+            newElo = updateElo(userRating: Double(user.elo.last!), userKFactor: Double(user.k), puzzleRating: Int(logic.puzzle.rating), correct: !logic.puzzleFailed)
             displayElo = user.elo.last!
             var eloHistory = user.elo
             eloHistory.append(newElo)
             Task {
-                await fireBaseService.updateUserAccount(username: user.username, elo: eloHistory, correct: user.correct+1, incorrect: user.incorrect, themes: ["placeholder"], k: user.k)
+                await fireBaseService.updateUserAccount(
+                    username: user.username,
+                    elo: eloHistory,
+                    correct: !logic.puzzleFailed ? user.correct + 1 : user.correct,
+                    incorrect: logic.puzzleFailed ? user.incorrect + 1 : user.incorrect,
+                    themes: ["placeholder"],
+                    k: get_k_factor(puzzlesCompleted: user.correct))
             }
         }
     }
@@ -68,19 +77,10 @@ extension View {
 }
 
 struct AnimatableNumberModifier: Animatable, ViewModifier {
-    var animatableData: Double {
-        willSet {
-            increasing = newValue > animatableData
-        }
-    }
-    var increasing: Bool = false
+    var animatableData: Double
     
     func body(content: Content) -> some View {
-        if increasing {
-            Text("\(Int(floor(animatableData)))")
-        } else {
-            Text("\(Int(ceil(animatableData)))")
-        }
+        Text("\(Int(round(animatableData)))")
     }
 }
 
@@ -112,6 +112,21 @@ func updateElo(userRating: Double, userKFactor: Double, puzzleRating: Int, corre
     let expectedScore = 1 / (1 + pow(10, diff / f_factor))
     let adjust = score - expectedScore
     return Int(userRating + userKFactor * adjust)
+}
+
+func get_k_factor(puzzlesCompleted: Int) -> Int {
+    if puzzlesCompleted < 2 {
+        return 400
+    }
+    else if puzzlesCompleted < 5 {
+        return 200
+    }
+    else if puzzlesCompleted < 10 {
+        return 150
+    }
+    else {
+        return 100
+    }
 }
 
 #Preview {
