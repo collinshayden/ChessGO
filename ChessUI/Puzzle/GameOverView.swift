@@ -40,7 +40,10 @@ struct GameOverView: View {
                         }
                     }
             }
-            RoundedButtonView(buttonText: "Reset", action: { logic.reset()})
+            RoundedButtonView(buttonText: "Reset", action: {
+                logic.eloChanged = true
+                logic.reset()
+            })
             .opacity({finished ? 1 : 0}())
             
         
@@ -74,19 +77,10 @@ extension View {
 }
 
 struct AnimatableNumberModifier: Animatable, ViewModifier {
-    var animatableData: Double {
-        willSet {
-            increasing = newValue > animatableData
-        }
-    }
-    var increasing: Bool = false
+    var animatableData: Double
     
     func body(content: Content) -> some View {
-        if increasing {
-            Text("\(Int(floor(animatableData)))")
-        } else {
-            Text("\(Int(ceil(animatableData)))")
-        }
+        Text("\(Int(round(animatableData)))")
     }
 }
 
