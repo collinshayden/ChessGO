@@ -1,6 +1,5 @@
 
 // https://www.abstractapi.com/guides/ip-geolocation/swift-geolocation
-// TODO: This code is still messy from Jason's example, I need to remove some parts that don't do anything.
 
 import CoreLocation
 import SwiftUI
@@ -12,6 +11,7 @@ enum CheckServiceResult {
   case available
 }
 
+// Class to interact with LocationManager and update user location data in the MapView
 class LocationService: NSObject, CLLocationManagerDelegate, ObservableObject  {
   var locationManager: CLLocationManager?
   @Published var serviceAvailable = false
@@ -48,21 +48,17 @@ class LocationService: NSObject, CLLocationManagerDelegate, ObservableObject  {
     print("#locations in array = \(locations.count)")
     print("location: \(latestLocation.coordinate)")
     print("altitude: \(latestLocation.altitude) +/- \(latestLocation.horizontalAccuracy) m")
-    // TODO: This is where the location is being actively updated when startLocationUpdates is called
-      // TODO: It still looks a little clunky when the update resets the camera position, so once we figure out what type of interaction we allow the user to do, we can adjust this.
+    // This is where the location is being actively updated when startLocationUpdates is called
       currentLoc = latestLocation.coordinate
       print("updating location")
       currentRegion = MKCoordinateRegion (
           center: currentLoc!,
           span: MKCoordinateSpan(latitudeDelta: 0.003, longitudeDelta: 0.003)
       )
-      print("################################")
       if let heading = locationManager?.heading?.magneticHeading{
           currentHeading = heading
           print(currentHeading)
       }
-//      currentHeading = (locationManager?.heading?.magneticHeading)!
-//      currentCameraPos = MapCameraPosition.region(currentRegion!)
       // This is used to set the pitch at an angle to start so that buildings appear 3D
       currentCameraPos = MapCameraPosition.camera(MapCamera(centerCoordinate: currentRegion!.center, distance:1000, heading: currentHeading, pitch: 40.0))
       // demo showing how to provide info asynchronously back to the main thread

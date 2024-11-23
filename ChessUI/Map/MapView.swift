@@ -1,7 +1,9 @@
 import SwiftUI
 import MapKit
-import CoreLocation // just for the printResult()
+import CoreLocation
 
+// View for the map and user's active location as well as
+// chess puzzle annotations spread across the map
 struct MapView: View {
     @EnvironmentObject var locationService: LocationService
     @EnvironmentObject var userService: UserService
@@ -9,24 +11,27 @@ struct MapView: View {
     @EnvironmentObject var puzzleStore: PuzzleStore
     @EnvironmentObject var settings: Settings
     @EnvironmentObject var profile: Profile
-    var motionService = MotionService()
     
     @State private var name = ""
-    // TODO: These states should be in the main view and set as binding here to update what view is shown there
     @State private var showMap = true
     @State private var showChess = false
     @State private var showHome = false
     @State private var gradientOffset = UIScreen.main.bounds.height
     @State private var curPuzzle = Puzzle()
     @State private var currentHeading: CLLocationDirection = 0
-        
+    
+    let userIconDimension: CGFloat = 80
+    let simulatedWalkingDistance: Double = 0.0003
+    let mapCoordinateSpan: Double = 0.003
+    let mapInitialPitch: Double = 40.0
+    let mapInitialDistance: Double = 1000.0
     
     func manualLocUpdate() {
         locationService.currentRegion = MKCoordinateRegion (
             center: locationService.currentLoc!,
-            span: MKCoordinateSpan(latitudeDelta: 0.003, longitudeDelta: 0.003)
+            span: MKCoordinateSpan(latitudeDelta: mapCoordinateSpan, longitudeDelta: mapCoordinateSpan)
         )
-        locationService.currentCameraPos = MapCameraPosition.camera(MapCamera(centerCoordinate: locationService.currentRegion!.center, distance:1000, heading: currentHeading, pitch: 40.0))
+        locationService.currentCameraPos = MapCameraPosition.camera(MapCamera(centerCoordinate: locationService.currentRegion!.center, distance: mapInitialDistance, heading: currentHeading, pitch: mapInitialPitch))
     }
   func printResult(location: CLLocation) {
     print("location received: \(location)")
@@ -38,9 +43,6 @@ struct MapView: View {
       // Asyncronously call the locationService while running this main thread
     Task {
       await locationService.startRecording(name: name)
-        //        motionService.startMagnetometer()
-
-                motionService.startGyros()
     }
       
     let currentDate = Date.now
@@ -68,6 +70,7 @@ struct MapView: View {
                 Map (position: $locationService.currentCameraPos,
                      interactionModes: []) {
                     if let userLoc = locationService.currentLoc {
+                        // Display all puzzles currently stored as PuzzleAnnotationView objects on the map
                         ForEach(0..<puzzleStore.allPuzzles.count, id: \.self) { puzzle in
                             if(!puzzleStore.allPuzzles[puzzle].isSet && !puzzleStore.allPuzzles[puzzle].isSolved){
                                 Annotation("", coordinate:CLLocationCoordinate2D(latitude: userLoc.latitude + puzzleStore.allPuzzles[puzzle].locOffset.latitude, longitude: userLoc.longitude + puzzleStore.allPuzzles[puzzle].locOffset.longitude)) {
@@ -86,15 +89,15 @@ struct MapView: View {
                         Annotation("", coordinate:userLoc){
                             VStack{
                                 ZStack {
-                                    profile.pieces[profile.pieceChoice].resizable().frame(width:80, height:80)
+                                    profile.pieces[profile.pieceChoice].resizable().frame(width: userIconDimension, height:userIconDimension)
                                 }
                             }
                         }
-                        // Hide initial label so we can style the text
+                        // Hide label so user annotation looks cleaner
                         .annotationTitles(.hidden)
                     }
                 }.ignoresSafeArea().animation(Animation.easeInOut(duration: 0.1), value:locationService.currentHeading)
-                
+                // Header for UI
                 VStack{
                     ZStack{
                         colors.darkGreen
@@ -126,12 +129,15 @@ struct MapView: View {
                     }.padding(50)
                 }.ignoresSafeArea()
                 // Uncomment this for arrow keys to move user
+                // These arrow keys are for demonstration purposes on the laptops since there is no active
+                // location input. The real app would not have these, as LocationService would update the
+                // user location automatically. This is to simulate walking around.
     //            /**
                 HStack{
                     VStack{
                         Button( action: {
                             print("moving forward")
-                            locationService.currentLoc?.latitude = (locationService.currentLoc?.latitude ?? 0.0) + 0.0003
+                            locationService.currentLoc?.latitude = (locationService.currentLoc?.latitude ?? 0.0) + simulatedWalkingDistance
                             manualLocUpdate()
 
                         }, label: {
@@ -140,14 +146,14 @@ struct MapView: View {
                         HStack{
                             Button( action: {
                                 print("moving left")
-                                locationService.currentLoc?.longitude = (locationService.currentLoc?.longitude ?? 0.0) - 0.0003
+                                locationService.currentLoc?.longitude = (locationService.currentLoc?.longitude ?? 0.0) - simulatedWalkingDistance
                                 manualLocUpdate()
                             }, label: {
                                 Image(systemName: "arrow.left").imageScale(.large).foregroundColor(.white).background(.blue).cornerRadius(3)
                             })
                             Button( action: {
                                 print("moving right")
-                                locationService.currentLoc?.longitude = (locationService.currentLoc?.longitude ?? 0.0) + 0.0003
+                                locationService.currentLoc?.longitude = (locationService.currentLoc?.longitude ?? 0.0) + simulatedWalkingDistance
                                 manualLocUpdate()
                             }, label: {
                                 Image(systemName: "arrow.right").imageScale(.large).foregroundColor(.white).background(.blue).cornerRadius(3)
@@ -155,7 +161,7 @@ struct MapView: View {
                         }
                         Button( action: {
                             print("moving back")
-                            locationService.currentLoc?.latitude = (locationService.currentLoc?.latitude ?? 0.0) - 0.0003
+                            locationService.currentLoc?.latitude = (locationService.currentLoc?.latitude ?? 0.0) - simulatedWalkingDistance
                             manualLocUpdate()
                         }, label: {
                             Image(systemName: "arrow.down").imageScale(.large).foregroundColor(.white).background(.blue).cornerRadius(3)

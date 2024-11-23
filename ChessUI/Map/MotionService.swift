@@ -9,6 +9,8 @@ import Foundation
 import CoreMotion
 import SwiftUI
 
+// Class to access other device sensors. The gyroscope and magnetometer are not currently
+// utilized within the MapView. This is here for future utility with moving the phone.
 class MotionService: NSObject, CLLocationManagerDelegate, ObservableObject  {
     var motionManager: CMMotionManager?
     var timer: Timer?
@@ -22,7 +24,6 @@ class MotionService: NSObject, CLLocationManagerDelegate, ObservableObject  {
     
     func startMagnetometer() {
         if((motionManager?.isMagnetometerAvailable) != nil) {
-//            self.motionManager?.showsDeviceMovementDisplay = true
             self.motionManager?.magnetometerUpdateInterval = 1.0 / 50.0
             self.motionManager?.startMagnetometerUpdates()
             
@@ -32,8 +33,6 @@ class MotionService: NSObject, CLLocationManagerDelegate, ObservableObject  {
                 // Get the gyro data.
                 if let data = self.motionManager?.magnetometerData {
                     self.currentMagnetometer = data
-//                    print(self.currentMagnetometer?.magneticField)
-//                    print(data)
                 
                 }
             })
@@ -65,15 +64,10 @@ class MotionService: NSObject, CLLocationManagerDelegate, ObservableObject  {
                 let x = data.rotationRate.x
                 let y = data.rotationRate.y
                 let z = data.rotationRate.z
-//                print("x: \(x)")
-//                 print("y: \(y)")
-//                 print("z: \(z)")
-
-
-                // Use the gyroscope data in your app.
+                 
+                // This is where gyro data can be used
              }
           })
-
 
           // Add the timer to the current run loop.
             RunLoop.current.add(self.timer!, forMode: RunLoop.Mode.default)
