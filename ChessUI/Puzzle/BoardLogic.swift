@@ -91,35 +91,36 @@ class BoardLogic : ObservableObject {
                 }
                 return
             }
-            
-            // check if the move was correct
-            if puzzle.moves[moveNum] == Move(source: firstClickedSquare!, destination: secondClickedSquare!) {
-                msg = "Correct! Keep going!"
-                moveNum += 1
-                // check if the user completed the puzzle
-                if moveNum == puzzle.moves.count {
-                    msg = "Puzzle Complete!"
+            if moveNum < puzzle.moves.count {
+                // check if the move was correct
+                if puzzle.moves[moveNum] == Move(source: firstClickedSquare!, destination: secondClickedSquare!) {
+                    msg = "Correct! Keep going!"
+                    moveNum += 1
+                    // check if the user completed the puzzle
+                    if moveNum == puzzle.moves.count {
+                        msg = "Puzzle Complete!"
+                        puzzleComplete = true
+                        return
+                    }
+                    // set puzzle failed flag if the move wasn't correct and show constructive criticism
+                } else {
+                    msg = "You disgust me. Hint: \(puzzle.moves[moveNum].source.notation)"
+                    legalMoves = []
+                    puzzleFailed = true
                     puzzleComplete = true
                     return
                 }
-            // set puzzle failed flag if the move wasn't correct and show constructive criticism
-            } else {
-                msg = "You disgust me. Hint: \(puzzle.moves[moveNum].source.notation)"
-                legalMoves = []
-                puzzleFailed = true
-                puzzleComplete = true
-                return
-            }
-            // move computer's piece
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [self] in
-                withAnimation(.easeInOut(duration: 0.5)) {
-                    let cMv = boardState.move(pieceAt: puzzle.moves[moveNum].source, to: puzzle.moves[moveNum].destination)
-                    if puzzle.moves[moveNum].promotion != nil {
-                        boardState.completePromotion(of: cMv!, to: Constants.idKinds[puzzle.moves[moveNum].promotion!]!)
+                // move computer's piece
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [self] in
+                    withAnimation(.easeInOut(duration: 0.5)) {
+                        let cMv = boardState.move(pieceAt: puzzle.moves[moveNum].source, to: puzzle.moves[moveNum].destination)
+                        if puzzle.moves[moveNum].promotion != nil {
+                            boardState.completePromotion(of: cMv!, to: Constants.idKinds[puzzle.moves[moveNum].promotion!]!)
+                        }
+                        lastMoveCoords = [puzzle.moves[moveNum].source.notation, puzzle.moves[moveNum].destination.notation]
                     }
-                    lastMoveCoords = [puzzle.moves[moveNum].source.notation, puzzle.moves[moveNum].destination.notation]
+                    moveNum += 1
                 }
-                moveNum += 1
             }
             // after the move is made, reset the origin/target and legal moves
             firstClickedSquare = nil
@@ -150,7 +151,7 @@ class BoardLogic : ObservableObject {
                 puzzleComplete = true
                 return
             }
-        // set puzzle failed flag if the move wasn't correct and show constructive criticism
+            // set puzzle failed flag if the move wasn't correct and show constructive criticism
         } else {
             msg = "You disgust me. Hint: \(puzzle.moves[moveNum].source.notation)"
             legalMoves = []
@@ -171,7 +172,7 @@ class BoardLogic : ObservableObject {
             moveNum += 1
         }
     }
-            
+    
     
     func getLegalMoves() -> [Square] {
         return legalMoves

@@ -153,7 +153,7 @@ struct board: View {
                         RoundedButtonView(buttonText: showHints == 0 ? "Get a Hint" : "Second Hint", action: {showHints += 1 })
                     }
                     
-                    // doesnt allow user to get hints after they have finished the puzzle
+                    // retry button
                     if logic.puzzleComplete && logic.eloChanged {
                         Button("Retry") {
                             logic.reset()
@@ -213,7 +213,7 @@ struct PuzzleView: View {
         VStack {
             Text("ChessGo").font(.largeTitle).padding(40).bold()
             board(logic: logic, puzzleRushIndex: .constant(nil), puzzleRushEnd: .constant(nil))
-            RoundedButtonView(buttonText: "Back", action: {
+            RoundedButtonView(buttonText: "Back to Map", action: {
                 withAnimation {
                 showChess.toggle()
                 showMap.toggle()

@@ -21,8 +21,14 @@ struct GameOverView: View {
     
     var body: some View {
         VStack(spacing: 6) {
-            Text("Good Job! ")
-                .opacity({finished ? 1 : 0}())
+            if logic.puzzleFailed {
+                Text("Puzzle failed")
+                    .opacity({finished ? 1 : 0}())
+            }
+            else {
+                Text("Good Job!")
+                    .opacity({finished ? 1 : 0}())
+            }
             Text("Old rating: \(Int(user.elo.last!))")
                 .opacity({finished ? 1 : 0}())
             
@@ -40,7 +46,7 @@ struct GameOverView: View {
                         }
                     }
             }
-            RoundedButtonView(buttonText: "Reset", action: {
+            RoundedButtonView(buttonText: "Retry", action: {
                 logic.eloChanged = true
                 logic.reset()
             })
