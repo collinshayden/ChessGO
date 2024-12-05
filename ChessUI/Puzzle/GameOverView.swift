@@ -46,13 +46,13 @@ struct GameOverView: View {
                         }
                     }
             }
-            RoundedButtonView(buttonText: "Retry", action: {
-                logic.eloChanged = true
-                logic.reset()
-            })
-            .opacity({finished ? 1 : 0}())
-            
-        
+            if logic.puzzleFailed {
+                RoundedButtonView(buttonText: "Retry", action: {
+                    logic.eloChanged = true
+                    logic.reset()
+                })
+                .opacity({finished ? 1 : 0}())
+            }
         }
         .padding(10)
         .environment(\.font, .custom("League Spartan", size: 32))
